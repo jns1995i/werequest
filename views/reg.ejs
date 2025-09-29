@@ -1,0 +1,377 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BVRSRS</title>
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" href="/images/logo.png">
+
+    <style>
+
+        @keyframes rotate {
+            from {
+                transform: scale(2) rotate(0deg);
+            }
+            to {
+                transform: scale(2) rotate(360deg);
+            }
+        }
+        @keyframes rotate2 {
+            from {
+                transform: scale(1.2) rotate(360deg);
+            }
+            to {
+                transform: scale(1.2) rotate(0deg);
+            }
+        }
+        .watermark1x {
+        animation-name: rotate;
+        animation-duration: 120s; /* Adjust this value for speed */
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        }
+        .watermark10x {
+        animation-name: rotate2;
+        animation-duration: 100s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        }
+        body { display: flex; position: relative; overflow-y: auto; gap: 10px; }
+        .fnav { color: white; max-width: 100%; }
+        .pnav { background: var(--primaryBGDark) }
+        .pnav:hover { color: white; }
+        .homeCard {
+            width: 40%; height: 60%;
+            backdrop-filter: blur(15px) saturate(150%);
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 20px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; color: white; text-align: center;
+        }
+        .photoF {
+            background-image: url('/images/brgy.jpg');  /* fixed: should be /images/profile.jpg */
+            background-position: center;
+            background-repeat: no-repeat;                  /* correct value */
+            background-size: cover;  
+        }
+        .homeSec2 { border-left: 1px solid black; padding-left: 30px; }
+        #server-error {
+            border: 0.5px solid rgba(255, 0, 0, 0.625);
+            color: rgb(100, 1, 1);
+            background-color: rgb(255, 248, 248);
+        }
+        .headPrime {
+            background: 
+                radial-gradient(circle at 25% 5%, var(--tint2), transparent 25%),  /* Light Gray */
+                radial-gradient(circle at 80% 95%,  var(--tint1), transparent 30%); /* White */
+            backdrop-filter: blur(10px);
+            background-color: var(--tint1);
+            transition: none;
+            transform: scale(1);
+        }
+        .headPrime:hover {
+            transition: none;
+            transform: scale(1);
+            height: 300px !important;
+        }
+
+        @media (max-width: 1024px) {
+            .headPrime {
+                height: 300px;
+                display: none;
+            }
+            body { position: relative; overflow-y: auto; flex-direction: column; padding: 0; display: block; gap: 0;}
+            .hpCard { height: 110px; width: 110px; padding: 5px; }
+            .hpCard img { border: 3px solid white !important; height: 100px; width: 100px;}
+            .g-recaptcha {
+                transform: scale(1);
+                width: 200px;
+            }
+            #lCard { height: 120px; border-radius: 0 !important; width: 100% !important; padding: 0;}
+            #rCard { width: 100% !important; padding: 0;}
+            #lCard .photoF { border-radius: 5px;}
+            #msg {display: none;}
+            form { gap: 0; display: flex; height: auto; width: 95% !important; border-radius: 10px; padding: 0 !important; box-shadow: none; }
+            .homeSec { gap: 5px; padding:0;}
+            .homeSec2 { border-left: 0; padding-left: 0; padding-inline: 40px; padding-block:0; }
+            .fnav { font-size: 12px; }
+            .p10 { font-size: 10px; }
+            p.title { font-size: 30px; font-weight: 400; }
+            #indexT { font-size: 14px; }
+            #secretBtn { color: transparent;}
+            button#loginBtn {
+                transform: scale(1);
+                transition: none;
+            }
+            button#loginBtn.fnav:hover {
+                border: none;
+                outline: none;
+                box-shadow: none;
+            }
+            #frgBtn:hover { transform: scale(1.02);}
+            .watermark1, .watermark2 {
+                transform: scale(2) !important;
+            }
+        }
+        .g-recaptcha {
+        padding: 0;  /* Optional padding for better spacing */
+        display: block; /* Ensure the reCAPTCHA element is a block element */
+        width: fit-content !important;
+        height: fit-content !important;
+        max-width: 100%;
+    }
+    </style>
+</head>
+<body class="relative">
+    <div class="relative width100 overflow-y1 alignStart" id="rCard">
+        
+
+        <div class="height0 padding10 width100 relative">
+            <div class="h300 headPrime absolute top0 left0"></div>
+            <form id="residentForm" action="/add-memberR" method="POST" class="height0 width50 padding40 borderRadius5">
+                <div class="height0 justifyStart width100">
+                    <a href="/" class="nav">
+                        <i class="fas fa-arrow-left"></i> Back to Login
+                    </a>
+                </div>
+                <br>
+                <div class="gap10 justifyStart alignStart height0">
+                    <div class="height0 col justifyStart alignStart">
+                        <p class="size30 str500 colorPrimary">Register Form</p>
+                        <br>
+                        <div class="height0 gap10">
+                            <div class="height0 col gap5 alignStart">
+                                <label for="">First Name</label>
+                                <input type="text" name="firstName" required>
+                            </div>
+                            <div class="height0 col gap5 alignStart">
+                                <label for="">Middle Name</label>
+                                <input type="text" name="middleName">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="height0 gap10">
+                            <div class="height0 col gap5 alignStart">
+                                <label for="">Last Name</label>
+                                <input type="text" name="lastName" required>
+                            </div>
+                            <div class="height0 col gap5 alignStart">
+                                <label for="">Ext Name</label>
+                                <input type="text" name="extName">
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="height0 gap10">
+                            <div class="height0 gap5">
+                                <div class="height0 col alignStart">
+                                    <label for="">House Number</label>
+                                    <input name="houseNo" type="text" required>
+                                </div>
+                                <div class="height0 col alignStart">
+                                    <label for="">Purok</label>
+                                    <div class="selectBar widthMax100"> 
+                                        <select id="purok" required name="purok"  placeholder="purok">
+                                            <option value="Purok 1">Purok 1</option>
+                                            <option value="Purok 2">Purok 2</option>
+                                            <option value="Purok 3">Purok 3</option>
+                                            <option value="Purok 4">Purok 4</option>
+                                            <option value="Purok 5">Purok 5</option>
+                                            <option value="Purok 6">Purok 6</option>
+                                            <option value="Purok 7">Purok 7</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <label for="">Birthday</label>
+                        <div class="height0 gap5">
+                            <div class="height0 col alignStart width40">
+                                <div class="selectBar widthMax100"> 
+                                    <select id="bMonth" required name="bMonth"  placeholder="Month">
+                                        <option value="" selected disabled>Month</option>
+                                        <option value="1">January</option>
+                                        <option value="2">February</option>
+                                        <option value="3">March</option>
+                                        <option value="4">April</option>
+                                        <option value="5">May</option>
+                                        <option value="6">June</option>
+                                        <option value="7">July</option>
+                                        <option value="8">August</option>
+                                        <option value="9">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="height0 col alignStart width20">
+                                <input name="bDay" type="number" id="bDay" min="1" max="31" placeholder="Day" required>
+                            </div>
+                            <div class="height0 col alignStart width40">
+                                <input name="bYear" type="number" id="bYear" min="1900" placeholder="Year" required>
+                            </div>
+                        </div>
+                        <label class="colorPrimary" id="ageWarning" style="display: none;"></label>
+                        <br>
+                        <div class="height0 col alignStart">
+                            <label for="">Birth Place</label>
+                            <input type="text" name ="birthPlace" required>
+                        </div>
+                        <br>
+                        
+                        <div class="height0 gap10 marginBottom5">
+                            <div class="height0 col alignStart">
+                                <label for="">Gender</label>
+                                <div class="selectBar widthMax100">
+                                    <select id="gender" name="gender" required>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="height0 col alignStart">
+                                <label for="">Civil Status</label>
+                                <div class="selectBar  widthMax100">
+                                    <select name="civilStatus" id="civilStatus" required>
+                                        <option value="Single">Single</option>
+                                        <option value="Married">Married</option>
+                                        <option value="Widowed">Widowed</option>
+                                        <option value="Separated">Separated</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <br>
+                        
+                        <div class="height0 gap10 marginBottom5">
+                            <div class="height0 col alignStart">
+                                <label for="">Precinct</label>
+                                <div class="selectBar  widthMax100">
+                                    <select name="precinct" id="precinct" required>
+                                        <option value="Registered Vote">Registered Voter</option>
+                                        <option value="Non-Voter">Not Registered</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="height0 col alignStart">
+                                <label for="">Education</label>
+                                <div class="selectBar  widthMax100">
+                                    <select name="education" id="education" required>
+                                        <option value="" selected disabled>Select</option>
+                                        <option value="Elementary">Elementary</option>
+                                        <option value="High School">High School</option>
+                                        <option value="Vocational">Vocational</option>
+                                        <option value="College">College</option>
+                                        <option value="Post Graduate">Post Graduate</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="height0 gap10 marginBottom5">
+                            <div class="height0 col alignStart">
+                                <label for="">Nationality</label>
+                                <input type="text" name="nationality" id="nationality">
+                            </div>
+                            <div class="height0 col alignStart">
+                                <label for="">Religion</label>
+                                <input type="text" name="religion" id="religion" >
+                            </div>
+                        </div>
+                        <div class="height0 gap10 marginBlock15" id="emailField">
+                            <div class="height0 col justifyStart alignStart">
+                                <label for="">Phone</label>
+                                <input type="text" name="phone" id="phone" class="phone">
+                            </div>
+                            <div class="height0 col justifyStart alignStart">
+                                <label for="">Email</label>
+                                <input type="email" name="email" id="email">
+                            </div>
+                        </div>
+                        <br><hr><br>
+                        <div class="height0 gap10">
+                            <div class="height0 justifyStart gap10 paddingInline10 borderRadius10" id="soloParent">
+                                <input type="checkbox" name="soloParent"><label for="">Solo Parent (Optional) </label>
+                            </div>
+                            <div class="height0 justifyStart gap10 paddingInline10 borderRadius10"  id="pregnantLabel">
+                                <input type="checkbox" name="pregnant" id="pregnant"><label for="">Pregnant (Optional) </label>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="height0 gap10 borderRadius10 paddingBlock5">
+                            <div class="height0 justifyStart gap10 paddingInline10">
+                                <input type="checkbox" id="pwdCheckbox" name="pwd"><label for="">PWD (Optional) </label>
+                            </div>
+                            <div class="height0 col alignStart">
+                                <div class="selectBar">
+                                    <select id="pwdType" name="pwdType">
+                                        <option value="" selected disabled>Select Disability Type</option>
+                                        <option value="Visual">Visual</option>
+                                        <option value="Hearing">Hearing</option>
+                                        <option value="Mobility">Mobility</option>
+                                        <option value="Mental">Mental</option>
+                                        <option value="Speech">Speech</option>
+                                        <option value="Intellectual">Intellectual</option>
+                                        <option value="Psychosocial">Psychosocial</option>
+                                        <option value="Learning">Learning</option>
+                                        <option value="Multiple">Multiple Disabilities</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <hr>
+                        <br>
+                        <div class="height0 gap10">
+                            <div class="height0 col gap5 alignStart">
+                                <label for="">Working Status</label>
+                                <div class="selectBar"> 
+                                    <select id="employmentStatus" name="employmentStatus" required>
+                                        <option value="Unemployed">Unemployed</option>
+                                        <option value="Employed">Employed</option>
+                                        <option value="Self-Employed">Self-Employed</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="height0 col gap5 alignStart  borderRadius10 padding5"  id="workField">
+                                <label for="">Work or Source of Income</label>
+                                <input type="text" id="work" name="work">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="height0 gap5 hidden">
+                            <div class="height0 col gap5 alignStart">
+                                <label for="">Position</label>
+                                <div class="selectBar widthMin100">
+                                    <select name="position" id="position">
+                                        <option value="Resident" selected>Resident</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="height0 justifyEnd"><button type="submit" class="nav pnav">Submit</button></div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    
+
+
+    </div>
+   
+</body>
+</html>

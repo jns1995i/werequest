@@ -1,0 +1,1212 @@
+<% layout('layout') %>
+    <head>
+        <style>
+            .mainf {
+                position: relative;
+            }
+            .resetPassCard, .newAccCard {
+                position: absolute;
+                background-color: rgba(0, 0, 0, 0.2);
+                border-radius: 10px;
+                z-index: 50;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .resetCard, .newCard {
+                width: 500px;
+                height: 450px;
+                background-color: white;
+                border-radius: 14px;
+                box-shadow: var(--shadow);
+            }
+            .main {
+                display: block;
+                gap: 0;
+                padding: 0;
+                flex-direction: column;
+                width: 100%;
+                height: auto !important;
+                overflow-y: auto;
+            }
+            .maindocPage {
+                display: block;
+                height: 1056px;
+                width: 816px;
+                background-color: white;
+                align-self: center !important;
+            }
+            .card.col.tray {
+                box-shadow: none;
+                overflow-y: auto;
+                display: block;
+                align-items: start;
+                justify-content: start;
+            }
+            .block {
+                padding: 0 20px;
+                width: 100%;
+                position: relative;
+                background-color: var(--lightgray);
+                border-radius: 15px;
+            }
+            .block.s {
+                width: 15%;
+                height: auto;
+                flex-direction: column;
+                justify-content: start;
+            }
+            .main .card {
+                padding: 40px;
+                align-items: start;
+                gap: 4px;
+            }
+            .title {
+                line-height: 2em;
+            }
+            .main p {
+                line-height: 1.5em;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+            }
+            .main p i {
+                width: 20px;
+                font-size: 12px;
+            }
+            .card.keyPlain {
+                height: 50%;
+            }
+            .card.Btn {
+                position: relative;
+                flex-direction: column;
+                padding: 10px 20px;
+                align-items: center;
+                justify-content: center;
+                height: auto;
+                font-size: 14px;
+                font-weight: 500;
+                gap: 20px;
+            }
+            .tray p {
+                text-align: left;
+                justify-content: start;
+            }
+            #docButtonCard {
+                height: 100%;
+            }
+            #docf {
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+            }
+            #docPage {
+                padding: 50px 150px;
+                border-radius: 0;
+                background-color: transparent;
+                justify-content: start;
+                justify-items: start;
+                height: 1050px;
+            }
+            .cmpCard {
+                flex-direction: column;
+                align-items: start;
+                padding: 10px;
+                height: auto;
+            }
+            .docHead {
+                position: absolute;
+                bottom: 0;
+                right: 38px;
+                z-index: 50;
+                flex-direction: column-reverse;
+                height: 100%;
+                gap: 10px;
+                width: 15%;
+                align-items: center;
+                justify-content: space-between;
+                padding-block: 20px;
+            }
+            .docHead .ctrl {
+                height: auto;
+                padding: 0;
+                width: 100%;
+                flex-direction: column;
+            }
+            .docHead .ctrl.right {
+                flex-direction: row;
+            }
+            .docHead .ctrl.left .nav {
+                width: 100%
+            }
+            .docHR {
+                opacity: 1;
+                width: 90%;
+                border: 2px solid black;
+            }
+            .pageMainf {
+                padding-inline: 60px;
+            }
+            .sub {
+                height: 30px;
+            }
+            .totalRecords {
+                font-size: 18px;
+                font-weight: 500;
+            }
+            .userPhoto {
+                height: 100px;
+                width: 100px;
+                outline: 1px solid lightgray;
+            }
+            .userH {
+                height: 50px;
+                padding: 0;
+            }
+            form {
+                width: 100%;
+                padding: 20px 300px;
+            }
+            #dirTable {
+                box-shadow: var(--dangerShadow);
+            }
+            .headCtrl {
+                padding: 5px;
+            }
+            .headCtrl .ctrl {
+                width: 97.5%;
+                background-color: white;
+                border-radius: 0.5vw;
+            }
+            .certContent {
+                position: absolute;
+                z-index: 50;
+                left: 10px;
+                bottom: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: auto;
+                padding: 15px;
+                width: 18%;
+            }
+            .certTA, .certTA:hover, .certTA:focus {
+                height: calc(38 * 1em);
+            }
+            .certContentM {
+                white-space: pre-wrap; /* Preserves new lines and spaces */
+            }
+            .hidden {
+                display: none !important;
+            }
+            @media print {
+                body {
+                    -webkit-print-color-adjust: exact;
+                    print-color-adjust: exact;
+                }
+                .maindocPage {
+                    background-image: url('your-background-image.png') !important;
+                    background-size: cover !important;
+                }
+                span {
+                    font-size: 12pt !important;
+                }
+                sup, sub {
+                    font-size: inherit !important;
+                }
+                p.docTLE {
+                    font-size: 18pt !important;
+                }.parag {
+    text-indent: 30px;
+    text-align: justify !important;
+    display: inline !important;
+    font-family: 'Times New Roman', Times, serif;
+}
+.paragStr {
+    text-indent: 30px;
+    text-align: justify !important;
+    display: inline;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-size: 1vw;
+}
+.txtStr {
+    font-weight: bold !important;
+}
+.blue {
+    color: rgb(1, 1, 111);
+}
+.certContent {
+    height: calc(8 * 1em);
+    width: 98%;
+}
+.certContentM {
+    white-space: pre-wrap; /* Preserves new lines and spaces */
+}
+            }
+            
+.parag {
+    text-indent: 30px;
+    text-align: justify !important;
+    display: inline !important;
+    font-family: 'Times New Roman', Times, serif;
+}
+.paragStr {
+    text-indent: 30px;
+    text-align: justify !important;
+    display: inline;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-size: 1vw;
+}
+.txtStr {
+    font-weight: bold !important;
+}
+.blue {
+    color: rgb(1, 1, 111);
+}
+
+    #viewD {
+        width: auto !important;
+        max-width: none !important;
+        min-width: none !important;
+        justify-self: start;
+        font-weight: 600;
+        color: var(--primary);
+    }
+    #viewD:hover {
+        transition: none;
+        transform: scale(1);
+    }
+    
+        .page p, .page span {
+            font-family: 'Tempus Sans ITC', cursive, sans-serif;
+        }
+        .page span.undeline {
+            font-family: 'Tempus Sans ITC', cursive, sans-serif;
+            font-size: 14px;
+            text-decoration: underline !important;
+        }
+        strong {
+            font-family: 'Tempus Sans ITC', cursive, sans-serif;
+            font-size: 14px;
+            text-shadow: 0 0 1px #000;
+            font-weight: bold !important;
+        }
+        .page p.bold {
+            text-shadow: 0 0 1px #000;
+            font-weight: bold !important;
+        }
+        .page {
+                height: 1056px;
+                width: 816px;
+                background-color: white;
+                position: relative;
+                padding: 20px 70px;
+            }
+        .page div {
+            z-index: 10;
+        }
+        .watermark {
+            position: absolute;
+            left: 50%;
+            top: 20%;
+            transform: translateX(-50%);
+            width: 98%;
+            opacity: 0.2;
+        }
+            hr.line {
+                opacity: 1;
+                border: 2px solid black;
+            }
+
+        </style>
+    </head>
+        <div class="hidden successCard padding15 fixed height0 borderRadius5 width0 darkShadow col bgWhite translateX" id="successCard" style="top: 10px; left: 50%; z-index: 100;">
+                <p class="size14 str400"> Updating Request Status ..</p>
+        </div>
+        <div class="hidden decCard padding15 fixed height0 borderRadius5 width0 darkShadow col bgWhite translateX" id="decCard" style="top: 10px; left: 50%; z-index: 100;">
+                <p class="size14 str400"> Updating Request Status ..</p>
+        </div>
+        
+        <div class="hidden claimedCard padding15 fixed height0 borderRadius5 width0 darkShadow col bgWhite translateX" id="claimedCard" style="top: 10px; left: 50%; z-index: 100;">
+                <p class="size14 str400"> Updating Request Status ..</p>
+        </div>
+    
+             
+    <div class="blockX overflow-y1 relative">
+
+        <div id="caseCard7" class="hidden height100 absolute top0 left0 index50 overflow-y1 alignStart">
+                    
+            <div class="width60 darkShadow height0 heightMin100 bgWhite padding20 borderRadius15 relative col justifyStart">
+                <a href="javascript:void()" class="nav absolute top20 right20" id="close7"><i class="fas fa-xmark"></i> Close</a>
+                
+                <p class="size28 str500"><i class="fas fa-exclamation-triangle red inline" style="font-size: 26px;"></i> Pending Case Record</p>
+                <br>
+                    <% if (request.cases.length > 0) { %>
+
+                                <% request.cases.forEach(caseItem => { %>
+                                    <div class="card width80 height0 padding20 col relative alignStart justifyCenter borderPrimary marginBottom10">
+                                        <a href="" class="nav tnav absolute right15 top15 disabled hidden">Status: <%= caseItem.status %></a>
+                                        <p class="size12 absolute right20 top20 disabled">
+                                            <%= caseItem.createdAt 
+                                                ? new Date(caseItem.createdAt).toLocaleString("en-US", { 
+                                                    year: "numeric", 
+                                                    month: "short",  
+                                                    day: "2-digit", 
+                                                    hour: "2-digit", 
+                                                    minute: "2-digit", 
+                                                    hour12: true 
+                                                }).replace(/,\s(\d{4}),/, ', $1') 
+                                                : "?" 
+                                            %></p>
+                                        <p class="size16 str500 green">Case No. <%= caseItem.caseNo %></p>
+                                        <p class="size16 str600"><%= caseItem.type.join(", ") %></p>
+                                        <br>
+                                     
+                                        <p class="size12 str400">Complainant(s)</p>
+                                        <p class="size14 str600"><% caseItem.complainants.forEach(c => { %>
+                                                <%= c.firstName %> <%= c.middleName %> <%= c.lastName %> <%= c.extName || '' %><br>
+                                            <% }) %>
+                                        </p>
+                                        <br>
+                                        <p class="size12 str400">Respondent(s)</p>
+                                        <p class="size14 str600 "><% caseItem.respondents.forEach(r => { %>
+                                                <%= r.firstName %> <%= r.middleName %> <%= r.lastName %> <%= r.extName || '' %><br>
+                                            <% }) %>
+                                        </p>
+                                        <br>
+                                        <a href="/caseView/<%= caseItem._id %>" class="btn btn-primary nav hidden">View Case</a>
+                                    </div>
+                                <% }) %>
+                    <% } else { %>
+                        <p>No case records found.</p>
+                    <% } %>
+                </div>
+        </div>
+
+        <div class="borderRadius15 padding20 absolute index100 hidden" style="background-color: rgba(0, 0, 0, 0.5);" id="noCard">
+            <form class="flex height0 bgWhite padding40 borderRadius10 width40 darkShadow col">
+                <p class="size30 str500">DECLINE DOCUMENT?</p>
+                <br>
+                <label for="" class="width100 textLeft hidden">Reason for declining</label>
+                <div class="height0 hidden">
+                    <div class="selectBar width100 widthMax100">
+                        <select name="notes" id="notesInput" required>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                </div>
+                <br>
+                <div class="height0 padding20 borderRadius10 borderPrimary">
+                    Note: Action can't be undone!
+                </div>
+                <br>
+                <div class="height0 gap10">
+                    <button class="nav fnav" onclick="hideNoCard()">Cancel</a>
+                    <button type="submit" class="nav fnav gnav"  onclick="declineDocument()">Decline</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="borderRadius15 padding20 absolute index100 hidden" 
+            style="background-color: rgba(0, 0, 0, 0.5);" 
+            id="noCard2">
+        <form class="flex height0 bgWhite padding40 borderRadius10 width40 darkShadow col" 
+                onsubmit="return false;">
+            <p class="size30 str500">Are you sure this request has been released?</p>
+            <br>
+            <div class="height0 padding20 borderRadius10 borderPrimary">
+            Note: This action can't be undone!
+            </div>
+            <br>
+            <div class="height0 gap10">
+            <button type="button" class="nav fnav" onclick="hideNoCard2()">Cancel</button>
+            <button type="button" class="nav fnav gnav" id="confirmReleaseBtn">Set as Released</button>
+            </div>
+        </form>
+        </div>
+        
+        <div class="height0 col padding10 mdoc" id="mdoc">
+            <% if (typeof message !== "undefined" && message) { %>
+                <div class="alert alert-success height0 absolute right30 top30">
+                    <%= message %>
+                </div>
+            <% } %>
+
+        
+            
+
+            <div class="bgWhite col height0 borderRadius10 padding30">
+
+
+                    <div class="height0 padding15 borderRadius10 alignStart gap5">
+                        <div class="height0 justifyStart gap10">                    
+                            <a href="/docc" class="nav" onclick="">
+                                <i class="fas fa-arrow-left"></i>
+                            </a>
+                            <p class="size20 str500">Request Information</p>
+                        </div>              
+
+                        <div class="height0 gap10 justifyEnd">
+                                <% if ( request.status === 'Approved' || request.status === 'Released') { %>
+                                    <% if ( request.status === 'Approved' || request.status !== 'Released') { %>
+                                    <a href="#" class="nav pnav" onclick="showNoCard2('<%= request._id %>')"><i class="fas fa-flag"></i>Released</a>
+                                <% } %>
+                                <a href="#" class="nav bgBlue white" onclick="printDocs()">
+                                    <i class="fas fa-print"></i>
+                                    Generate Documents
+                                </a>
+                                <% } %>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="height0 gap5 alignStart">
+                        <div class="height0 col gap5 alignStart">
+                            <p class="size12 str400 marginTop5">Request By:</p>
+                            <p class="size16 str500"><%= request.resident.firstName %> <%= request.resident.middleName %> <%= request.resident.lastName %> <%= request.resident.extName %></p>
+                            <p class="size16 str500"><%= request.resident ? request.resident.houseNo : "N/A" %> <%= request.resident ? request.resident.purok : "N/A" %> San Andres</p>
+                        </div>
+                        <div class="height0 col gap5 alignStart">
+                            <p class="size12 str400">Request Date</p>
+                            <p class="size16 str500">
+                                <%= request.createdAt 
+                                    ? new Date(request.createdAt).toLocaleString("en-US", { 
+                                        year: "numeric", 
+                                        month: "short",  
+                                        day: "2-digit", 
+                                        hour: "2-digit", 
+                                        minute: "2-digit", 
+                                        hour12: true 
+                                    }).replace(/,\s(\d{4}),/, ', $1') 
+                                    : "Unreleased" 
+                                %>
+                            </p>
+                        </div>
+                        <div class="height0 col gap5 alignStart">
+                            <p class="size12 str400 marginTop5">Request ID</p>
+                            <p class="size16 str500"><%= request.tr %></p>
+                        </div>
+                    </div>
+
+                            
+                            <script>
+                                function formatDate(dateString) {
+                                    if (!dateString) return "Unreleased"; // If no date, return "Unreleased"
+                                    const options = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+                                    return new Date(dateString).toLocaleDateString('en-US', options);
+                                }
+                            
+                                let successAtElement = document.getElementById("successAt");
+                                let successAtRaw = successAtElement.getAttribute("data-date");
+                            
+                                if (successAtRaw) {
+                                    successAtElement.textContent = formatDate(successAtRaw);
+                                }
+                            </script>
+                            <br><br>
+                        <hr>
+                        
+                        <table>
+                    <thead>
+                        <tr>
+                            <th class="width20">QTY & TYPE</th>
+                            <th class="width15">PURPOSE</th>
+                            <th class="width20">REQUEST FOR</th>
+                            <th class="width15">STATUS</th>
+                            <th class="textCenter width15">PROOF</th>
+                            <th class="textCenter width15">ACTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><%= request.qty %> <%= request.type %></td>
+                            <td><%= request.purpose %></td>
+                            <td>
+                            <%= request.requestForData 
+                                    ? request.requestForData.firstName 
+                                    + (request.requestForData.middleName ? " " + request.requestForData.middleName : "") 
+                                    + " " + request.requestForData.lastName 
+                                    : "N/A" %>
+                            </td>
+                            <td>
+                                <% if (request.status === 'Approved') { %>
+                                <i class="fas fa-check-circle w20 h20 inline marginRight5 green"></i>
+                                <% } else if (request.status === 'Declined') { %>
+                                <i class="fas fa-xmark-circle w20 h20 inline marginRight5 red"></i>
+                                <% } else if (request.status === 'Verified') { %>
+                                <i class="fas fa-check-circle w20 h20 inline marginRight5 blue"></i>
+                                <% } else if (request.status === 'Released') { %>
+                                <i class="fas fa-flag w20 h20 inline marginRight5 green"></i>
+                                <% } else { %>
+                                <i class="fas fa-clock w20 h20 inline marginRight5 yellow"></i>
+                                <% } %>
+                                <%= request.status %>
+                            </td>
+                            <td><% if (request.proof) { %>
+                            <% const file = request.proof; %>
+
+                            <% if (file.match(/\.(jpg|jpeg|png|gif)$/i)) { %>
+                                <!-- Image preview -->
+                                <img src="<%= file %>" alt="Proof" 
+                                    style="max-width:150px; border:1px solid #ccc; border-radius:5px;" class="hidden">
+                                <!-- PDF link -->
+                                <a class="nav" href="<%= file %>" target="_blank">
+                                    View Image
+                                </a>
+
+                            <% } else if (file.match(/\.pdf$/i)) { %>
+                                <!-- PDF link -->
+                                <a class="nav" href="<%= file %>" target="_blank">
+                                    View PDF
+                                </a>
+
+                            <% } else if (file.match(/\.(doc|docx)$/i)) { %>
+                                <!-- Word file -->
+                                <a class="nav" href="<%= file %>" download>
+                                    Download
+                                </a>
+
+                            <% } else { %>
+                                <!-- Fallback -->
+                                <a class="nav" href="<%= file %>" target="_blank">
+                                    View File
+                                </a>
+                            <% } %>
+                        <% } else { %>
+                                    <a class="nav" target="_blank" class="disabled" style="border: none !important; background-color: transparent; pointer-events: none;">
+                                        No Proof Upload
+                                    </a>
+                        <% } %>
+                        </td>
+                        <td  class="textCenter">              
+                                            <div class="height0 justifyCenter gap10 padding5">
+                                                    <% if ( user.position === 'Punong Barangay') { %>
+                                                        <% if ( request.status !== 'Approved' && request.status !== 'Released') { %>  
+                                                            <a href="javascript:void(0)" onclick="showNoCard('<%= request._id %>')" class="nav bgRed white">
+                                                                Decline
+                                                            </a>                     
+                                                            <a href="javascript:void(0)" class="nav str400 bgGreen white" onclick="approveDocument('<%= request._id %>')">
+                                                                Approve
+                                                            </a>
+                                                        <% } else { %>
+                                                            <p class="size12 gray str500 textCenter">Action Done</p>
+                                                        <% } %>  
+                                                    <% } else { %>
+                                                        <% if ( request.status !== 'Verified' && request.status !== 'Released' && request.status !== 'Approved') { %>
+                                                            <a href="javascript:void(0)" onclick="showNoCard('<%= request._id %>')" class="nav bgRed white">
+                                                                Decline
+                                                            </a>
+                                                            <a href="javascript:void(0)" class="nav str400 bgBlue white" onclick="verifyDocument('<%= request._id %>')">
+                                                                Verify
+                                                            </a>
+                                                        <% } else { %>
+                                                            <p class="size12 gray str500">Action Done</p>
+                                                        <% } %>
+                                                    <% } %>
+                                            </div>
+                        </td>
+                        </tr>
+                    </tbody>
+                </table>
+                            </div>
+            </div>
+        </div>
+
+        <div class="hidden height0 col relative index50 top0 vdoc bgSoft borderRadius10" id="vdoc" style="padding-left: 35%;">
+            <a href="" class="nav fixed top40 index50 marginRight35 hidden" id="xBtn" style="left: 40%;"><i class="fas fa-times"></i>Close View</a>
+            <% 
+            function calculateAge(bDay, bMonth, bYear) {
+                const birthDate = new Date(bYear, bMonth - 1, bDay);
+                const today = new Date();
+                let age = today.getFullYear() - birthDate.getFullYear();
+                const monthDiff = today.getMonth() - birthDate.getMonth();
+                if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                return age;
+            } 
+            %>
+    
+<% 
+  // Helpers to handle inconsistent field names
+  function fullName(p) {
+    if (!p) return "Unknown";
+    const first = p.fName || p.firstName || "";
+    const middle = p.middleName || p.mName || p.middle || "";
+    const last = p.lName || p.lastName || p.surname || "";
+    const name = `${first}${first && (middle || last) ? " " : ""}${middle ? middle + " " : ""}${last}`.trim();
+    return name || "Unknown";
+  }
+
+  function addressLine(p) {
+    if (!p) return "Unknown";
+    if (p.houseNo || p.purok) {
+      return `${p.houseNo || ""} ${p.purok || ""} San Andres, Guimba`.trim();
+    }
+    return p.address || "Unknown";
+  }
+
+  const isApproved = request && (request.status === "Approved" || request.status === "approved");
+  const qty = Number(request && request.qty) || 1;
+  const requester = request && request.resident ? request.resident : null; // requestBy info
+  const target = request && request.requestForData ? request.requestForData : (request.isMyself ? requester : null);
+%>
+
+
+  <% for (let i = 0; i < qty; i++) { %>
+    <div class="height0 justifyEnd borderRadius10 doc" id="doc<%= i+1 %>" style="padding: 10px;">
+      <p class="status hidden"><%= request.status %></p>
+      <p class="qty hidden"><%= qty %></p>
+
+      <div class="maindocPage darkShadow borderRadius5" style="position: relative;">
+        <div class="page col justifyStart alignStart">
+          <img src="/images/logo.png" alt="" class="watermark">
+          <br>
+
+          <!-- Common Header -->
+          <div class="height0 gap10">
+            <div class="height0 gap10">
+              <img src="/images/pilipinas.jpg" alt="" class="h110 w110">
+              <img src="/images/guimba.png" alt="" class="h95 w95">
+              <img src="/images/logo.png" alt="" class="h100 w100">
+            </div>
+            <div class="height0 col alignStart">
+              <p class="size14 bold">Republic of the Philippines</p>
+              <p class="size14 bold">Province of Nueva Ecija</p>
+              <p class="size14 bold">Municipality of Guimba</p>
+              <p class="size14 bold blue">BARANGAY SAN ANDRES</p>
+            </div>
+          </div>
+
+          <hr class="line marginBottom5">
+          <div class="height0 padding5 borderPrimary" style="background-color: rgb(194, 255, 163);">
+            <p class="size20 str600 orange bold" style="font-weight: bolder !important;">OFFICE OF THE PUNONG BARANGAY</p>
+          </div>
+          <br>
+
+          <!-- Dynamic Title -->
+          <div class="height0">
+            <p class="size28" style="font-family: 'Snap ITC', cursive, sans-serif;">
+              <% if (request.type === "Barangay Clearance") { %>
+                BARANGAY CLEARANCE
+              <% } else if (request.type === "Barangay Indigency") { %>
+                CERTIFICATE OF INDIGENCY
+              <% } else if (request.type === "Residency") { %>
+                CERTIFICATE OF RESIDENCY
+              <% } else if (request.type === "Business Permit") { %>
+                BARANGAY BUSINESS PERMIT
+              <% } else if (request.type === "BARC") { %>
+                BARC CERTIFICATE
+              <% } else { %>
+                <%= (request.type || "DOCUMENT").toUpperCase() %>
+              <% } %>
+            </p>
+          </div>
+
+          <br>
+          <div class="height0 justifyEnd">
+            <p class="size14">Date: <%= request.createdAt ? new Date(request.createdAt).toLocaleDateString() : new Date().toLocaleDateString() %></p>
+          </div>
+          <br><br>
+
+          <!-- Content per type (use `target` for requestFor data) -->
+          <% if (request.type === "Barangay Clearance") { %>
+            <p class="size14">Name: <span class="undeline"><%= fullName(target) %></span></p>
+            <p class="size14">Address: <%= addressLine(target) %></p>
+            <p class="size14">Birthday: 
+                <% 
+                const months = [
+                    "January","February","March","April","May","June",
+                    "July","August","September","October","November","December"
+                ];
+                const monthName = months[request.resident.bMonth - 1]; // since months are stored as numbers
+                %>
+
+                <%= monthName %> <%= request.resident.bDay %>, <%= request.resident.bYear %>
+            </p>
+            <p class="size14">Civil Status: <%= request.resident.civilStatus %></p>
+            <br>
+
+            <p class="size14">FINDING: NO DEROGATORY RECORDS</p>
+            <p class="size14">PURPOSE: <%= request.purpose || "N/A" %></p>
+            <br>
+            <p class="size16">TO WHOM IT MAY CONCERN:</p>
+            <br>
+            <p class="size16 textJustify">
+              THIS IS TO CERTIFY that <strong><%= fullName(target) %></strong> whose left and right thumbmarks and signature appear below has undergone the identification of this office. The Clearance is valid only for ninety (90) days.
+            </p>
+            <br>
+            <div class="height0 alignEnd col">
+                <div class="height0 gap10 w210 col">
+                    <hr class="borderBlack">
+                    <p class="size14">Applicant Signature</p>
+                </div>
+                <br>
+                <br>
+
+                <p class="size14 textCenter w210">THUMBMARKS</p>
+                <div class="height0 gap10 w210">
+                    <div class="h100 w100 borderBlack"></div>
+                    <div class="h100 w100 borderBlack"></div>
+                </div>
+                <div class="height0 gap10 w210">
+                    <p class="size16 textCenter w100">Left</p>
+                    <p class="size16 textCenter w100">Right</p>
+                </div>
+            </div>   
+
+          <% } else if (request.type === "Barangay Indigency") { %>
+            <p class="size16">TO WHOM IT MAY CONCERN:</p>
+            <p class="size16 textJustify">
+              THIS IS TO CERTIFY that <strong><%= fullName(target) %></strong>, a resident of Barangay San Andres, belongs to one of the indigent families. Reason: <strong><%= request.purpose || "N/A" %></strong>.
+            </p>
+            <p class="size14">Any assistance given shall be highly appreciated.</p>
+
+          <% } else if (request.type === "Residency") { %>
+            <p class="size16">TO WHOM IT MAY CONCERN:</p>
+            <br>
+            <p class="size16 textJustify">
+              THIS IS TO CERTIFY that <strong><%= fullName(target) %></strong> is a bonafide resident of Barangay San Andres, Guimba, Nueva Ecija and is personally known to be of good moral character.
+            </p>
+            <p class="size16 textJustify">Presently residing at <strong><%= addressLine(target) %></strong>.</p>
+
+          <% } else if (request.type === "Business Permit") { %>
+            <p class="size16">TO WHOM IT MAY CONCERN:</p>
+            <br>
+            <p class="size16 textJustify">
+              This is to certify that the person named below had applied for and has been issued PERMIT TO OPERATE:
+            </p>
+            <p class="size14">NAME OF PERMITTEE: <%= fullName(target) %></p>
+            <p class="size14">ADDRESS: <%= addressLine(target) %></p>
+            <p class="size14">BUSINESS ADDRESS: <%= request.businessAddress || (request.resident && (request.resident.address || addressLine(request.resident))) || "N/A" %></p>
+            <p class="size14">NATURE OF BUSINESS: <%= request.purpose || "N/A" %></p>
+
+          <% } else if (request.type === "BARC") { %>
+            <p class="size16 textJustify">
+              This is to certify that <strong><%= fullName(target) %></strong> is a bonafide OWNER/TENANT AND CULTIVATOR of agricultural land located at Barangay San Andres.
+            </p>
+            <p class="size16 textJustify">
+              This certification is issued upon request of <strong><%= request.resident ? (request.resident.lastName || request.resident.lName || "N/A") : "N/A" %></strong>.
+            </p>
+
+          <% } else { %>
+            <!-- Generic content fallback -->
+            <p class="size16">TO WHOM IT MAY CONCERN:</p>
+            <p class="size16 textJustify">
+              This certifies that <strong><%= fullName(target) %></strong>. Purpose: <strong><%= request.purpose || "N/A" %></strong>.
+            </p>
+          <% } %>
+
+          <br><br>
+
+          <!-- Common Footer -->
+          <div class="height0">
+            <div class="height0 col justifyStart alignStart width70">
+              <p class="size14">Prepared and Verified By:</p>
+              <p class="size14 blue" style="text-decoration: underline;">IMELDA L. ALOG</p>
+              <p class="size14">Barangay Secretary</p>
+            </div>
+            <div class="height0 col justifyStart alignStart width30">
+              <p class="size14">Approved By:</p>
+              <p class="size14 blue" style="text-decoration: underline;">EDDIE A. ASUNCION</p>
+              <p class="size14">Barangay Captain</p>
+            </div>
+          </div>
+
+          <br><br><br>
+          <div class="height0 justifyStart">
+            <p class="size12 italic">NOTE: This form is not valid without dry seal</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% } %>
+
+
+    
+        </div>
+    </div>
+  
+  
+
+
+            <script>
+                function printDocs() {
+                    const docElements = document.querySelectorAll(".maindocPage");
+            
+                    if (docElements.length === 0) {
+                        alert("Error: Documents not found!");
+                        return;
+                    }
+            
+                    // Create a new print window
+                    const printWindow = window.open("", "_blank");
+                    printWindow.document.open();
+            
+                    // Copy all styles from the main document
+                    let styles = "";
+                    document.querySelectorAll("link[rel='stylesheet'], style").forEach((style) => {
+                        styles += style.outerHTML;
+                    });
+            
+                    // Write the new document with styles
+                    let content = "";
+                    docElements.forEach((element) => {
+                        content += `<div class="maindocPage">${element.outerHTML}</div>`;
+                    });
+            
+                    printWindow.document.write(`
+                        <html>
+                        <head>
+                            <title>Print Documents</title>
+                            ${styles} <!-- Include copied styles -->            
+            <style>@media print {
+    /* Ensures background colors and images are printed */
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+
+    /* Ensure images print with full opacity */
+    img {
+        print-color-adjust: exact;
+        -webkit-print-color-adjust: exact;
+    }
+
+    /* Fixes absolute-positioned watermark images */
+    .watermarkImage {
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        width: 100% !important;
+        height: auto !important;
+        opacity: 0.2 !important;
+        z-index: -1 !important;
+    }
+
+    /* Ensures textareas display input */
+    textarea {
+        border: none;
+        width: 100%;
+        height: auto;
+        resize: none;
+        overflow: visible;
+        white-space: pre-wrap; /* Ensures text wraps properly */
+        background: transparent !important;
+    }
+}
+
+                @media print {
+                    @page {
+                        size: A4 portrait;
+                        margin: 0;
+                    }
+                    body {
+                        margin: 0;
+                        padding: 0;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: flex-start;
+                        width: 100%;
+                        height: auto;
+                        box-sizing: border-box;
+                        background: white;
+                        color: black;
+                    }
+                    .maindocPage {
+                        width: 100%;
+                        max-width: 100%;
+                        font-size: 12pt !important;
+                        line-height: 1.2;
+                        height: 297mm; /* A4 height */
+                        display: block;
+                        page-break-before: always;
+                        page-break-inside: avoid;
+                    }
+                    textarea {
+                        border: none;
+                        width: 100%;
+                        height: auto;
+                        resize: none;
+                        overflow: visible;
+                        white-space: pre-wrap; /* Ensures text wraps properly */
+                    }
+                    h1, h2, h3 {
+                        font-size: 16pt !important;
+                    }
+                    p {
+                        font-size: 12pt !important;
+                    }
+                    .docTLE {
+                        font-size: 18px !important;
+                    }
+                    .page-break {
+                        page-break-before: always;
+                        display: block;
+                        height: 1px;
+                        width: 100%;
+                    }
+                }
+            </style>
+                        </head>
+                        <body onload="setTimeout(() => { window.print(); window.close(); }, 500)">
+                            ${content}
+                        </body>
+                        </html>
+                    `);
+            
+                    printWindow.document.close();
+                    printWindow.focus();
+                }
+            </script>
+            
+       
+
+            
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the current date
+        const currentDate = new Date();
+    
+        // Get the current year, month (0-based, so +1 for the correct month), and day
+        const currentYear = currentDate.getFullYear();
+        const currentMonthIndex = currentDate.getMonth();  // Months are 0-indexed (0 = January, 11 = December)
+        const currentDay = currentDate.getDate();
+    
+        // Array of month names in English
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June", 
+            "July", "August", "September", "October", "November", "December"
+        ];
+    
+        // Array of month names in Tagalog
+        const monthNamesTagalog = [
+            "Enero", "Pebrero", "Marso", "Abril", "Mayo", "Hunyo", 
+            "Hulyo", "Agosto", "Setyembre", "Oktubre", "Nobyembre", "Disyembre"
+        ];
+    
+        // Get the current month name in English and Tagalog
+        const currentMonth = monthNames[currentMonthIndex];
+        const currentMonthTagalog = monthNamesTagalog[currentMonthIndex];
+    
+        // Function to get the ordinal suffix for the day
+        function getOrdinalSuffix(day) {
+            if (day > 3 && day < 21) return day + "th";  // Handle 11th to 13th
+            switch (day % 10) {
+                case 1: return day + "st";
+                case 2: return day + "nd";
+                case 3: return day + "rd";
+                default: return day + "th";
+            }
+        }
+    
+        // Get the ordinal form of the day
+        const ordinalDay = getOrdinalSuffix(currentDay);
+    
+        // Update elements with the classes
+        document.querySelectorAll('.thisYear').forEach(el => el.textContent = currentYear);
+        document.querySelectorAll('.thisMonth').forEach(el => el.textContent = currentMonth);
+        document.querySelectorAll('.thisDay').forEach(el => el.textContent = ordinalDay);
+        
+        // Update elements with new requirements
+        document.querySelectorAll('.thisDay2').forEach(el => el.textContent = currentDay); // Only number
+        document.querySelectorAll('.thisMonth2').forEach(el => el.textContent = currentMonthTagalog); // Tagalog month name
+    });
+    </script>
+
+
+<script>
+document.getElementById('certContent').addEventListener('input', function() {
+    document.getElementById('certContentM').textContent = this.value; 
+});
+
+</script>
+<script>
+    const openResetCard = document.getElementById('openResetCard');
+    const resetPassCard = document.getElementById('resetPassCard');
+    const closeResetCard = document.getElementById('closeResetCard');
+
+    openResetCard.addEventListener('click', function(e) {
+        e.preventDefault();
+        resetPassCard.style.display = 'flex';
+    });
+
+    closeResetCard.addEventListener('click', function(e) {
+        e.preventDefault();
+        resetPassCard.style.display = 'none';
+    });
+</script>
+
+<script>
+let selectedDocId = null;
+
+function showNoCard(docId) {
+    selectedDocId = docId;
+    document.getElementById("noCard").classList.remove("hidden");
+}
+
+function hideNoCard() {
+    selectedDocId = null;
+    document.getElementById("noCard").classList.add("hidden");
+}
+
+async function declineDocument() {
+    if (!selectedDocId) return;
+
+    const notesInput = document.getElementById("notesInput"); 
+    if (!notesInput) {
+        alert("Notes input field not found.");
+        return;
+    }
+
+    const notes = notesInput.value.trim();
+    if (!notes) { 
+        alert("Please enter a reason for declining."); 
+        notesInput.focus(); 
+        return;
+    }
+
+    const decCard = document.querySelector(".decCard"); // success card for decline
+    const noCard = document.getElementById("noCard");    // the decline form/card
+
+    // Show decline card immediately (optimistic UI)
+    if (decCard) decCard.classList.remove("hidden");
+
+    try {
+        const response = await fetch(`/noDoc/${selectedDocId}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ notes })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+            // Keep it visible briefly, then reload
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+        } else {
+            console.error("Decline failed:", result.message);
+            alert("Failed to decline the document. Please try again.");
+            if (decCard) decCard.classList.add("hidden"); 
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("An error occurred while processing your request.");
+        if (decCard) decCard.classList.add("hidden"); 
+    } finally {
+        if (noCard) noCard.classList.add("hidden"); // hide decline form
+    }
+}
+
+async function approveDocument(docId) {
+    const successCard = document.querySelector(".successCard");
+
+    // Show success card right away
+    if (successCard) successCard.classList.remove("hidden");
+
+    try {
+        const response = await fetch(`/yesDoc/${docId}`, { method: "POST" });
+
+        if (!response.ok) throw new Error("Failed to approve document");
+
+        setTimeout(() => {
+            location.reload();
+        }, 2000);
+
+    } catch (error) {
+        console.error("Error:", error);
+        if (successCard) successCard.classList.add("hidden");
+        alert("An error occurred while approving the document.");
+    }
+}
+
+async function verifyDocument(docId) {
+    const successCard = document.querySelector(".successCard");
+
+    // Show success card right away
+    if (successCard) successCard.classList.remove("hidden");
+
+    try {
+        const response = await fetch(`/verDoc/${docId}`, { method: "POST" });
+
+        if (!response.ok) throw new Error("Failed to approve document");
+
+        setTimeout(() => {
+            location.reload();
+        }, 2000);
+
+    } catch (error) {
+        console.error("Error:", error);
+        if (successCard) successCard.classList.add("hidden");
+        alert("An error occurred while approving the document.");
+    }
+}
+</script>
+
+
+<script>
+  let currentRequestId = null;
+
+  function showNoCard2(requestId) {
+    currentRequestId = requestId; // store request ID
+    document.getElementById("noCard2").classList.remove("hidden");
+  }
+
+  function hideNoCard2() {
+    document.getElementById("noCard2").classList.add("hidden");
+    currentRequestId = null;
+  }
+
+  async function releaseRequest() {
+    if (!currentRequestId) return;
+
+    try {
+      const response = await fetch(`/release/${currentRequestId}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        const claimedCard = document.getElementById("claimedCard");
+        claimedCard.classList.remove("hidden");
+
+        // ⏳ auto-close after 3 seconds
+        setTimeout(() => {
+          claimedCard.classList.add("hidden");
+          location.reload(); // optional: reload page after closing
+        }, 1000);
+      } else {
+        alert("Failed: " + (result.message || "Unknown error"));
+      }
+    } catch (err) {
+      console.error("Error releasing request:", err);
+      alert("An error occurred while updating.");
+    } finally {
+      hideNoCard2(); // hide confirmation modal anyway
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function() {
+    const btn = document.getElementById("confirmReleaseBtn");
+    if (btn) btn.addEventListener("click", releaseRequest);
+  });
+</script>
+
+<script>
+    function viewDocs() {
+    document.getElementById('vdoc').classList.remove('hidden');
+    document.getElementById('mdoc').classList.add('hidden');
+}
+
+document.getElementById('xBtn').addEventListener('click', function () {
+    document.getElementById('vdoc').classList.add('hidden');
+    document.getElementById('mdoc').classList.remove('hidden');
+});
+
+</script>

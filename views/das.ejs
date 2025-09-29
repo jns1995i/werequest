@@ -1,0 +1,792 @@
+<% layout('layout') %>
+<head>
+    <style>
+        .mainf {
+            padding: 0;
+        }
+        .tab {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            background-color: transparent;
+            border: 0.5px solid gray;
+            border-block-end: none !important;
+            max-width: 180px !important;
+            font-size: 14px;
+            padding: 10px;
+        }
+        .tab:hover {
+            transform: scale(1) !important;
+            color: white;
+            background-color: var(--primary);
+        }
+        .tabX {
+            color: white;
+            background-color: green;
+        }
+        li {
+          font-size: 16px;
+          font-weight: 500;
+        }
+        @keyframes spinPulse {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.2); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+#loadIcon {
+  display: inline-block;
+  animation: spinPulse 2s ease-in-out infinite;
+}
+    </style>
+</head>
+<div class="absolute left0 top0" style="background-color: rgba(0, 0, 0, 0.6); z-index: 100;" id="loader">
+  <div class="height0 width30 bgWhite borderRadius10 col padding30">
+    <i class="fas fa-hourglass size35 green" id="loadIcon"></i>
+    <br>
+    <p class="size18 textCenter">Please wait while loading your data ..</p>
+  </div>
+</div>
+
+<script>
+  // Hide loader after 1 minute
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      const loader = document.getElementById("loader");
+      if (loader) loader.style.display = "none";
+    }, 5000); // 60 seconds
+  });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<div class="col overflow-y1 blockX">
+    <div class="height10 darkShadow gap10 padding25 relative">
+        <div class="height0 gap5 justifyStart">
+            <p class="size26 str500 colorPrimary">Dashboard</p>
+        </div>
+        <div class="height0 gap10 alignEnd absolute translateX left0 bottom0">
+        </div>
+        <div class="height0 gap5 justifyEnd">
+            <button href="" class="nav white orgBtn" id="exportExcel">Export Report</button>
+        </div>
+    </div>
+<script>
+document.getElementById("exportExcel").addEventListener("click", () => {
+  const table = document.getElementById("requestTable");
+  const wb = XLSX.utils.book_new();
+
+  // Step 1: Convert table directly to sheet
+  const ws = XLSX.utils.table_to_sheet(table);
+
+  // Step 2: Extract table as array of arrays
+  const tableData = XLSX.utils.sheet_to_json(ws, { header: 1 });
+
+  // Step 3: Custom header rows
+  const header = [
+    ["Master List of Document Request"], // Row 1
+    ["Barangay San Andres, Guimba"],     // Row 2
+    [""],                                // Row 3 (blank)
+  ];
+
+  // Step 4: Build new worksheet with header first
+  const newWs = XLSX.utils.aoa_to_sheet(header);
+
+  // Step 5: Append table data starting from row 4
+  XLSX.utils.sheet_add_aoa(newWs, tableData, { origin: "A4" });
+
+  // Step 6: Merge header rows across all columns
+  if (!newWs["!merges"]) newWs["!merges"] = [];
+  const colCount = table.rows[0].cells.length; // total columns
+  newWs["!merges"].push({ s: { r:0, c:0 }, e: { r:0, c:colCount-1 } }); // merge row 1
+  newWs["!merges"].push({ s: { r:1, c:0 }, e: { r:1, c:colCount-1 } }); // merge row 2
+
+  // Step 7: Save as Excel
+  XLSX.utils.book_append_sheet(wb, newWs, "Requests");
+  XLSX.writeFile(wb, "Request_List.xlsx");
+});
+</script>
+
+
+    <div class="height0 gap30 padding30">
+
+<div class="height0 borderPrimary padding20 alignStart col borderRadius5 darkShadow bgWhite">
+  <p class="size28 str600 colorPrimary" id="totalPending"><%= totals.Pending || 0 %></p>
+  <p class="size18 str500">Pending</p>
+  <p class="size18 str500" style="color: orange;" id="percentPending"><%= percentages.Pending || 0 %>%</p>
+</div>
+
+<div class="height0 borderPrimary padding20 alignStart col borderRadius5 darkShadow bgWhite">
+  <p class="size28 str600 colorPrimary" id="totalApproved"><%= totals.Approved || 0 %></p>
+  <p class="size18 str500">Approved</p>
+  <p class="size18 str500 green" id="percentApproved"><%= percentages.Approved || 0 %>%</p>
+</div>
+
+<div class="height0 borderPrimary padding20 alignStart col borderRadius5 darkShadow bgWhite">
+  <p class="size28 str600 colorPrimary" id="totalDeclined"><%= totals.Declined || 0 %></p>
+  <p class="size18 str500">Declined</p>
+  <p class="size18 str500 red" id="percentDeclined"><%= percentages.Declined || 0 %>%</p>
+</div>
+
+<div class="height0 borderPrimary padding20 alignStart col borderRadius5 darkShadow bgWhite">
+  <p class="size28 str600 colorPrimary" id="totalReleased"><%= totals.Released || 0 %></p>
+  <p class="size18 str500">Released</p>
+  <p class="size18 str500 gray" id="percentReleased"><%= percentages.Released || 0 %>%</p>
+</div>
+
+<div class="height0 borderGreen padding20 alignStart col borderRadius5 darkShadow" style="background-color: var(--tint10);">
+  <p class="size28 str600 green" id="grandTotal"><%= grandTotal %></p>
+  <p class="size18 str500 green">Total Requests</p>
+  <p class="size18 str500 gray" style="opacity: 0;" id="percentClaimed"><%= percentages.Claimed || 0 %>%</p>
+</div>
+
+
+</div>
+ 
+    <div class="height0 gap30 padding30 bgWhite col">
+<div class="height0 gap10 borderGreen padding15 borderRadius5 bgSoft darkShadow">
+  <!-- Filters -->
+<div class="height0 col gap5 alignStart">
+<label>Date:</label>
+<select id="filterDate">
+  <option value="">All</option>
+  <option value="today">Today</option>
+  <option value="week">This Week</option>
+  <option value="month">This Month</option>
+  <option value="year" selected>This Year</option>
+</select>
+</div>
+
+<div class="height0 col gap5 alignStart">
+  <label>Type:</label>
+  <select id="filterType">
+    <option value="">All</option>
+    <option value="Barangay Clearance">Barangay Clearance</option>
+    <option value="Barangay Indigency">Barangay Indigency</option>
+    <option value="Certificate of Residency">Certificate of Residency</option>
+    <option value="Business Permit">Business Permit</option>
+  </select>
+</div>
+
+  
+<div class="height0 col gap5 alignStart">
+  <label>Purpose:</label>
+  <select id="filterPurpose">
+    <option value="">All</option>
+    <option value="ANY LEGAL">ANY LEGAL</option>
+    <option value="BURIAL ASSISTANCE">BURIAL ASSISTANCE</option>
+    <option value="EDUCATIONAL ASSISTANCE">EDUCATIONAL ASSISTANCE</option>
+    <option value="FINANCIAL ASSISTANCE">FINANCIAL ASSISTANCE</option>
+    <option value="MEDICAL ASSISTANCE">MEDICAL ASSISTANCE</option>
+    <option value="BANK TRANSACTION">BANK TRANSACTION</option>
+    <option value="BOARD EXAM">BOARD EXAM</option>
+    <option value="LEGALIZATION">LEGALIZATION</option>
+    <option value="LOCAL EMPLOYMENT">LOCAL EMPLOYMENT</option>
+    <option value="PHILHEALTH">PHILHEALTH</option>
+    <option value="POLICE CLEARANCE">POLICE CLEARANCE</option>
+    <option value="SCHOOL REQUIREMENT">SCHOOL REQUIREMENT</option>
+    <option value="SENIOR CITIZEN">SENIOR CITIZEN</option>
+    <option value="SOLO PARENT PWD">SOLO PARENT PWD</option>
+    <option value="TRAVEL ABROAD">TRAVEL ABROAD</option>
+  </select>
+</div>
+
+  
+<div class="height0 col gap5 alignStart">
+  <label>Gender:</label>
+  <select id="filterGender">
+    <option value="">All</option>
+    <option value="Male">Male</option>
+    <option value="Female">Female</option>
+  </select>
+</div>
+
+  
+<div class="height0 col gap5 alignStart">
+  <label>Employment:</label>
+  <select id="filterEmployment">
+    <option value="">All</option>
+    <option value="Self-Employed">Self-Employed</option>
+    <option value="Employed">Employed</option>
+    <option value="Unemployed">Unemployed</option>
+  </select>
+</div>
+
+  
+<div class="height0 col gap5 alignStart">
+  <label>Priority:</label>
+  <select id="filterPriority">
+    <option value="">All</option>
+    <option value="1">Priority</option>
+  </select>
+</div>
+</div>
+
+<!-- Chart -->
+ <div class="h350 padding10 bgWhite borderRadius10"> 
+        <canvas id="statusChart" width="" height=""></canvas>
+ </div>
+
+<div class="height0 col padding20 borderRadius5 bgTint10 alignStart justifyStart">
+  <p class="size20 str500 green">Prediction & Insights</p>
+  <br>
+  <p class="size14 str400" id="a"><span class="size14 str600" id="prediction"><%= insights.prediction %></span> — Estimated total requests for next month</p>
+  <p class="size14 str400" id="b">Exponential Smoothing: <span class="size14 str600" id="smoothing"><%= insights.smoothing %></span></p>
+  <p class="size14 str400" id="c">Model: Linear Regression & Exponential Smoothing</p>
+  <p class="size14 str400" id="d">Avg/month: <span class="size14 str600" id="avg"><%= insights.avg %></span></p>
+  <p class="size14 str400 hidden" id="e">Highest: <span class="size14 str600" id="highestMonth"><%= insights.highestMonth %></span> (<span id="highest"><%= insights.highest %></span>)</p>
+  <p class="size14 str400 hidden" id="f">Lowest: <span class="size14 str600" id="lowestMonth"><%= insights.lowestMonth %></span> (<span class="size14" id="lowest"><%= insights.lowest %></span>)</p>
+  <p class="size14 str400 hidden">MoM Change:<span class="size14 str600" id="momChange"><%= insights.momChange %> <%= insights.momChange < 0 ? '↓' : '↑' %></span></p>
+
+</div>
+
+    </div>
+
+    
+<!-- Top 3 Insights -->
+<div class="height0 padding30 gap20">
+  <!-- Top Requestors -->
+  <div class="height0 col bgWhite borderGreen padding20 borderRadius5">
+    <p class="size18 str600">👤 Top 3 Requestors</p>
+    <br>
+    <ul id="topRequestors">
+      <% insights.topRequestors.forEach(r => { %>
+        <li><%= r.name || "Unknown" %> — <span><%= r.count %></span></li>
+      <% }) %>
+    </ul>
+  </div>
+
+  <!-- Top Ages -->
+  <div class="height0 col bgWhite borderGreen padding20 borderRadius5">
+    <p class="size18 str600">👤 Top 3 Ages</p>
+    <br>
+    <ul id="topAges">
+      <% insights.topAges.forEach(a => { %>
+        <li>Age <%= a._id %> — <span><%= a.count %></span></li>
+      <% }) %>
+    </ul>
+  </div>
+
+  <!-- Top Purok -->
+  <div class="height0 col bgWhite borderGreen padding20 borderRadius5">
+    <p class="size18 str600">👤 Top 3 Purok</p>
+    <br>
+    <ul id="topPurok">
+      <% insights.topPurok.forEach(p => { %>
+        <li><%= p._id %> — <span><%= p.count %></span></li>
+      <% }) %>
+    </ul>
+  </div>
+
+  <!-- Top Days -->
+  <div class="height0 col bgWhite borderGreen padding20 borderRadius5">
+    
+    <p class="size18 str600">👤 Top 3 Days of the Week</p>
+    <br>
+    <ul id="topDays">
+      <% insights.topDays.forEach(d => { %>
+        <%
+          const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+          const dayName = days[(d._id - 1)];
+        %>
+        <li><%= dayName %> — <span><%= d.count %></span></li>
+      <% }) %>
+    </ul>
+  </div>
+</div>
+
+<div class="height0 gap10 padding20">
+  <div class="height0 padding10 borderRadius5 bgWhite col justifyStart alignStart gap5 width35">
+    <table>
+      <thead>
+        <tr>
+          <th>Document Type</th>
+          <th class="textCenter">Count</th>
+          <th class="textRight">Percentage</th>
+        </tr>
+      </thead>
+      <tbody id="tablePerDocument"></tbody>
+    </table>
+  </div>
+  <div class="h300 padding10 col width65"><canvas id="chartPerDocument"></canvas></div>
+</div>
+<div class="height0 gap10 padding20">
+  <div class="h200 padding10 col"><canvas id="chartPerPriority"></canvas></div>
+  <div class="height0 padding10 borderRadius5 bgWhite col justifyStart alignStart gap5">
+    <table>
+      <thead>
+        <tr>
+          <th>Priority</th>
+          <th class="textCenter">Count</th>
+          <th class="textRight">Percentage</th>
+        </tr>
+      </thead>
+      <tbody id="tablePerPriority"></tbody>
+    </table>
+  </div>
+</div>
+
+<div class="height0 gap10 padding20">
+  <div class="height0 padding10 borderRadius5 bgWhite col justifyStart alignStart gap5">
+    <table>
+      <thead>
+        <tr>
+          <th>PWD Type</th>
+          <th class="textCenter">Count</th>
+          <th class="textRight">Percentage</th>
+        </tr>
+      </thead>
+      <tbody id="tablePerPWDType"></tbody>
+    </table>
+  </div>
+  <div class="h250 padding10 col"><canvas id="chartPerPWDType"></canvas></div>
+</div>
+<div class="height0 gap10 padding20">
+  <div class="h200 width20 padding10 col"><canvas id="chartPerGender"></canvas></div>
+  <div class="height0 padding10 borderRadius5 bgWhite col justifyStart alignStart gap5 width25">
+    <table>
+      <thead>
+        <tr>
+          <th>Gender</th>
+          <th class="textCenter">Count</th>
+          <th class="textRight">Percentage</th>
+        </tr>
+      </thead>
+      <tbody id="tablePerGender"></tbody>
+    </table>
+  </div>
+  <div class="h200 width30 padding10 col"><canvas id="chartPerEmployment"></canvas></div>
+  <div class="height0 padding10 borderRadius5 bgWhite col justifyStart alignStart gap5 width25">
+    <table>
+      <thead>
+        <tr>
+          <th>Employment</th>
+          <th class="textCenter">Count</th>
+          <th class="textRight">Percentage</th>
+        </tr>
+      </thead>
+      <tbody id="tablePerEmployment"></tbody>
+    </table>
+  </div>
+</div>
+
+
+<script>
+async function loadTables(filters = { filterDate: "year" }) {
+  const params = new URLSearchParams(filters);
+  const res = await fetch(`/api/das-data?${params.toString()}`);
+  const data = await res.json();
+
+  // Store chart instances so we can destroy them when re-rendering
+  const charts = {};
+
+  // Fixed color palette (muted, non-bright colors)
+  const colorPalette = [
+    "#2E7D32", // dark green
+    "#EF6C00", // deep orange
+    "#C62828", // dark red
+    "#424242", // dark gray
+    "#1565C0", // deep blue
+    "#00695C"  // teal / dark cyan
+  ];
+
+  // Function to render table
+  function renderTable(tbodyId, data, col1Fn, col2Fn) {
+    const tbody = document.getElementById(tbodyId);
+    tbody.innerHTML = "";
+
+    data
+      .filter(d => d._id != null && d._id !== "" && d.count > 0)
+      .forEach(d => {
+        const tr = document.createElement("tr");
+        const td1 = document.createElement("td");
+        const td2 = document.createElement("td");
+        const td3 = document.createElement("td");
+
+        td1.textContent = col1Fn(d);
+        td2.textContent = col2Fn(d);
+        td3.textContent = `${d.percentage || 0}%`;
+        td2.classList.add("textCenter");
+        td3.classList.add("textRight");
+
+        tr.appendChild(td1);
+        tr.appendChild(td2);
+        tr.appendChild(td3);
+        tbody.appendChild(tr);
+      });
+  }
+
+  // Function to render chart
+  function renderChart(canvasId, data, labelFn, countFn, type = "bar") {
+    const ctx = document.getElementById(canvasId).getContext("2d");
+
+    // Destroy old chart if exists
+    if (charts[canvasId]) charts[canvasId].destroy();
+
+    const filteredData = data.filter(d => d._id && d.count > 0);
+    const labels = filteredData.map(d => labelFn(d));
+    const counts = filteredData.map(d => countFn(d));
+    const colors = labels.map((_, i) => colorPalette[i % colorPalette.length]);
+
+    charts[canvasId] = new Chart(ctx, {
+      type,
+      data: {
+        labels,
+        datasets: [{
+          label: "Count",
+          data: counts,
+          backgroundColor: colors
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: type === "doughnut" } // show legend for doughnut
+        },
+        scales: type === "bar" ? {
+          y: { beginAtZero: true }
+        } : {}
+      }
+    });
+  }
+
+  // Render tables + charts
+  renderTable("tablePerDocument", data.chartPerDocument, d => d._id, d => d.count);
+  renderChart("chartPerDocument", data.chartPerDocument, d => d._id, d => d.count, "bar");
+
+  renderTable("tablePerEmployment", data.chartPerEmployment, d => d._id, d => d.count);
+  renderChart("chartPerEmployment", data.chartPerEmployment, d => d._id, d => d.count, "doughnut");
+
+  renderTable("tablePerGender", data.chartPerGender, d => d._id, d => d.count);
+  renderChart("chartPerGender", data.chartPerGender, d => d._id, d => d.count, "doughnut");
+
+  renderTable("tablePerPriority", data.chartPerPriority, d => d._id, d => d.count);
+  renderChart("chartPerPriority", data.chartPerPriority, d => d._id, d => d.count, "bar");
+
+  renderTable("tablePerPWDType", data.chartPerPWDType, d => d._id, d => d.count);
+  renderChart("chartPerPWDType", data.chartPerPWDType, d => d._id, d => d.count, "bar");
+}
+
+// Attach change events to filters
+document
+  .querySelectorAll(
+    "#filterDate, #filterType, #filterPurpose, #filterGender, #filterEmployment, #filterPriority"
+  )
+  .forEach(select =>
+    select.addEventListener("change", () => {
+      const filters = {
+        filterDate: document.getElementById("filterDate").value,
+        filterType: document.getElementById("filterType").value,
+        filterPurpose: document.getElementById("filterPurpose").value,
+        filterGender: document.getElementById("filterGender").value,
+        filterEmployment: document.getElementById("filterEmployment").value,
+        filterPriority: document.getElementById("filterPriority").value
+      };
+      loadTables(filters);
+    })
+  );
+
+// Initial load
+loadTables();
+</script>
+
+
+
+<div class="blockX height50 padding20 overflow-y1 col gap10 justifyStart alignStart bgWhite">
+  <p class="size30 str500">Document Request MasterList</p>
+  <br>
+  <table class="table table-bordered height0" id="requestTable">
+    <thead>
+      <tr>
+        <th>Created At</th>
+        <th>Status</th>
+        <th>ID</th>
+        <th>Type</th>
+        <th>Qty</th>
+        <th>Purpose</th>
+        <th>Request For</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Employment Status</th>
+        <th>Priority</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+<br>
+
+<script>
+async function loadRequests(filters = {}) {
+  try {
+    const params = new URLSearchParams(filters).toString();
+    const res = await fetch(`/api/das-data?${params}`);
+    const data = await res.json();
+
+    const tbody = document.querySelector("#requestTable tbody");
+    tbody.innerHTML = "";
+
+    if (data.requestList && data.requestList.length > 0) {
+      data.requestList.forEach(r => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${r.createdAt ? new Date(r.createdAt).toLocaleString("en-PH", { timeZone: "Asia/Manila" }) : "-"}</td>
+          <td>${r.status || "-"}</td>
+          <td>${r.tr || "-"}</td>
+          <td>${Array.isArray(r.type) ? r.type.join(", ") : (r.type || "-")}</td>
+          <td>${r.quantity || "-"}</td>
+          <td>${r.purpose || "-"}</td>
+          <td>${r.requestFor || "-"}</td>
+          <td>${r.age || "-"}</td>
+          <td>${r.gender || "-"}</td>
+          <td>${r.employmentStatus || "-"}</td>
+          <td>${r.priority || "-"}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    } else {
+      tbody.innerHTML = `
+        <tr>
+          <td colspan="12" class="text-center">No records found</td>
+        </tr>
+      `;
+    }
+  } catch (err) {
+    console.error("Error loading requests:", err);
+  }
+}
+
+// Load initially
+loadRequests();
+</script>
+
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+let chart;
+
+// Format hours into 12-hour clock with AM/PM
+function formatHour(h) {
+  const suffix = h >= 12 ? "PM" : "AM";
+  const hour = h % 12 === 0 ? 12 : h % 12;
+  return `${hour}:00 ${suffix}`;
+}
+
+// Generate labels based on filterDate + data
+function getLabels(filterDate, data) {
+  if (filterDate === "today") {
+    const hours = [...new Set(data.map(d => d._id.time))];
+    return hours.sort((a, b) => a - b).map(h => formatHour(h));
+  } else if (filterDate === "week") {
+    return ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  } else if (filterDate === "month") {
+    const days = [...new Set(data.map(d => d._id.time))];
+    return days.sort((a, b) => a - b).map(String);
+  } else if (filterDate === "year") {
+    return ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  } else if (!filterDate || filterDate === "all") {
+    const years = [...new Set(data.map(d => d._id.time))].filter(y => y != null);
+    return years.sort((a, b) => a - b).map(String);
+  }
+  return [];
+}
+
+// Update totals and percentages cards
+function updateTotals(totals, percentages, grandTotal) {
+  document.getElementById("totalPending").textContent = totals.Pending || 0;
+  document.getElementById("percentPending").textContent = (percentages.Pending || 0) + "%";
+
+  document.getElementById("totalApproved").textContent = totals.Approved || 0;
+  document.getElementById("percentApproved").textContent = (percentages.Approved || 0) + "%";
+
+  document.getElementById("totalDeclined").textContent = totals.Declined || 0;
+  document.getElementById("percentDeclined").textContent = (percentages.Declined || 0) + "%";
+
+  document.getElementById("totalReleased").textContent = totals.Released || 0;
+  document.getElementById("percentReleased").textContent = (percentages.Released || 0) + "%";
+
+  document.getElementById("grandTotal").textContent = grandTotal;
+}
+
+// Update Top 3 Insights
+function updateInsights(insights) {
+  const renderList = (id, arr, nameFn) => {
+    const ul = document.getElementById(id);
+    ul.innerHTML = "";
+    arr.forEach(item => {
+      const li = document.createElement("li");
+      li.innerHTML = nameFn(item);
+      ul.appendChild(li);
+    });
+  };
+
+  renderList("topRequestors", insights.topRequestors, r => `${r.name || "Unknown"} — <span>${r.count}</span>`);
+  renderList("topAges", insights.topAges, a => `Age ${a._id} — <span>${a.count}</span>`);
+  renderList("topPurok", insights.topPurok, p => `${p._id} — <span>${p.count}</span>`);
+  renderList("topDays", insights.topDays, d => {
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const dayName = days[d._id - 1] || "N/A";
+    return `${dayName} — <span>${d.count}</span>`;
+  });
+
+  document.getElementById("prediction").textContent = insights.prediction;
+  document.getElementById("smoothing").textContent = insights.smoothing;
+  document.getElementById("avg").textContent = insights.avg;
+  document.getElementById("highestMonth").textContent = insights.highestMonth;
+  document.getElementById("highest").textContent = insights.highest;
+  document.getElementById("lowestMonth").textContent = insights.lowestMonth;
+  document.getElementById("lowest").textContent = insights.lowest;
+  document.getElementById("momChange").textContent = insights.momChange + (insights.momChange < 0 ? " ↓" : " ↑");
+}
+
+// Load chart + totals + insights dynamically
+async function loadDashboard(filters = {}) {
+  const params = new URLSearchParams(filters);
+  const res = await fetch(`/api/das-data?${params.toString()}`);
+  const { chartData, totals, percentages, grandTotal, insights } = await res.json();
+
+  // Update totals and insights
+  updateTotals(totals, percentages, grandTotal);
+  updateInsights(insights);
+
+  // Prepare chart
+  const filterDate = filters.filterDate || "";
+  const labels = getLabels(filterDate, chartData);
+  const statusGroups = {};
+
+  chartData.forEach(d => {
+    const status = d._id.status;
+    const time = d._id.time ?? null;
+    if (!statusGroups[status]) statusGroups[status] = Array(labels.length).fill(0);
+
+    let idx = -1;
+    if (filterDate === "today") idx = labels.indexOf(formatHour(time));
+    else if (filterDate === "week") idx = time ? time - 1 : -1;
+    else if (filterDate === "month") idx = labels.indexOf(String(time));
+    else if (filterDate === "year") idx = (time && time > 0) ? time - 1 : 0;
+    else idx = labels.indexOf(String(time)); // for "All"
+
+    if (idx >= 0 && labels[idx] !== undefined) statusGroups[status][idx] = d.count;
+  });
+
+  const statusColors = {
+    Approved: "green",
+    Verified: "blue",
+    Pending: "orange",
+    Declined: "red",
+    Released: "gray"
+  };
+
+  const datasets = Object.keys(statusGroups).map(status => ({
+    label: status,
+    data: statusGroups[status],
+    backgroundColor: statusColors[status] || "gray",
+    borderColor: statusColors[status] || "gray",
+    borderWidth: 0
+  }));
+
+  if (chart) chart.destroy();
+  const ctx = document.getElementById("statusChart").getContext("2d");
+  chart = new Chart(ctx, {
+    type: "bar",
+    data: { labels, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: { stacked: false, ticks: { autoSkip: false }, grid: { display: true, borderDash: [5,4] } },
+        y: { beginAtZero: true, stacked: false, ticks: { display: false }, grid: { display: false } }
+      },
+      plugins: { legend: { position: "top" } },
+      elements: { bar: { barPercentage: 0.5, categoryPercentage: 0.4, borderRadius: 5 } }
+    }
+  });
+}
+
+let chartDocument, chartEmployment, chartGender, chartPriority, chartPWD;
+
+function renderNewCharts(data) {
+  const ctxDoc = document.getElementById("chartPerDocument").getContext("2d");
+  if (chartDocument) chartDocument.destroy();
+  chartDocument = new Chart(ctxDoc, {
+    type: "bar",
+    data: {
+      labels: data.chartPerDocument.map(d => d._id),
+      datasets: [{ label: "Requests per Document", data: data.chartPerDocument.map(d => d.count), backgroundColor: "blue" }]
+    }
+  });
+
+  const ctxEmp = document.getElementById("chartPerEmployment").getContext("2d");
+  if (chartEmployment) chartEmployment.destroy();
+  chartEmployment = new Chart(ctxEmp, {
+    type: "bar",
+    data: {
+      labels: data.chartPerEmployment.map(d => d._id),
+      datasets: [{ label: "Requests per Employment", data: data.chartPerEmployment.map(d => d.count), backgroundColor: "green" }]
+    }
+  });
+
+  const ctxGender = document.getElementById("chartPerGender").getContext("2d");
+  if (chartGender) chartGender.destroy();
+  chartGender = new Chart(ctxGender, {
+    type: "bar",
+    data: {
+      labels: data.chartPerGender.map(d => d._id),
+      datasets: [{ label: "Requests per Gender", data: data.chartPerGender.map(d => d.count), backgroundColor: "orange" }]
+    }
+  });
+
+  const ctxPriority = document.getElementById("chartPerPriority").getContext("2d");
+  if (chartPriority) chartPriority.destroy();
+  chartPriority = new Chart(ctxPriority, {
+    type: "bar",
+    data: {
+      labels: ["Pregnant","PWD","Solo Parent"],
+      datasets: [{ label: "Requests per Priority", data: [data.chartPerPriority[0]?.pregnant || 0, data.chartPerPriority[0]?.pwd || 0, data.chartPerPriority[0]?.soloParent || 0], backgroundColor: "red" }]
+    }
+  });
+
+  const ctxPWD = document.getElementById("chartPerPWDType").getContext("2d");
+  if (chartPWD) chartPWD.destroy();
+  chartPWD = new Chart(ctxPWD, {
+    type: "bar",
+    data: {
+      labels: data.chartPerPWDType.map(d => d._id),
+      datasets: [{ label: "Requests per PWD Type", data: data.chartPerPWDType.map(d => d.count), backgroundColor: "purple" }]
+    }
+  });
+}
+
+// Apply filters on change
+function applyFilters() {
+  const loader = document.getElementById("loader");
+  if (loader) loader.style.display = "flex"; // show loader
+
+  const filters = {
+    filterDate: document.getElementById("filterDate").value,
+    filterType: document.getElementById("filterType").value,
+    filterPurpose: document.getElementById("filterPurpose").value,
+    filterGender: document.getElementById("filterGender").value,
+    filterEmployment: document.getElementById("filterEmployment").value,
+    filterPriority: document.getElementById("filterPriority").value
+  };
+
+  loadDashboard(filters);
+  loadTables(filters);
+  loadRequests(filters);
+
+  // hide loader after 5 seconds
+  setTimeout(() => {
+    if (loader) loader.style.display = "none";
+  }, 5000);
+}
+
+// Attach change events
+document.querySelectorAll(
+  "#filterDate, #filterType, #filterPurpose, #filterGender, #filterEmployment, #filterPriority"
+).forEach(select => select.addEventListener("change", applyFilters));
+
+// Initial load
+loadDashboard({ filterDate: "year" });
+</script>

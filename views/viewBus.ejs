@@ -1,0 +1,298 @@
+<% layout('layout') %>
+<head>
+    <style>
+        .page p, .page span {
+            font-family: 'Tempus Sans ITC', cursive, sans-serif;
+        }
+        .page span.undeline {
+            font-family: 'Tempus Sans ITC', cursive, sans-serif;
+            font-size: 14px;
+            text-decoration: underline !important;
+        }
+        strong {
+            font-family: 'Tempus Sans ITC', cursive, sans-serif;
+            font-size: 14px;
+            text-shadow: 0 0 1px #000;
+            font-weight: bold !important;
+        }
+        .page p.bold {
+            text-shadow: 0 0 1px #000;
+            font-weight: bold !important;
+        }
+        .page {
+                height: 1056px;
+                width: 816px;
+                background-color: white;
+                position: relative;
+                padding: 20px 70px;
+            }
+        .page div {
+            z-index: 10;
+        }
+        .watermark {
+            position: absolute;
+            left: 50%;
+            top: 20%;
+            transform: translateX(-50%);
+            width: 98%;
+            opacity: 0.2;
+        }
+            hr.line {
+                opacity: 1;
+                border: 2px solid black;
+            }
+    </style>
+</head>
+<div class="head">
+    <div class="padding10 justifyStart gap10">
+        <a href="javascript:history.back();" class="nav"><i class="fas fa-arrow-left"></i> Back</a>
+        <p class="size28 str500">Business Permit</p>
+    </div>
+    <div class="padding10 justifyEnd gap10  ">
+                <a href="#" class="nav" onclick="printDiv('doc1')">
+                    <i class="fas fa-print"></i>
+                    Print Document
+                </a>
+    </div>
+</div>
+
+<div class="height88 padding30 bgSoft overflow-y1 alignStart justifyCenter" id="doc1">
+    
+    <div class="page col justifyStart maindocPage" id="maindocPage">
+        <img src="/images/logo.png" alt="" class="watermark">
+        <br>
+        <div class="height0 gap10">
+            <div class="height0 gap10">
+                <img src="/images/pilipinas.jpg" alt="" class="h110 w110">
+                <img src="/images/guimba.png" alt="" class="h95 w95">
+                <img src="/images/logo.png" alt="" class="h100 w100">
+            </div>
+            <div class="height0 col alignStart">
+                <p class="size14 bold">Republic of the Philippines</p>
+                <p class="size14 bold">Province of Nueva Ecija</p>
+                <p class="size14 bold">Municipality of Guimba</p>
+                <p class="size14 bold blue">BARANGAY SAN ANDRES</p>
+            </div>
+        </div>
+        <hr class="line marginBottom5">
+        <div class="height0 padding5 borderPrimary" style="background-color: rgb(194, 255, 163);">
+            <p class="size20 str600 orange bold" style="font-weight: bolder !important;">OFFICE OF THE PUNONG BARANGAY</p>
+        </div>
+        <br>
+        <div class="height0">
+            <p class="size28" style="font-family: 'Snap ITC', cursive, sans-serif;">BARANGAY BUSINESS PERMIT</p>
+        </div>
+        <br>
+        <div class="height0 justifyEnd">
+                <p class="size14">Date: <span class="paragStr thisDay" id=""></span> <span class="paragStr thisMonth" id=""></span>, <span class="paragStr thisYear" id=""></span></p>
+        </div>
+        <br>
+        <div class="height0 col alignStart">
+            <p class="size16">TO WHOM IT MAY CONCERN:</p>
+        </div>
+        <br>
+        <div class="height0 textJustify">
+            <p class="size16">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; This is to certify that the person named below had applied for and has been issued PERMIT TO OPERATE his/her business more particularly described as follows:</p>
+        </div>
+        <br>
+        <div class="height0 col alignStart">
+            <p class="size14">NAME OF PERMITTEE: 
+                <% if (business.owner) { %>
+                    <td><%= business.owner.firstName %> <%= business.owner.lastName %></td>
+                <% } else { %>
+                    <td>Unknown Owner</td>
+                <% } %>
+            </p>
+            <p class="size14">ADDRESS: Barangay San Andres, Guimba, Nueva Ecija</p>
+            <p class="size14">BUSINESS ADDRESS: Barangay San Andres, Guimba, Nueva Ecija</p>
+            <p class="size14">NATURE OF BUSINESS: <%= business.businessType %></p>
+        </div>
+        <br>
+        <div class="height0 textJustify">
+            <p class="size16">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; This certifies that the undersigned had inspected the location and found the same to be suitable to its intent and purposes, and no objection was filed in this office in connection there to.</p>
+        </div>
+        <br>
+        <div class="height0 textJustify">
+            <p class="size16">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Given this <span class="paragStr thisDay" id=""></span> day of <span class="paragStr thisMonth" id=""></span>, <span class="paragStr thisYear" id=""></span> here at the Office of the Barangay Captain, Barangay Hall of San Andres, Guimba, Nueva Ecija. </p>
+        </div>
+        <br>
+        <br>
+        <div class="height0">
+            <div class="height0 col width30">
+                <hr class="opacity10">
+                <p class="size14">Signature of Permittee</p>
+            </div>
+        </div>
+        <br>
+        <div class="height0">
+            <div class="height0 col justifyStart alignStart width70">
+                <p class="size14">Prepared and Verified By:</p>
+                <br>
+                <div class="height col">
+                    <p class="size14 blue" style="text-decoration: underline;">IMELDA L. ALOG</p>
+                    <p class="size14">Barangay Secretary</p>
+                </div>
+            </div>
+            <div class="height0 col justifyStart alignStart width30">
+                <p class="size14">Approved By:</p>
+                <br>
+                <div class="height col">
+                    <p class="size14 blue" style="text-decoration: underline;">EDDIE A. ASUNCION</p>
+                    <p class="size14">Barangay Captain</p>
+                </div>
+            </div>
+        </div>
+        <br><br><br><br><br>
+        <div class="height0 justifyStart">
+            <p class="size12 italic" style="font-style: italic;">NOTE: This form is not valid without dry seal</p>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const select = document.querySelector('select');
+        const allPages = document.querySelectorAll('.page.col');
+
+        select.addEventListener('change', () => {
+            // Get selected text (e.g., "BARC Certificate")
+            const selectedText = select.options[select.selectedIndex].text;
+
+            // Map display names to div ids
+            const map = {
+                'Barangay Clearance': 'Clearance',
+                'Barangay Indigency': 'Indigency',
+                'Certificate of Residency': 'Residency',
+                'BARC Certificate': 'BARC',
+                'Business Permit': 'business'
+            };
+
+            const targetId = map[selectedText];
+
+            // Loop through all pages and show/hide
+            allPages.forEach(div => {
+                if (div.id === targetId) {
+                    div.classList.remove('hidden');
+                } else {
+                    div.classList.add('hidden');
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the current date
+        const currentDate = new Date();
+    
+        // Get the current year, month (0-based, so +1 for the correct month), and day
+        const currentYear = currentDate.getFullYear();
+        const currentMonthIndex = currentDate.getMonth();  // Months are 0-indexed (0 = January, 11 = December)
+        const currentDay = currentDate.getDate();
+    
+        // Array of month names in English
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June", 
+            "July", "August", "September", "October", "November", "December"
+        ];
+    
+        // Array of month names in Tagalog
+        const monthNamesTagalog = [
+            "Enero", "Pebrero", "Marso", "Abril", "Mayo", "Hunyo", 
+            "Hulyo", "Agosto", "Setyembre", "Oktubre", "Nobyembre", "Disyembre"
+        ];
+    
+        // Get the current month name in English and Tagalog
+        const currentMonth = monthNames[currentMonthIndex];
+        const currentMonthTagalog = monthNamesTagalog[currentMonthIndex];
+    
+        // Function to get the ordinal suffix for the day
+        function getOrdinalSuffix(day) {
+            if (day > 3 && day < 21) return day + "th";  // Handle 11th to 13th
+            switch (day % 10) {
+                case 1: return day + "st";
+                case 2: return day + "nd";
+                case 3: return day + "rd";
+                default: return day + "th";
+            }
+        }
+    
+        // Get the ordinal form of the day
+        const ordinalDay = getOrdinalSuffix(currentDay);
+    
+        // Update elements with the classes
+        document.querySelectorAll('.thisYear').forEach(el => el.textContent = currentYear);
+        document.querySelectorAll('.thisMonth').forEach(el => el.textContent = currentMonth);
+        document.querySelectorAll('.thisDay').forEach(el => el.textContent = ordinalDay);
+        
+        // Update elements with new requirements
+        document.querySelectorAll('.thisDay2').forEach(el => el.textContent = currentDay); // Only number
+        document.querySelectorAll('.thisMonth2').forEach(el => el.textContent = currentMonthTagalog); // Tagalog month name
+    });
+    </script>
+
+    
+<script>
+    function printDiv(divId) {
+        const divElement = document.querySelector(`#${divId} .maindocPage`);
+
+        if (!divElement) {
+            alert("Error: Document not found!");
+            return;
+        }
+
+        // Create a new print window
+        const printWindow = window.open("", "_blank");
+        printWindow.document.open();
+
+        // Copy all styles from the main document
+        let styles = "";
+        document.querySelectorAll("link[rel='stylesheet'], style").forEach((style) => {
+            styles += style.outerHTML;
+        });
+
+        // Write the new document with styles
+        printWindow.document.write(`
+            <html>
+            <head>
+                <title>Print Document</title>
+                ${styles} <!-- Include copied styles -->
+                <style>
+                    @media print {
+                        body {
+                            margin: 0;
+                            padding: 0;
+                            color: black;
+                        }
+                        .maindocPage {
+                            width: 100%;
+                            max-width: 100%;
+                            font-size: 12pt !important; /* Set a proper font size */
+                            line-height: 1;
+                            page-break-before: always;
+                            page-break-inside: avoid;
+                        }
+                        h1, h2, h3 {
+                            font-size: 16pt !important;
+                        }
+                        p {
+                            font-size: 12pt !important;
+                        }
+                        .docTLE {
+                            font-size: 18px !important;
+                        }
+                    }
+                </style>
+            </head>
+            <body onload="setTimeout(() => { window.print(); window.close(); }, 500)">
+                ${divElement.outerHTML}
+            </body>
+            </html>
+        `);
+        
+        printWindow.document.close();
+        printWindow.focus();
+    }
+</script>

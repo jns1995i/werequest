@@ -1,0 +1,79 @@
+<% layout('layout') %>
+
+<div class="height0 blockX overflow-y1 padding10 relative">
+    <a href="/blot" class="nav absolute left20 top20"><i class="fas fa-arrow-left"></i> Back</a>
+    <div class="height0 padding10">
+        <div class="width50 height0 padding30 bgWhite darkShadow borderRadius5 col justifyStart alignStart relative" style="gap: 2px;">
+    <a href="/cases/edit/<%= caseItem._id %>" class="nav absolute right20 top20"><i class="fas fa-edit"></i> Edit</a>
+
+            <p class="size20 str500">Complaint Details</p>
+            <br>
+            <p class="size12 str400">Case No.</p>
+            <p class="size14 str500"><%= caseItem.caseNo %></p>
+            <br>
+            <p class="size12 str400">Date Filed</p><p class="size14 str500">
+            <%= new Date(caseItem.createdAt).toLocaleString("en-US", {
+                weekday: "short",   // Tue
+                month: "short",     // Sep
+                day: "2-digit",     // 16
+                year: "numeric",    // 2025
+                hour: "2-digit",    // 08
+                minute: "2-digit",  // 43
+                hour12: true        // PM
+            }) %>
+            </p>
+            <br>
+            <p class="size12 str400">Status</p>
+            <p class="size14 str500"><%= caseItem.status %></p>
+            <br>
+            <p class="size12 str400">Complainants</p>
+            <p class="size14 str500">
+                <% complainants.forEach(c => { %>
+                    <p class="size14 str500"><%= c %></p>
+                <% }) %>
+            </p>
+            <br>
+            <p class="size12 str400">Respondents</p>
+            <p class="size14 str500">
+                <% respondents.forEach(r => { %>
+                    <p class="size14 str500"><%= r %></p>
+                <% }) %>
+            </p>
+            <br>
+            <p class="size12 str400">Nature of Complain</p>
+            <div class="size14 str500 justifyStart">
+            <% if (caseItem.type && caseItem.type.length > 0) { %>
+            <p class="size14 str500"><%= caseItem.type.join(", ") %></p>
+            <% } else { %>
+            <p class="size14 str500">None</p>
+            <% } %>
+            </div>
+            <br>
+            <p class="size12 str400">Complaint</p>
+            <p class="size14 str500"><%= caseItem.remarks %></p>
+            <br>
+
+        </div>
+    </div>
+</div>
+
+<div class="height0 padding10 col hidden">
+    <h2>Case No: </h2>
+<p>Status: </p>
+<p>Remarks: <%= caseItem.remarks %></p>
+
+<h3>Complainants</h3>
+<ul>
+</ul>
+
+<h3>Respondents</h3>
+<ul>
+</ul>
+
+<h3>Schedules</h3>
+<ul>
+  <% schedules.forEach(s => { %>
+    <li> - <%= s.remarks %></li>
+  <% }) %>
+</ul>
+</div>

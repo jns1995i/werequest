@@ -1,0 +1,46 @@
+<% layout('layout') %>
+<head>
+  <style>
+    select {
+      height: initial;
+    }
+    select[multiple] {
+      min-height: 120px;
+    }
+  </style>
+</head>
+
+<div class="overflow-y1 padding10 alignStart">
+    <form action="/cases/edit/<%= caseData._id %>" method="POST">
+
+      <div class="height0 gap10">
+        <div class="field">
+          <label>Case No:</label>
+          <input type="text" name="caseNo" value="<%= caseData.caseNo %>" required />
+        </div>
+        <div class="field">
+          <label>Status:</label>
+          <select name="status" class="borderGray">
+            <option value="Pending" <%= caseData.status === 'Pending' ? 'selected' : '' %>>Pending</option>
+            <option value="Ongoing" <%= caseData.status === 'Ongoing' ? 'selected' : '' %>>Ongoing</option>
+            <option value="Resolved" <%= caseData.status === 'Resolved' ? 'selected' : '' %>>Resolved</option>
+            <option value="Settled" <%= caseData.status === 'Settled' ? 'selected' : '' %>>Settled</option>
+            <option value="Escalated" <%= caseData.status === 'Escalated' ? 'selected' : '' %>>Escalated</option>
+          </select>
+        </div>
+      </div>
+    <br>
+    <div class="field">
+      <label>Case Types (comma-separated):</label>
+      <input type="text" name="type" value="<%= caseData.type.join(', ') %>" />
+    </div>
+    <br>
+    <div class="field">
+      <label>Remarks:</label>
+      <textarea name="remarks"><%= caseData.remarks %></textarea>
+    </div>
+    <br>
+
+    <div class="height0 justifyEnd"><button type="submit" class="nav pnav">Update Case</button></div>
+  </form>
+</div>

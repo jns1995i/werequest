@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REGISTRAR</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/color.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <link rel="stylesheet" href="/user.css">
+    <link rel="icon" href="/images/logo.png">
+    <style>
+
+        #reqBtn:hover {
+            transform: scale(1);
+            transition: transform 0.4s ease-in-out;
+            background-color: rgb(238, 238, 238);
+        }
+        .hidden {
+            display: none;
+        }
+
+        @media screen and (max-width: 1025px) {
+            .responsive {
+                display: none !important;
+            }
+            #reqBtn {
+                width: 100%;
+                flex-direction: column;
+                padding: 0 !important;
+                justify-content: start !important;
+                align-items: start !important;
+                gap: 2px;
+            }
+            #reqCrd {
+                flex-direction: column;
+                justify-content: start !important;
+                align-items: start !important;
+                width: 100%;
+                padding: 20px;
+                div {
+                    width: 100%;
+                }
+            }
+            #reqDtl {
+                flex-direction: column;
+                justify-content: start;
+                align-items: start;
+                width: 100% !important;
+                p {
+                    width: 100%;
+                }
+            }
+            #reqDtl2 {
+                flex-direction: column;
+                justify-content: start;
+                align-items: start;
+                width: 100% !important;
+                p {
+                    width: 100%;
+                }
+            }
+            #reqDtl3 {
+                width: 100%;
+            }
+            #status {
+                width: fit-content !important;
+                max-width: auto;
+                padding: 8px;
+                position: initial;
+                border-radius: 10px !important;
+            }
+            body {
+                padding: 0;
+                padding-inline: 0 !important;
+            }
+            .abstractBG {
+                border-radius: 0;
+            }
+            .responsive {
+                display: none;
+            }
+            .unresponsive {
+                display: flex;
+            }
+            #headCard {
+                flex-direction: row;
+                justify-content: space-between;
+                height: auto;
+                padding: 15px;
+            }
+            .headPlate {
+                justify-content: end;
+                span {
+                    width: 100%;
+                }
+                input {
+                    width: 100%;
+                }
+            }
+            #headX {
+                width: 100%;
+            }
+            #date {
+                margin-left: 0;
+                width: 100%;
+                text-align: left;
+                margin-top: 0 !important;
+            }
+            #mainTab {
+                width: 100%;
+            }
+            .br3 {
+                display: none;
+            }
+            #reqCard {
+                padding-inline: 0 !important;
+                padding: 5px !important;
+            }
+            #c1 {
+                flex-direction: column;
+            }
+        }
+    </style>
+<body class="bgWhite relative gap10 rowReverse padding0">
+
+    <div class="absolute left0 top0 index50 padding30 hidden" style="background-color: rgba(0, 0, 0, 0.4); padding-inline: 25%;" id="reqCard">
+        
+    
+            <div class="width100 block overflow-y1 relative bgWhite padding20 borderRadius10" id="">
+                                
+                <div class="height0 paddingInline10 justifyBetween gap20">
+                    <p class="size28 str500 colorPrimary">New Request</p>
+                    <a href="javascript:void(0);" class="nav" id="closeButton"><i class="fas fa-xmark" style="margin-left: 0; margin-Inline: 0;"></i></a>
+                </div>
+                <br>
+                <form action="/reqDocument" method="POST" enctype="multipart/form-data" class="height0 padding10 bgWhite relative borderRadius10 width100">
+
+                    <div class="fieldsetContainer height0 padding5 width0 col" id="fieldsetContainer">
+                        <fieldset class="marginBottom20 border0 borderGreen padding5">
+                            <div class="justifyEnd marginBottom5" id="removeBtnContainer2">
+                                <button type="button" class="remove-btn height0 width0 red padding5"><i class="fas fa-xmark"></i></button>
+                            </div>
+
+                    <div class="gap10 bgWhite borderRadius10 padding10" id="c2">
+                        <div class="field">
+                            <label>Request for:</label>
+                            <div class="selectBar">
+                                <select required class="people">
+                                    <option value="" selected disabled>Select</option>
+                                    <option value="myself">Myself</option>
+                                    <option value="others">For Others</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Autocomplete search (hidden by default) -->
+                        <div class="field hidden searchField">
+                            <label style="opacity: 0;">Request for:</label>
+                            <input placeholder="Requestor's Name" class="searchResident">
+                            <datalist></datalist>
+                        </div>
+
+                        <!-- Hidden input for requestBy -->
+                        <div class="field hidden">
+                            <label style="opacity: 0;">Request for:</label>
+                            <input type="text" class="requestFor" name="requestFor[]">
+                        </div>
+                    </div>
+
+                            
+                            <div class="gap10 bgWhite borderRadius10 padding10" id="c1">
+                                <div class="field">
+                                    <label>Document Type</label>
+                                    <div class="selectBar">
+                                        <select name="type[]" required class="docType">
+                                            <option value="" selected disabled>Select</option>
+                                            <option value="Barangay Clearance">Barangay Clearance</option>
+                                            <option value="Barangay Indigency">Barangay Indigency</option>
+                                            <option value="Certificate of Residency">Certificate of Residency</option>
+                                            <option value="Business Permit">Business Permit</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label>Purpose</label>
+                                    <div class="selectBar">
+                                        <select name="purpose[]" required>
+                                            <option value="ANY LEGAL">ANY LEGAL</option>
+                                            <option value="BURIAL ASSISTANCE">BURIAL ASSISTANCE</option>
+                                            <option value="EDUCATIONAL ASSISTANCE">EDUCATIONAL ASSISTANCE</option>
+                                            <option value="FINANCIAL ASSISTANCE">FINANCIAL ASSISTANCE</option>
+                                            <option value="MEDICAL ASSISTANCE">MEDICAL ASSISTANCE</option>
+                                            <option value="BANK TRANSACTION">BANK TRANSACTION</option>
+                                            <option value="LEGALIZATION">LEGALIZATION</option>
+                                            <option value="LOCAL EMPLOYMENT">LOCAL EMPLOYMENT</option>
+                                            <option value="PHILHEALTH">PHILHEALTH</option>
+                                            <option value="POLICE CLEARANCE">POLICE CLEARANCE</option>
+                                            <option value="SCHOOL REQUIREMENT">SCHOOL REQUIREMENT</option>
+                                            <option value="SENIOR CITIZEN">SENIOR CITIZEN</option>
+                                            <option value="SOLO PARENT PWD">SOLO PARENT PWD</option>
+                                            <option value="TRAVEL ABROAD">TRAVEL ABROAD</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="height0 paddingInline10">
+                                <div class="field">
+                                    <label>No. Copies</label>
+                                    <div class="selectBar">
+                                        <select name="qty[]" required>
+                                            <option value="" selected disabled>Select</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>  
+                            
+
+                    <div class="gap10 bgWhite borderRadius10 padding10 proofWrapper hidden" id="c2">
+                        <div class="field">
+                            <label class="str500 size14" style="opacity: 1;">Upload Supporting Documents or Proof of Authority</label>
+                            <label class="gray" style="opacity: 1;">You can upload document, photo or pdf file</label>
+                            <input type="file" style="border: 1px gray solid;" name="proof[]"  accept=".jpg,.jpeg,.png,.pdf,.doc,.docx" class="proofInput">
+                        </div>
+                    </div>                    
+                        </fieldset>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const addBtn = document.getElementById("addBtn");
+    const fieldsetContainer = document.getElementById("fieldsetContainer");
+    const messageDiv = document.getElementById("formMessage");
+    const limitMessageDiv = document.getElementById("limitM");
+    const datalist = document.getElementById("residentList"); // global shared list
+    const userId = "<%= user._id %>";
+
+    const defaultPurposes = [
+        "ANY LEGAL","BURIAL ASSISTANCE","EDUCATIONAL ASSISTANCE","FINANCIAL ASSISTANCE",
+        "MEDICAL ASSISTANCE","BANK TRANSACTION","BOARD EXAM"
+        ,"LEGALIZATION","LOAN","LOCAL EMPLOYMENT","PHILHEALTH","POLICE CLEARANCE"
+        ,"SCHOOL REQUIREMENT","SENIOR CITIZEN","SOLO PARENT PWD","TRAVEL ABROAD"
+    ];
+    const indigencyPurposes = [
+        "ANY LEGAL","BURIAL ASSISTANCE","EDUCATIONAL ASSISTANCE","FINANCIAL ASSISTANCE",
+        "MEDICAL ASSISTANCE","PHILHEALTH","SCHOOL REQUIREMENT"
+    ];
+
+    function updatePurposeOptions(fieldset) {
+        const docTypeSelect = fieldset.querySelector(".docType");
+        const purposeSelect = fieldset.querySelector("select[name='purpose[]']");
+        if (!docTypeSelect || !purposeSelect) return;
+
+        purposeSelect.innerHTML = "";
+
+        let purposes = defaultPurposes;
+        if (docTypeSelect.value === "Good Moral" || docTypeSelect.value === "Certification") {
+            purposes = ["ANY LEGAL"];
+        } else if (docTypeSelect.value === "Barangay Indigency") {
+            purposes = indigencyPurposes;
+        }
+
+        const defaultOption = document.createElement("option");
+        defaultOption.value = "";
+        defaultOption.textContent = "Select";
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        purposeSelect.appendChild(defaultOption);
+
+        purposes.forEach(purpose => {
+            const option = document.createElement("option");
+            option.value = purpose;
+            option.textContent = purpose;
+            purposeSelect.appendChild(option);
+        });
+    }
+
+    function togglePurposeCard(selectElement) {
+        const fieldset = selectElement.closest("fieldset");
+        const purposeCard = fieldset.querySelector(".purposeCard");
+        const remarksField = fieldset.querySelector(".remarks");
+
+        if (selectElement.value === "Certification") {
+            purposeCard?.classList.remove("unseen");
+            purposeCard?.classList.add("seen2");
+        } else {
+            purposeCard?.classList.remove("seen2");
+            purposeCard?.classList.add("unseen");
+        }
+
+        if (remarksField) {
+            remarksField.parentElement.classList.remove("unseen");
+        }
+    }
+
+    function isFieldsetValid(fieldset) {
+        const requiredFields = fieldset.querySelectorAll("select[required], input[required], textarea[required]");
+        return Array.from(requiredFields).every(field => field.value.trim() !== "");
+    }
+
+    function checkLastFieldsetBeforeAdding() {
+        const fieldsets = fieldsetContainer.querySelectorAll("fieldset");
+        const lastFieldset = fieldsets[fieldsets.length - 1];
+
+        if (isFieldsetValid(lastFieldset)) {
+            addBtn.removeAttribute("disabled");
+            messageDiv.style.display = "none";
+        } else {
+            addBtn.setAttribute("disabled", "true");
+        }
+    }
+
+    function checkFieldsetCount() {
+        const fieldsets = fieldsetContainer.querySelectorAll("fieldset");
+        if (fieldsets.length >= 5) {
+            addBtn.style.display = "none";
+            limitMessageDiv?.classList.remove("hidden");
+        } else {
+            addBtn.style.display = "inline-block";
+            limitMessageDiv?.classList.add("hidden");
+        }
+    }
+let datalistCounter = 0;
+
+function attachFieldsetListeners(fieldset) {
+    // DOC TYPE
+    const docTypeSelect = fieldset.querySelector(".docType");
+    if (docTypeSelect) {
+        docTypeSelect.onchange = function () {
+            togglePurposeCard(this);
+            updatePurposeOptions(fieldset);
+        };
+        updatePurposeOptions(fieldset);
+    }
+
+    // REMOVE
+    const removeBtn = fieldset.querySelector(".remove-btn");
+    if (removeBtn) {
+        removeBtn.style.display = "flex";
+        removeBtn.onclick = function () {
+            fieldset.remove();
+            checkFieldsetCount();
+            checkLastFieldsetBeforeAdding();
+        };
+    }
+
+    // REQUEST FOR
+    const requestFor = fieldset.querySelector(".people");
+    const searchField = fieldset.querySelector(".searchField");
+    const requestBy = fieldset.querySelector(".requestFor");
+    const searchResident = fieldset.querySelector(".searchResident");
+    const datalist = fieldset.querySelector("datalist");
+
+    // assign a unique datalist id
+    if (searchResident && datalist) {
+        datalistCounter++;
+        const newId = "residentList_" + datalistCounter;
+        datalist.id = newId;
+        searchResident.setAttribute("list", newId);
+
+        // populate options once
+        datalist.innerHTML = `
+            <% if (residents && residents.length > 0) { %>
+                <% residents.forEach((resident) => { %>
+                    <option value="<%= resident.firstName %> <%= resident.lastName %> <%= resident.extName %>" data-id="<%= resident._id %>"></option>
+                <% }); %>
+            <% } %>
+        `;
+    }
+
+    if (requestFor) {
+        requestFor.onchange = function () {
+            if (this.value === "myself") {
+                requestBy.value = userId;
+                searchField?.classList.add("hidden");
+
+                // 🔹 Hide + remove required from proof input
+                const proofWrapper = fieldset.querySelector(".proofWrapper");
+                const proofInput = fieldset.querySelector(".proofInput");
+                if (proofWrapper && proofInput) {
+                    proofWrapper.classList.add("hidden");
+                    proofInput.removeAttribute("required");
+                    proofInput.value = "";
+                }
+
+            } else if (this.value === "others") {
+                requestBy.value = "";
+                searchField?.classList.remove("hidden");
+
+                // 🔹 Show + require proof input
+                const proofWrapper = fieldset.querySelector(".proofWrapper");
+                const proofInput = fieldset.querySelector(".proofInput");
+                if (proofWrapper && proofInput) {
+                    proofWrapper.classList.remove("hidden");
+                    proofInput.setAttribute("required", "required");
+                }
+            }
+        };
+    }
+
+    if (searchResident && datalist) {
+        searchResident.oninput = function () {
+            const val = this.value;
+            requestBy.value = "";
+            for (let i = 0; i < datalist.options.length; i++) {
+                if (datalist.options[i].value === val) {
+                    requestBy.value = datalist.options[i].dataset.id;
+                    break;
+                }
+            }
+        };
+    }
+}
+
+    // Init first fieldset
+    document.querySelectorAll("#fieldsetContainer fieldset").forEach((fs, i) => {
+        attachFieldsetListeners(fs);
+        if (i === 0) {
+            const removeBtn = fs.querySelector(".remove-btn");
+            if (removeBtn) removeBtn.style.display = "none";
+        }
+    });
+
+    // Add new fieldset
+    addBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        const fieldsets = fieldsetContainer.querySelectorAll("fieldset");
+        const lastFieldset = fieldsets[fieldsets.length - 1];
+        messageDiv.style.display = "none";
+
+        if (!isFieldsetValid(lastFieldset)) {
+            messageDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> Please fill in all required fields before adding a new document!`;
+            messageDiv.style.display = "flex";
+            messageDiv.style.marginBottom = "10px";
+            return;
+        }
+
+        const firstFieldset = document.querySelector("#fieldsetContainer fieldset");
+        if (!firstFieldset) return;
+
+        const newFieldset = firstFieldset.cloneNode(true);
+
+        // reset all inputs
+        newFieldset.querySelectorAll("select, input, textarea").forEach(el => {
+            if (el.tagName === "SELECT") el.selectedIndex = 0;
+            else el.value = "";
+            el.removeAttribute("required"); // reset required state
+        });
+
+        // reset search + proof visibility
+        const searchField = newFieldset.querySelector(".searchField");
+        if (searchField) searchField.classList.add("hidden");
+        const proofWrapper = newFieldset.querySelector(".proofWrapper");
+        if (proofWrapper) proofWrapper.classList.add("hidden");
+
+        attachFieldsetListeners(newFieldset);
+        fieldsetContainer.appendChild(newFieldset);
+
+        checkFieldsetCount();
+        checkLastFieldsetBeforeAdding();
+    });
+
+    fieldsetContainer.addEventListener("input", checkLastFieldsetBeforeAdding);
+    checkFieldsetCount();
+    checkLastFieldsetBeforeAdding();
+});
+</script>
+                    
+                    </div>
+
+                    <div id="formMessage" class="form-message height0 size12 justifyCenter" style="color: rgb(80, 0, 0);"></div>
+
+                    <div id="limitM" class="limitM marginBottom5 height0 size12 colorPrimary justifyCenter">
+                        <div class="height0 padding10 size14 str500 hidden"> You can only request not more than a five (5) items</div>
+                    </div>
+                    <div class="gap10 justifyEnd height0 marginTop15 width100 alignEnd">
+                            <a href="#" class="nav" id="addBtn">Add New</a>
+                        <button type="submit" class="nav">Submit</button>
+                    </div>
+                </form>
+            </div>
+    </div>
+
+
+    <div class="col gap5 relative bgWhite width100" id="mainTab">
+        
+    <div class="height10 headPrime" id="headFrame">
+        <div class=" justifyStart paddingInline20 gap10 responsive">
+            <a href="/hom" class="userPhoto transition width0 h60 padding0 borderRadius500"><img src="/images/logo.jpg" alt="" class="height60 borderRadius500"></a>
+            <p class="size24 str400 white">WeRequest</p>
+        </div>
+        <div class="height0 justifyStart gap10 padding5">
+            <a href="/hom" class="nav cnav hidden" id=""><i class="fas fa-chevron-left"></i></a>
+            <a href="/hom" class="userPhoto transition width0 h60 padding0 borderRadius500 unresponsive hidden"><img src="/images/logo.jpg" alt="" class="height60 borderRadius500"></a>
+            <p class="size24 str400 white unresponsive hidden">WeRequest</p>
+        </div>
+        <div class="paddingInline10">
+            <div class="width100 height100 justifyEnd gap10" id="navFrame">
+                <a href="/prf" class="height0 width0 hidden" id="prfBtn">
+                    <img src="<%= user.photo ? user.photo : '/images/profile.jpg' %>" 
+                    alt="" 
+                    class="borderRadius500 h50 borderPrimary" 
+                    onerror="this.onerror=null; this.src='/images/profile.jpg';">
+                </a>                  
+            <span class="flex justifyStart alignCenter gap0 snav paddingInline20 paddingBlock0 borderRadius5">
+                <i class="fas fa-search" style="font-size: 12px;"></i>
+                <input type="search" id="searchRequest" class="border0 width0" placeholder="Search request here ..">
+            </span>
+            </div>
+            <div class="width100 height100 gap5 hidden" id="navFrame2">
+                <div class="height0 gap5 justifyStart">
+                    <div class="justifyStart gap10">
+                        <a href="/hom" class="userPhoto transition h40 w40 padding0 borderRadius500"><img src="/images/logo.jpg" alt="" class="borderRadius500"></a>
+                        <p class="size24 str400 colorPrimary">WeRequest</p>
+                    </div>
+                </div>
+                <div class="height0 justifyEnd gap10">
+                <a href="/srvAll" class="nav cnav colorPrimary"><i class="fas fa-file"></i></a>
+                    <a href="/prf" class="nav cnav headf" id="">
+                        <img src="<%= user.photo ? user.photo : '/images/profile.jpg' %>" 
+                        alt="" 
+                        class="borderRadius500" 
+                        onerror="this.onerror=null; this.src='/images/profile.jpg';">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="height0 justifyStart gap10 padding10 borderRadius10" id="headCard">
+        <div class="height0 justifyStart gap15 padding10 responsive">
+            <a href="/hom" class="nav headf responsive colorPrimary" id=""><i class="fas fa-arrow-left"></i></a>
+            <p class="size20 str500">Transactions</p>
+            <a href="/hom" class="userPhoto transition h50 padding0 borderRadius500 hidden"><img src="/images/logo.jpg" alt="" class="height60 borderRadius500"></a>
+            <p class="size24 str400 upperCase colorPrimary hidden">BVRSRS</p> 
+        </div>  
+        <div class="height0 justifyStart gap15 padding10 hidden unresponsive">
+            <a href="/hom" class="nav headf colorPrimary" id=""><i class="fas fa-arrow-left"></i></a>
+            <p class="size14 colorPrimary str500">Transactions</p>  
+        </div> 
+        <div class="height0 justifyEnd gap15 headPlate padding10">
+                <a href="javascript:void(0)" class="nav" id="requestButton"><i class="fas fa-plus"></i> Request</a>
+        </div>
+    </div>
+    
+    <div class="height90 gap20">
+        <div class="col gap0">
+            <div class="block col justifyStart borderRadius10 padding15 alignStart justifyBetween overflow-y1">
+                    <div id="noFound" class="noFound size20 height0 width0 padding30 borderRadius10 str500  shadowNone hidden bgSoft col">
+                        Sorry, No record Found!
+                    </div>
+
+                <div class="height0 justifyStart alignStart col" id="reqSec">
+                            
+                        <a class="responsive height0 justifyStart width100 heightMax0 padding10 borderRadius5 relative borderGray disabled" style="background-color: rgb(234, 234, 234);">
+                            <div class="height0 size14 justifyStart paddingInline10 str400 width25">REQUEST ID</div>
+                            <div class="height0 size14 justifyStart paddingInline10 str400 width20">REQUEST DATE</div>
+                            <div class="height0 size14 justifyStart paddingInline10 str400 width20">REQUESTED DOCUMENT</div>
+                            <div class="height0 size14 justifyStart paddingInline10 str400 width20">REQUEST FOR</div>
+                            <div class="height0 size14 justifyStart paddingInline10 str400 width15">STATUS</div>
+                        </a>
+
+                    <% if (requests.length > 0) { %>
+                        <% requests.forEach(request => { %>
+                            
+                        <a href="/reqView/<%= request._id %>" class="height0 justifyStart width100 heightMax0 padding10 borderRadius5 relative bgWhite borderGray" id="reqBtn">
+                            <div class="cnav height0 absolute right15 h45 w45 borderGray" style="top: 50%; transform: translateY(-50%);"><i class="fas fa-arrow-right"></i></div>
+                            <div class="height0 padding15 borderRadius10 alignCenter height100" id="reqCrd">
+                                <div class="height0 justifyStart str500 size14 width25"><%= request.tr %></div>
+                                <div class="height0 justifyStart str400 size14 width20">
+                                        <%= new Date(request.createdAt).toLocaleString('en-US', { month: 'short', day: '2-digit' }) %>
+                                        <%= new Date(request.createdAt).getFullYear() %>
+                                        <br class="br3 hidden"> <%= new Date(request.createdAt).toLocaleString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true }) %>
+                                </div>
+                                <div class="height0 justifyStart str400 size14 width20">
+                                    <%= request.type %>
+                                </div>
+                                <div class="height0 justifyStart str400 size14 width20">
+                                    <% if (request.isMyself) { %>
+                                    Myself
+                                    <% } else if (request.residentInfo) { %>
+                                    <%= request.residentInfo.firstName %> <%= request.residentInfo.lastName %>
+                                    <% } else { %>
+                                    Unknown Resident
+                                    <% } %>
+                                </div>
+                                <div class="height0 justifyStart str500 size14 width15">
+                                    <% if (request.status === 'Approved') { %>
+                                    <i class="fas fa-check-circle w20 h20 inline marginRight5 green"></i>
+                                    <% } else if (request.status === 'Declined') { %>
+                                    <i class="fas fa-xmark-circle w20 h20 inline marginRight5 red"></i>
+                                    <% } else if (request.status === 'Verified') { %>
+                                    <i class="fas fa-check-circle w20 h20 inline marginRight5 blue"></i>
+                                    <% } else { %>
+                                    <i class="fas fa-clock w20 h20 inline marginRight5 yellow"></i>
+                                    <% } %>
+                                    <%= request.status %>
+                                </div>
+                            </div>
+                        </a>
+                        <% }) %>
+                    <% } else { %>
+                        <p class="size14 str400 textCenter">No Recent or Active Requests as of Now</p>
+                    <% } %>   
+
+                </div>
+            </div>
+            <div class="height10 justifyBetween paddingInline10">
+                <div class="height0 width0 gap10">
+                    <p class="size14">Display Per Page</p>
+                    <div class="selectBar width0">
+                        <select id="rowsPerPage" class="width0">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="100">100</option>
+                            <option value="100000">All</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="pagination" class="height0 width0"></div>
+            </div>
+
+        </div>
+     
+    </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const requestContainer = document.getElementById("reqSec");
+    const paginationContainer = document.getElementById("pagination");
+    const rowsPerPageSelect = document.getElementById("rowsPerPage");
+    const searchInput = document.getElementById("searchRequest");
+
+    let currentPage = 1;
+    let rowsPerPage = parseInt(rowsPerPageSelect.value);
+    let allRequests = Array.from(requestContainer.children);
+    let filteredRequests = allRequests;
+
+    function renderRequests() {
+        const start = (currentPage - 1) * rowsPerPage;
+        const end = start + rowsPerPage;
+
+        // Hide all first
+        allRequests.forEach(req => (req.style.display = "none"));
+        
+        // Show filtered requests based on pagination
+        filteredRequests.slice(start, end).forEach(req => (req.style.display = "flex"));
+
+        renderPagination(filteredRequests.length);
+    }
+
+    function renderPagination(totalRequests) {
+        paginationContainer.innerHTML = "";
+
+        if (searchInput.value.trim()) return;
+
+        const totalPages = Math.ceil(totalRequests / rowsPerPage);
+        if (totalPages <= 1) return;
+
+        const prevButton = document.createElement("button");
+        prevButton.innerHTML = "« Previous";
+        prevButton.disabled = currentPage === 1;
+        prevButton.onclick = () => {
+            currentPage--;
+            renderRequests();
+        };
+        paginationContainer.appendChild(prevButton);
+
+        for (let i = 1; i <= totalPages; i++) {
+            const pageButton = document.createElement("button");
+            pageButton.innerHTML = i;
+            pageButton.className = i === currentPage ? "active" : "";
+            pageButton.onclick = () => {
+                currentPage = i;
+                renderRequests();
+            };
+            paginationContainer.appendChild(pageButton);
+        }
+
+        const nextButton = document.createElement("button");
+        nextButton.innerHTML = "Next »";
+        nextButton.disabled = currentPage === totalPages;
+        nextButton.onclick = () => {
+            currentPage++;
+            renderRequests();
+        };
+        paginationContainer.appendChild(nextButton);
+    }
+
+    function updateRowsPerPage() {
+        rowsPerPage = parseInt(rowsPerPageSelect.value);
+        currentPage = 1;
+        renderRequests();
+    }
+
+function searchRequests() {
+    const query = searchInput.value.toLowerCase().trim();
+    filteredRequests = allRequests.filter(req => req.innerText.toLowerCase().includes(query));
+    currentPage = 1;
+    rowsPerPageSelect.style.display = query ? "none" : "flex";
+
+    const noFoundDiv = document.querySelector(".noFound");
+    if (noFoundDiv) {
+        if (filteredRequests.length === 0) {
+            noFoundDiv.classList.remove("hidden");
+        } else {
+            noFoundDiv.classList.add("hidden");
+        }
+    }
+
+    renderRequests();
+}
+
+    rowsPerPageSelect.addEventListener("change", updateRowsPerPage);
+    searchInput.addEventListener("input", searchRequests);
+    renderRequests();
+});
+
+</script>
+<script>
+  const reqCard = document.getElementById("reqCard");
+  const requestButton = document.getElementById("requestButton");
+  const closeButton = document.getElementById("closeButton");
+
+  requestButton.addEventListener("click", () => {
+    reqCard.classList.remove("hidden"); // show
+  });
+
+  closeButton.addEventListener("click", () => {
+    reqCard.classList.add("hidden"); // hide
+  });
+</script>
+</body>
+</html>

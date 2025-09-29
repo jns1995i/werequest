@@ -1,0 +1,174 @@
+<% layout('layout') %>
+<head>
+    <style>
+        .mainf {
+            gap: 10px;
+            display: flex;
+        }
+    </style>
+</head>
+
+        <div class="height10">
+            <div class="height0 width100">
+                <div class="ctrl left">
+                    <p class="size26 str500">Document Management</p>
+                </div>
+                <div class="ctrl">
+                    <div class="searchBar">
+                        <input type="search" id="univ">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+                <div class="ctrl right">
+                    <a href="/mainReq" class="nav">
+                        Request Document
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="height90 overflow-y1 col justifyStart blockX bgSoft relative">
+            <div class="height0 hidden size18" id="noRecord">No Records Found!
+            </div>
+            <% 
+    // Get current date values
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    const startOfWeek = new Date(today);
+    startOfWeek.setDate(today.getDate() - today.getDay());
+
+    // Categorize requests
+    const todayRequests = [];
+    const yesterdayRequests = [];
+    const thisWeekRequests = [];
+    const otherRequests = [];
+
+    requests.forEach(request => {
+        const reqDate = new Date(request.createdAt);
+        const reqDay = new Date(reqDate.getFullYear(), reqDate.getMonth(), reqDate.getDate());
+
+        if (reqDay.getTime() === today.getTime()) {
+            todayRequests.push(request);
+        } else if (reqDay.getTime() === yesterday.getTime()) {
+            yesterdayRequests.push(request);
+        } else if (reqDay >= startOfWeek) {
+            thisWeekRequests.push(request);
+        } else {
+            otherRequests.push(request);
+        }
+    });
+
+    const categorizedRequests = [
+        { title: "TODAY", data: todayRequests },
+        { title: "YESTERDAY", data: yesterdayRequests },
+        { title: "THIS WEEK", data: thisWeekRequests },
+        { title: "OTHERS", data: otherRequests }
+    ];
+%>
+
+<% if (requests.length > 0) { %>
+    <% categorizedRequests.forEach(category => { %>
+        <% if (category.data.length > 0) { %>
+            <div class="height0 padding0 marginBottom5 titleCard justifyStart hidden">
+                <p class="size16 str500 gray width65 textLeft"><%= category.title %></p>
+            </div>
+            <% category.data.forEach(request => { %>
+                <div class="height0 srvCard justifyStart" id="srvCard">
+                    <div class=" height0 bgWhite padding15 gap10 justifyBetween borderGray" id="srvCard">
+                        <div class="width10 height0 col gap0 marginLeft10 alignStart">
+                            <p class="size14 str500 gray">
+                                <%= new Date(request.createdAt).toLocaleString('en-US', { month: 'short' }).toUpperCase() %>
+                                 <%= ("0" + new Date(request.createdAt).getDate()).slice(-2) %>
+                                  <%= new Date(request.createdAt).getFullYear() %>
+                            </p>
+                        </div>
+                        <div class="width20 height0 col gap0 marginLeft10 alignStart">
+                            <p class="size14 str500"><%= request.tr %></p>
+                        </div>
+                    <% if (request.resident) { %>
+                        <div class="height0 width20 gap10 justifyStart">
+                            <div class="height0 width0 col alignStart">
+                                <p class="size14 str500"><%= request.resident.firstName %> <%= request.resident.lastName %> <%= request.resident.extName %></p>
+                            </div>
+                        </div>
+                    <% } else { %>
+                        No resident data available
+                    <% } %>
+                        <div class="height0 col alignStart width30 size14"><%= request.status %></div>
+                        <a href="/srvView/<%= request._id %>" class="nav border0 transparent green"><i class="fas fa-eye"></i> View</a>
+                    </div>
+                </div>
+            <% }) %>
+        <% } %>
+    <% }) %>
+<% } else { %>
+    <p class="size14 str400 textCenter">No Recent or Active Requests as of Now</p>
+<% } %>
+
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const searchInput = document.getElementById("univ");
+                const srvCards = document.querySelectorAll("#srvCard");
+                const titleCards = document.querySelectorAll(".titleCard");
+                const noRecordMsg = document.getElementById("noRecord");
+        
+                searchInput.addEventListener("input", function () {
+                    const query = searchInput.value.toLowerCase().trim();
+                    let hasMatch = false;
+        
+                    // Map to check which titleCard has at least one matching srvCard
+                    const visibleTitleCards = new Map();
+        
+                    srvCards.forEach(card => {
+                        const text = card.textContent.toLowerCase();
+                        const parentTitle = card.closest(".titleWrapper")?.querySelector(".titleCard");
+        
+                        if (text.includes(query)) {
+                            card.style.display = "flex"; // Show matching card
+                            hasMatch = true;
+        
+                            // Mark titleCard as visible if its child srvCard is matched
+                            if (parentTitle) {
+                                visibleTitleCards.set(parentTitle, true);
+                            }
+                        } else {
+                            card.style.display = "none"; // Hide non-matching card
+                        }
+                    });
+        
+                    // Show/hide the #noRecord message
+                    noRecordMsg.classList.toggle("hidden", hasMatch);
+        
+                    // Hide all titleCards first
+                    titleCards.forEach(title => {
+                        title.style.display = "none";
+                    });
+        
+                    // Show only titleCards that have visible srvCards
+                    visibleTitleCards.forEach((_, title) => {
+                        title.style.display = "block";
+                    });
+                });
+            });
+        </script>
+        
+        <script>
+            let lastRequestCount = <%= requests.length %>; // Store the initial count
+        
+            function checkForNewRequests() {
+                fetch('/getRequestCount') // Fetch request count from backend
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.count > lastRequestCount) {
+                            location.reload(); // Reload page if new requests exist
+                        }
+                    })
+                    .catch(error => console.error("Error checking new requests:", error));
+            }
+        
+            setInterval(checkForNewRequests, 5000); // Check every 5 seconds
+        </script>
+        

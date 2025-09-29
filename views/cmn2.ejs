@@ -1,0 +1,124 @@
+<% layout('layout') %>
+<head>
+    <style>
+        button {
+            text-decoration: none;
+            border: 1px solid green !important;
+            padding: 5px;
+            border-radius: 5px;
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 0.5px solid lightgray;
+            cursor: pointer;
+            transition: all 0.6s ease-in-out;
+            height: auto;
+            width: auto;
+            font-size: 0.8vw;
+            font-family: 'poppins', sans-serif;
+        }
+        button:hover {
+            transform: scale(1);
+        }
+        .pnav:hover, .pnav {
+            color: white;
+            background-color: rgb(0, 105, 0) !important;
+        }
+        .f {
+            height: auto;
+            flex-direction: column;
+            align-items: start;
+            gap: 5px;
+        }
+        .search-results button {
+            border: none
+        }
+        .person-item {
+            gap: 10px;
+            border: 0.5px solid rgb(1, 84, 0);
+            border-radius: 5px;
+            padding: 8px 10px;
+            width: fit-content;
+            font-weight: 400 !important;
+        }
+        .person-item div {
+            width: fit-content;
+            font-weight: 400 !important;
+        }
+        .person-item .remove-btn {
+            height: 20px;
+        }
+    </style>
+</head>
+<div class="bgSoft padding20 borderRadius10 blockX overflow-y1 relative">
+    <a href="/blot" class="nav absolute left10 top10"><i class="fas fa-arrow-left"></i>BACK</a>
+    <div class="col height0 padding10">
+    
+        <form action="/cases" method="POST" id="caseForm" class="padding20 borderRadius10 height0 shadowNone">
+
+            <p class="size24 str500">New Blotter</p>
+
+            <br>
+
+            <div class="height0 gap10">
+                <div class="field">
+                    <label for="">Case No.</label>
+                    <input type="text" name="caseNo" required>
+                </div>
+                
+                <div class="field">
+                    <label for="">Nature of Complain</label>
+                    <select name="" id="" class="borderGray borderRadius5">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+            <br>
+
+            <div class="height0 gap10" id="complainantDiv">
+                <div class="field searchField">
+                    <input placeholder="Complainant's Name" class="searchResident1">
+                    <datalist></datalist>
+                </div>
+
+                <div class="field hidden">
+                    <input type="text" class="complainant" name="complainant[]">
+                </div>
+
+                <div class="field padding5">
+                    <a href="" class="nav padding9 borderRadius5">+ Add More Complainant</a>
+                </div>
+            </div>
+
+            <div class="height0 gap10" id="respondentDiv">
+                <div class="field searchField">
+                    <input placeholder="Respondent's Name" class="searchResident2">
+                    <datalist></datalist>
+                </div>
+
+                <div class="field hidden">
+                    <input type="text" class="respondent" name="respondent[]">
+                </div>
+
+                <div class="field padding5">
+                    <a href="" class="nav padding9 borderRadius5">+ Add More Complainant</a>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="field">
+                <label for="">Complain</label>
+                <textarea name="" id=""></textarea>
+            </div>
+
+            <br>
+
+            <div class="field alignEnd">
+                <button class="nav">Submit</button>
+            </div>
+          
+        </form> 
+    </div>
+</div>

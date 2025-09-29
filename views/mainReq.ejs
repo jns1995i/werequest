@@ -1,0 +1,355 @@
+<% layout('layout') %>
+            <div class="width100 blockX overflow-y1 relative bgWhite borderRadius10 padding20" style="padding-inline: 20%;">
+                                
+                <div class="height0 paddingInline10 justifyBetween gap20">
+                    <p class="size28 str500 colorPrimary">New Request</p>
+                    <a href="/docc" class="nav" id="closeButton"><i class="fas fa-xmark" style="margin-left: 0; margin-Inline: 0;"></i></a>
+                </div>
+                <br>
+                <form action="/reqDocumentA" method="POST" enctype="multipart/form-data" class="height0 padding10 bgWhite relative borderRadius10 width100">
+
+                    <div class="fieldsetContainer height0 padding5 col" id="fieldsetContainer">
+                        <fieldset class="marginBottom20 border0 borderGreen borderRadius5 padding5">
+                            <div class="justifyEnd marginBottom5" id="removeBtnContainer2">
+                                <button type="button" class="remove-btn height0 width0 red padding5"><i class="fas fa-xmark"></i></button>
+                            </div>
+
+                    <div class="gap10 bgWhite borderRadius10 padding10" id="c2">
+                        <div class="field">
+                            <label>Request for:</label>
+                            <div class="selectBar">
+                                <select required class="people">
+                                    <option value="" selected disabled>Select</option>
+                                    <option value="myself">Myself</option>
+                                    <option value="others">For Others</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Autocomplete search (hidden by default) -->
+                        <div class="field hidden searchField">
+                            <label style="opacity: 0;">Request for:</label>
+                            <input placeholder="Requestor's Name" class="searchResident">
+                            <datalist></datalist>
+                        </div>
+
+                        <!-- Hidden input for requestBy -->
+                        <div class="field hidden">
+                            <label style="opacity: 0;">Request for:</label>
+                            <input type="text" class="requestFor" name="requestFor[]">
+                        </div>
+                    </div>
+
+                            
+                            <div class="gap10 bgWhite borderRadius10 padding10" id="c1">
+                                <div class="field">
+                                    <label>Document Type</label>
+                                    <div class="selectBar">
+                                        <select name="type[]" required class="docType">
+                                            <option value="" selected disabled>Select</option>
+                                            <option value="Barangay Clearance">Barangay Clearance</option>
+                                            <option value="Barangay Indigency">Barangay Indigency</option>
+                                            <option value="Certificate of Residency">Certificate of Residency</option>
+                                            <option value="Business Permit">Business Permit</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label>Purpose</label>
+                                    <div class="selectBar">
+                                        <select name="purpose[]" required>
+                                            <option value="ANY LEGAL">ANY LEGAL</option>
+                                            <option value="BURIAL ASSISTANCE">BURIAL ASSISTANCE</option>
+                                            <option value="EDUCATIONAL ASSISTANCE">EDUCATIONAL ASSISTANCE</option>
+                                            <option value="FINANCIAL ASSISTANCE">FINANCIAL ASSISTANCE</option>
+                                            <option value="MEDICAL ASSISTANCE">MEDICAL ASSISTANCE</option>
+                                            <option value="BANK TRANSACTION">BANK TRANSACTION</option>
+                                            <option value="BOARD EXAM">BOARD EXAM</option>
+                                            <option value="LEGALIZATION">LEGALIZATION</option>
+                                            <option value="LOCAL EMPLOYMENT">LOCAL EMPLOYMENT</option>
+                                            <option value="PHILHEALTH">PHILHEALTH</option>
+                                            <option value="POLICE CLEARANCE">POLICE CLEARANCE</option>
+                                            <option value="SCHOOL REQUIREMENT">SCHOOL REQUIREMENT</option>
+                                            <option value="SENIOR CITIZEN">SENIOR CITIZEN</option>
+                                            <option value="SOLO PARENT PWD">SOLO PARENT PWD</option>
+                                            <option value="TRAVEL ABROAD">TRAVEL ABROAD</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="height0 paddingInline10">
+                                <div class="field">
+                                    <label>No. Copies</label>
+                                    <div class="selectBar">
+                                        <select name="qty[]" required>
+                                            <option value="" selected disabled>Select</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>  
+                            
+
+                    <div class="gap10 bgWhite borderRadius10 padding10 proofWrapper hidden" id="c2">
+                        <div class="field">
+                            <label class="str500 size14" style="opacity: 1;">Upload Supporting Documents or Proof of Authority</label>
+                            <label class="gray" style="opacity: 1;">You can upload document, photo or pdf file</label>
+                            <input type="file" style="border: 1px gray solid;" name="proof[]"  accept=".jpg,.jpeg,.png,.pdf,.doc,.docx" class="proofInput">
+                        </div>
+                    </div>                    
+                        </fieldset>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const addBtn = document.getElementById("addBtn");
+    const fieldsetContainer = document.getElementById("fieldsetContainer");
+    const messageDiv = document.getElementById("formMessage");
+    const limitMessageDiv = document.getElementById("limitM");
+    const datalist = document.getElementById("residentList"); // global shared list
+    const userId = "<%= user._id %>";
+
+    const defaultPurposes = [
+        "ANY LEGAL","BURIAL ASSISTANCE","EDUCATIONAL ASSISTANCE","FINANCIAL ASSISTANCE",
+        "MEDICAL ASSISTANCE","BANK TRANSACTION","BOARD EXAM"
+        ,"LEGALIZATION","LOAN","LOCAL EMPLOYMENT","PHILHEALTH","POLICE CLEARANCE"
+        ,"SCHOOL REQUIREMENT","SENIOR CITIZEN","SOLO PARENT PWD","TRAVEL ABROAD"
+    ];
+    const indigencyPurposes = [
+        "ANY LEGAL","BURIAL ASSISTANCE","EDUCATIONAL ASSISTANCE","FINANCIAL ASSISTANCE",
+        "MEDICAL ASSISTANCE","PHILHEALTH","SCHOOL REQUIREMENT"
+    ];
+
+    function updatePurposeOptions(fieldset) {
+        const docTypeSelect = fieldset.querySelector(".docType");
+        const purposeSelect = fieldset.querySelector("select[name='purpose[]']");
+        if (!docTypeSelect || !purposeSelect) return;
+
+        purposeSelect.innerHTML = "";
+
+        let purposes = defaultPurposes;
+        if (docTypeSelect.value === "Good Moral" || docTypeSelect.value === "Certification") {
+            purposes = ["ANY LEGAL"];
+        } else if (docTypeSelect.value === "Barangay Indigency") {
+            purposes = indigencyPurposes;
+        }
+
+        const defaultOption = document.createElement("option");
+        defaultOption.value = "";
+        defaultOption.textContent = "Select";
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+        purposeSelect.appendChild(defaultOption);
+
+        purposes.forEach(purpose => {
+            const option = document.createElement("option");
+            option.value = purpose;
+            option.textContent = purpose;
+            purposeSelect.appendChild(option);
+        });
+    }
+
+    function togglePurposeCard(selectElement) {
+        const fieldset = selectElement.closest("fieldset");
+        const purposeCard = fieldset.querySelector(".purposeCard");
+        const remarksField = fieldset.querySelector(".remarks");
+
+        if (selectElement.value === "Certification") {
+            purposeCard?.classList.remove("unseen");
+            purposeCard?.classList.add("seen2");
+        } else {
+            purposeCard?.classList.remove("seen2");
+            purposeCard?.classList.add("unseen");
+        }
+
+        if (remarksField) {
+            remarksField.parentElement.classList.remove("unseen");
+        }
+    }
+
+    function isFieldsetValid(fieldset) {
+        const requiredFields = fieldset.querySelectorAll("select[required], input[required], textarea[required]");
+        return Array.from(requiredFields).every(field => field.value.trim() !== "");
+    }
+
+    function checkLastFieldsetBeforeAdding() {
+        const fieldsets = fieldsetContainer.querySelectorAll("fieldset");
+        const lastFieldset = fieldsets[fieldsets.length - 1];
+
+        if (isFieldsetValid(lastFieldset)) {
+            addBtn.removeAttribute("disabled");
+            messageDiv.style.display = "none";
+        } else {
+            addBtn.setAttribute("disabled", "true");
+        }
+    }
+
+    function checkFieldsetCount() {
+        const fieldsets = fieldsetContainer.querySelectorAll("fieldset");
+        if (fieldsets.length >= 5) {
+            addBtn.style.display = "none";
+            limitMessageDiv?.classList.remove("hidden");
+        } else {
+            addBtn.style.display = "inline-block";
+            limitMessageDiv?.classList.add("hidden");
+        }
+    }
+let datalistCounter = 0;
+
+function attachFieldsetListeners(fieldset) {
+    // DOC TYPE
+    const docTypeSelect = fieldset.querySelector(".docType");
+    if (docTypeSelect) {
+        docTypeSelect.onchange = function () {
+            togglePurposeCard(this);
+            updatePurposeOptions(fieldset);
+        };
+        updatePurposeOptions(fieldset);
+    }
+
+    // REMOVE
+    const removeBtn = fieldset.querySelector(".remove-btn");
+    if (removeBtn) {
+        removeBtn.style.display = "flex";
+        removeBtn.onclick = function () {
+            fieldset.remove();
+            checkFieldsetCount();
+            checkLastFieldsetBeforeAdding();
+        };
+    }
+
+    // REQUEST FOR
+    const requestFor = fieldset.querySelector(".people");
+    const searchField = fieldset.querySelector(".searchField");
+    const requestBy = fieldset.querySelector(".requestFor");
+    const searchResident = fieldset.querySelector(".searchResident");
+    const datalist = fieldset.querySelector("datalist");
+
+    // assign a unique datalist id
+    if (searchResident && datalist) {
+        datalistCounter++;
+        const newId = "residentList_" + datalistCounter;
+        datalist.id = newId;
+        searchResident.setAttribute("list", newId);
+
+        // populate options once
+        datalist.innerHTML = `
+            <% if (residents && residents.length > 0) { %>
+                <% residents.forEach((resident) => { %>
+                    <option value="<%= resident.firstName %> <%= resident.lastName %> <%= resident.extName %>" data-id="<%= resident._id %>"></option>
+                <% }); %>
+            <% } %>
+        `;
+    }
+
+    if (requestFor) {
+        requestFor.onchange = function () {
+            if (this.value === "myself") {
+                requestBy.value = userId;
+                searchField?.classList.add("hidden");
+
+                // 🔹 Hide + remove required from proof input
+                const proofWrapper = fieldset.querySelector(".proofWrapper");
+                const proofInput = fieldset.querySelector(".proofInput");
+                if (proofWrapper && proofInput) {
+                    proofWrapper.classList.add("hidden");
+                    proofInput.removeAttribute("required");
+                    proofInput.value = "";
+                }
+
+            } else if (this.value === "others") {
+                requestBy.value = "";
+                searchField?.classList.remove("hidden");
+
+                // 🔹 Show + require proof input
+                const proofWrapper = fieldset.querySelector(".proofWrapper");
+                const proofInput = fieldset.querySelector(".proofInput");
+                if (proofWrapper && proofInput) {
+                    proofWrapper.classList.remove("hidden");
+                    proofInput.setAttribute("required", "required");
+                }
+            }
+        };
+    }
+
+    if (searchResident && datalist) {
+        searchResident.oninput = function () {
+            const val = this.value;
+            requestBy.value = "";
+            for (let i = 0; i < datalist.options.length; i++) {
+                if (datalist.options[i].value === val) {
+                    requestBy.value = datalist.options[i].dataset.id;
+                    break;
+                }
+            }
+        };
+    }
+}
+
+    // Init first fieldset
+    document.querySelectorAll("#fieldsetContainer fieldset").forEach((fs, i) => {
+        attachFieldsetListeners(fs);
+        if (i === 0) {
+            const removeBtn = fs.querySelector(".remove-btn");
+            if (removeBtn) removeBtn.style.display = "none";
+        }
+    });
+
+    // Add new fieldset
+    addBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        const fieldsets = fieldsetContainer.querySelectorAll("fieldset");
+        const lastFieldset = fieldsets[fieldsets.length - 1];
+        messageDiv.style.display = "none";
+
+        if (!isFieldsetValid(lastFieldset)) {
+            messageDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> Please fill in all required fields before adding a new document!`;
+            messageDiv.style.display = "flex";
+            messageDiv.style.marginBottom = "10px";
+            return;
+        }
+
+        const firstFieldset = document.querySelector("#fieldsetContainer fieldset");
+        if (!firstFieldset) return;
+
+        const newFieldset = firstFieldset.cloneNode(true);
+
+        // reset all inputs
+        newFieldset.querySelectorAll("select, input, textarea").forEach(el => {
+            if (el.tagName === "SELECT") el.selectedIndex = 0;
+            else el.value = "";
+            el.removeAttribute("required"); // reset required state
+        });
+
+        // reset search + proof visibility
+        const searchField = newFieldset.querySelector(".searchField");
+        if (searchField) searchField.classList.add("hidden");
+        const proofWrapper = newFieldset.querySelector(".proofWrapper");
+        if (proofWrapper) proofWrapper.classList.add("hidden");
+
+        attachFieldsetListeners(newFieldset);
+        fieldsetContainer.appendChild(newFieldset);
+
+        checkFieldsetCount();
+        checkLastFieldsetBeforeAdding();
+    });
+
+    fieldsetContainer.addEventListener("input", checkLastFieldsetBeforeAdding);
+    checkFieldsetCount();
+    checkLastFieldsetBeforeAdding();
+});
+</script>
+                    
+                    </div>
+
+                    <div id="formMessage" class="form-message height0 size12 justifyCenter" style="color: rgb(80, 0, 0);"></div>
+
+                    <div id="limitM" class="limitM marginBottom5 height0 size12 colorPrimary justifyCenter">
+                        <div class="height0 padding10 size14 str500 hidden"> You can only request not more than a five (5) items</div>
+                    </div>
+                    <div class="gap10 justifyEnd height0 marginTop15 width100 alignEnd">
+                            <a href="#" class="nav" id="addBtn">Add New</a>
+                        <button type="submit" class="nav">Submit</button>
+                    </div>
+                </form>
+            </div>

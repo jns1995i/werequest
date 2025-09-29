@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BVRSRS</title>
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <link rel="stylesheet" href="/style.css">
+    <link rel="icon" href="/images/logo.png">
+
+    <style>
+
+        @keyframes rotate {
+            from {
+                transform: scale(2) rotate(0deg);
+            }
+            to {
+                transform: scale(2) rotate(360deg);
+            }
+        }
+        @keyframes rotate2 {
+            from {
+                transform: scale(1.2) rotate(360deg);
+            }
+            to {
+                transform: scale(1.2) rotate(0deg);
+            }
+        }
+        .watermark1x {
+        animation-name: rotate;
+        animation-duration: 120s; /* Adjust this value for speed */
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        }
+        .watermark10x {
+        animation-name: rotate2;
+        animation-duration: 100s;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        }
+        body { display: flex; position: relative; overflow-y: auto; gap: 10px; }
+        .fnav { color: white; max-width: 100%; }
+        .pnav { background: var(--primaryBGDark) }
+        .pnav:hover { color: white; }
+        .homeCard {
+            width: 40%; height: 60%;
+            backdrop-filter: blur(15px) saturate(150%);
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.6);
+            padding: 20px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; color: white; text-align: center;
+        }
+        .photoF {
+            background-image: url('/images/brgy.jpg');  /* fixed: should be /images/profile.jpg */
+            background-position: center;
+            background-repeat: no-repeat;                  /* correct value */
+            background-size: cover;  
+        }
+        form { width: 50%; padding-inline: 50px; border-radius: 0px; box-shadow: none; }
+        .homeSec2 { border-left: 1px solid black; padding-left: 30px; }
+        #server-error {
+            border: 0.5px solid rgba(255, 0, 0, 0.625);
+            color: rgb(100, 1, 1);
+            background-color: rgb(255, 248, 248);
+        }
+
+        @media (max-width: 1024px) {
+            body { position: relative; overflow-y: auto; flex-direction: column; padding: 0; display: block; gap: 0;}
+            .hpCard { height: 110px; width: 110px; padding: 5px; }
+            .hpCard img { border: 3px solid white !important; height: 100px; width: 100px;}
+            .g-recaptcha {
+                transform: scale(1);
+                width: 200px;
+            }
+            #lCard { height: 120px; border-radius: 0 !important; width: 100% !important; padding: 0;}
+            #rCard { height: 600px; width: 100% !important; padding: 0;}
+            #lCard .photoF { border-radius: 5px;}
+            #msg {display: none;}
+            form { gap: 0; display: flex; height: auto; width: 95% !important; border-radius: 10px; padding: 0; }
+            .homeSec { gap: 5px; padding:0;}
+            .homeSec2 { border-left: 0; padding-left: 0; padding-inline: 40px; padding-block:0; }
+            .fnav { font-size: 12px; }
+            .p10 { font-size: 10px; }
+            p.title { font-size: 30px; font-weight: 400; }
+            #indexT { font-size: 14px; }
+            #secretBtn { color: transparent;}
+            button#loginBtn {
+                transform: scale(1);
+                transition: none;
+            }
+            button#loginBtn.fnav:hover {
+                border: none;
+                outline: none;
+                box-shadow: none;
+            }
+            #frgBtn:hover { transform: scale(1.02);}
+            .watermark1, .watermark2 {
+                transform: scale(2) !important;
+            }
+        }
+        .g-recaptcha {
+        padding: 0;  /* Optional padding for better spacing */
+        display: block; /* Ensure the reCAPTCHA element is a block element */
+        width: fit-content !important;
+        height: fit-content !important;
+        max-width: 100%;
+    }
+        div { width: auto;}
+    </style>
+</head>
+<body class="relative">
+    <div class="relative padding20 width63" id="lCard">
+            <div class="height0 padding15 borderRadius15 justifyCenter textCenter size16 str600 width70 absolute top35 index50 left20" id="msg" style="text-shadow: 2px 2px 5px rgba(255, 255, 255, 0.6); color: rgb(14, 47, 14);">
+                " The heart of our community, where service, unity, and progress begin. Welcome to Barangay San Andres, Guimba—your home, your future "
+            </div>
+        <div class="height100 photoF relative padding30 alignStart borderRadius25 width100"  style="filter: brightness(1.1) contrast(1);"></div>
+    </div>
+    <div class="width37 relative" id="rCard">
+        
+        
+        <a href="/" class="nav absolute top10 left10">
+            <i class="fas fa-arrow-left"></i> Back to Login
+        </a>
+    <form action="/forgotX" method="POST" class="gap20" style="flex-direction: column; width: 100%;">
+        <div class="height0 hpCard">
+            <img src="/images/logo.png" alt="Logo" class="homePhoto borderWhite borderRadius500 h160 w160">
+        </div>
+        <div class="gap15 col textCenter">
+            <p class="size36 str500 green">Forgot Password</p>
+            <div class="height0 gap0 col">
+                <p class="size14">
+                    <% if (error) { %>
+                        <br><p style="color: red;"><%= error %></p>
+                    <% } %>
+                </p>
+            </div>
+            <div class="height0 col">
+                <p class="size14">Enter your email address</p>
+            </div>
+            <div class="col gap10 hidden">
+                <div class="col alignStart" style="gap: 2px;">
+                    <label for="">Username</label>
+                    <input type="username" placeholder="e.g. jyne.santiago1395" name="username" >
+                </div>
+            </div>
+            <div class="col gap10">
+                <div class="col alignStart" style="gap: 2px;">
+                    <input type="email" placeholder="e.g. resident@gmail.com" name="email" required>
+                </div>
+            </div>
+            <button type="submit" class="nav fnav str400 bgTint2 size14 borderRadius5">Submit</button>
+        </div>
+    </form>
+
+
+    </div>
+    <a class="white height0 width0 size14 fixed right10 top10" style="opacity: 0;" href="/index2" id="secretBtn">SECRET ACCESS</a>
+    
+    <script>
+    function validateRecaptcha() {
+        var response = grecaptcha.getResponse();
+        if (!response) {
+            var errorDiv = document.getElementById("server-error");
+            if (errorDiv) {
+                errorDiv.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please complete the reCAPTCHA before logging in.';
+                errorDiv.style.display = "block";
+            }
+            return false;
+        }
+        return true;
+    }
+    </script>
+
+
+    <script>
+        document.querySelectorAll('.showPass').forEach(button => {
+            button.addEventListener('click', function() {
+                const passwordInput = button.previousElementSibling;
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    button.textContent = 'hide';
+                } else {
+                    passwordInput.type = 'password';
+                    button.textContent = 'show';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

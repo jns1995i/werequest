@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REGISTRAR</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/color.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <link rel="stylesheet" href="/user.css">
+    <link rel="icon" href="/images/clogo.png">
+    <style>
+        .hidden {
+            display: none;
+        }
+        @media screen and (max-width: 1025px) {
+            body { padding: 0; background-color: white !important;}
+            #mainFrame {
+                padding-inline: 0 !important;
+                padding: 0;
+                background-color: white !important;
+                background: white !important;
+            }
+            #backBtn {
+                position: initial;
+                left: initial;
+                top: initial;
+                margin: 20px 0 0 20px;
+            }
+            #feedback, .floatCard {
+                width: 100%;
+                position: initial;
+                left: initial;
+                bottom: initial;
+                padding: 15px;
+                box-shadow: none;
+                height: auto;
+            }
+            #feedback {
+                padding: 50px;
+            }
+            .responsive {
+                display: none !important;
+            }
+            .unresponsive {
+                display: flex;
+            }
+            #x2 {
+                padding: 15px;
+            }
+            #hero {
+                flex-direction: column;
+            }
+            #hero .width65 {
+                width: 100%;
+            }
+            #head3 {
+                flex-direction: column;
+                align-items: start;
+                gap: 0 !important;
+            }
+            
+        }
+    </style>
+<body class="block padding0 overflow-y1 relative bgWhite">
+     
+    <div class="height10 headPrime" id="headFrame">
+        <div class=" justifyStart paddingInline20 gap10 responsive">
+            <a href="/hom" class="userPhoto transition width0 h60 padding0 borderRadius500"><img src="/images/logo.jpg" alt="" class="height60 borderRadius500"></a>
+            <p class="size24 str400 white">WeRequest</p>
+        </div>
+        <div class="height0 justifyStart gap10 padding5">
+            <a href="/hom" class="nav cnav hidden" id=""><i class="fas fa-chevron-left"></i></a>
+            <a href="/hom" class="userPhoto transition width0 h60 padding0 borderRadius500 unresponsive hidden"><img src="/images/logo.jpg" alt="" class="height60 borderRadius500"></a>
+            <p class="size24 str400 white unresponsive hidden">WeRequest</p>
+        </div>
+        <div class="paddingInline10">
+            <div class="width100 height100 justifyEnd gap10" id="navFrame">
+                <a href="/prf" class="height0 width0 hidden" id="prfBtn">
+                    <img src="<%= user.photo ? user.photo : '/images/profile.jpg' %>" 
+                    alt="" 
+                    class="borderRadius500 h50 borderPrimary" 
+                    onerror="this.onerror=null; this.src='/images/profile.jpg';">
+                </a>
+            </div>
+            <div class="width100 height100 gap5 hidden" id="navFrame2">
+                <div class="height0 gap5 justifyStart">
+                    <div class="justifyStart gap10">
+                        <a href="/hom" class="userPhoto transition h40 w40 padding0 borderRadius500"><img src="/images/logo.jpg" alt="" class="borderRadius500"></a>
+                        <p class="size24 str400 colorPrimary">WeRequest</p>
+                    </div>
+                </div>
+                <div class="height0 justifyEnd gap10">
+                <a href="/srvAll" class="nav cnav colorPrimary"><i class="fas fa-file"></i></a>
+                    <a href="/prf" class="nav cnav headf" id="">
+                        <img src="<%= user.photo ? user.photo : '/images/profile.jpg' %>" 
+                        alt="" 
+                        class="borderRadius500" 
+                        onerror="this.onerror=null; this.src='/images/profile.jpg';">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="height0 justifyStart gap10 padding10 borderRadius10" id="headCard">
+        <div class="height0 justifyStart gap15 padding10 responsive">
+            <a href="javascript:history.back()" class="nav headf responsive colorPrimary" id=""><i class="fas fa-arrow-left"></i></a>
+            <p class="size20 str500">Request Details</p>
+            <a href="/hom" class="userPhoto transition h50 bgWhite padding0 borderRadius500 hidden"><img src="/images/logo.jpg" alt="" class="height60 borderRadius500"></a>
+            <p class="size24 str400 upperCase colorPrimary hidden">BVRSRS</p>
+        </div>  
+        <div class="height0 justifyStart gap15 padding10 hidden unresponsive">
+            <a href="javascript:history.back()" class="nav headf colorPrimary" id=""><i class="fas fa-arrow-left"></i></a>
+            <p class="size14 colorPrimary str500">Details</p>  
+        </div> 
+        <div class="height0 justifyEnd gap15 headPlate padding10">
+        </div>
+    </div>
+
+    <div class="block height0 overflow-y1 relative col paddingBottom10" style="padding-inline: 12%;" id="mainFrame">
+
+        <div class="height0 bgWhite relative borderRadius5 borderGreen col justifyStart alignStart paddingInline70 paddingBlock50" id="x2">
+                <% 
+                const createdDate = new Date(request.createdAt);
+                const today = new Date();
+                const yesterday = new Date();
+                yesterday.setDate(today.getDate() - 1);
+
+                const isToday = createdDate.toDateString() === today.toDateString();
+                const isYesterday = createdDate.toDateString() === yesterday.toDateString();
+
+                // Format parts
+                const monthDayYear = createdDate.toLocaleString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+                const time = createdDate.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+
+                let formattedDate;
+                if (isToday) {
+                    formattedDate = `Today - ${monthDayYear} at ${time}`;
+                } else if (isYesterday) {
+                    formattedDate = `Yesterday - ${monthDayYear} at ${time}`;
+                } else {
+                    const weekday = createdDate.toLocaleString('en-US', { weekday: 'long' });
+                    formattedDate = `${weekday} - ${monthDayYear} at ${time}`;
+                }
+                %>
+                <div class="height0 gap10 justifyBetween" id="head3">
+                    <p class="size18 str500"><%= request.tr %></p>
+                    <p class="size16"><%= formattedDate %></p>
+                </div>
+                <hr>
+                <br>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>TYPE</th>
+                            <th>COPIES</th>
+                            <th>PURPOSE</th>
+                            <th>REQUEST FOR</th>
+                            <th>STATUS</th>
+                            <th class="textCenter">PROOF</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><%= request.type %></td>
+                            <td>
+                                <%= request.qty %>
+                            </td>
+                            <td><%= request.purpose %></td>
+                            <td>
+                                <% if (request.isMyself) { %>
+                                Myself
+                                <% } else if (request.residentInfo) { %>
+                                <%= request.residentInfo.firstName %> <%= request.residentInfo.lastName %>
+                                <% } else { %>
+                                Unknown Resident
+                                <% } %>
+                            </td>
+                            <td>
+                                <% if (request.status === 'Approved') { %>
+                                <i class="fas fa-check-circle w20 h20 inline marginRight5 green"></i>
+                                <% } else if (request.status === 'Declined') { %>
+                                <i class="fas fa-xmark-circle w20 h20 inline marginRight5 red"></i>
+                                <% } else if (request.status === 'Verified') { %>
+                                <i class="fas fa-check-circle w20 h20 inline marginRight5 blue"></i>
+                                <% } else { %>
+                                <i class="fas fa-clock w20 h20 inline marginRight5 yellow"></i>
+                                <% } %>
+                                <%= request.status %>
+                            </td>
+                            <td>
+                            <% if (request.proof) { %>
+                                <% const file = request.proof; %>
+
+                                <% if (file.match(/\.(jpg|jpeg|png|gif)$/i)) { %>
+                                    <!-- Image preview -->
+                                    <img src="<%= file %>" alt="Proof" 
+                                        style="max-width:150px; border:1px solid #ccc; border-radius:5px;" class="hidden">
+                                    <!-- PDF link -->
+                                    <a class="nav" href="<%= file %>" target="_blank">
+                                        View Image
+                                    </a>
+
+                                <% } else if (file.match(/\.pdf$/i)) { %>
+                                    <!-- PDF link -->
+                                    <a class="nav" href="<%= file %>" target="_blank">
+                                        View PDF
+                                    </a>
+
+                                <% } else if (file.match(/\.(doc|docx)$/i)) { %>
+                                    <!-- Word file -->
+                                    <a class="nav" href="<%= file %>" download>
+                                        Download
+                                    </a>
+
+                                <% } else { %>
+                                    <!-- Fallback -->
+                                    <a class="nav" href="<%= file %>" target="_blank">
+                                        View File
+                                    </a>
+                                <% } %>
+                        <% } else { %>
+                                    <a class="nav" target="_blank" class="disabled" style="border: none !important; background-color: transparent; pointer-events: none;">
+                                        No Proof Upload
+                                    </a>
+                        <% } %>
+                        </td>
+                        </tr>
+                    </tbody>
+                </table>
+        </div>
+
+
+</body>
+</html>

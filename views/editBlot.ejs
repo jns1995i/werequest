@@ -1,0 +1,314 @@
+<% layout('layout') %>
+<head>
+    <style>
+        button {
+            text-decoration: none;
+            border: 1px solid green !important;
+            padding: 5px;
+            border-radius: 5px;
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 0.5px solid lightgray;
+            cursor: pointer;
+            transition: all 0.6s ease-in-out;
+            height: auto;
+            width: auto;
+            font-size: 0.8vw;
+            font-family: 'poppins', sans-serif;
+        }
+        button:hover {
+            transform: scale(1);
+        }
+        .pnav:hover, .pnav {
+            color: white;
+            background-color: rgb(0, 105, 0) !important;
+        }
+        .f {
+            height: auto;
+            flex-direction: column;
+            align-items: start;
+            gap: 5px;
+        }
+        .search-results button {
+            border: none
+        }
+        .person-item {
+            gap: 10px;
+            border: 0.5px solid rgb(1, 84, 0);
+            border-radius: 5px;
+            padding: 8px 10px;
+            width: fit-content;
+            font-weight: 400 !important;
+        }
+        .person-item div {
+            width: fit-content;
+            font-weight: 400 !important;
+        }
+        .person-item .remove-btn {
+            height: 20px;
+        }
+    </style>
+</head>
+<div class="bgSoft padding30 borderRadius10 blockX overflow-y1 relative">
+  <a href="/blotv/<%= caseItem._id %>" class="nav absolute left10 top10">
+    <i class="fas fa-chevron-left"></i>Go Back
+  </a>
+  <div class="col height0 padding10">
+<form action="/cases/update/<%= caseItem._id %>" method="POST" id="updateCaseForm" class="col">
+
+  <!-- Case Number -->
+  <div class="height0">
+    <label>Case No.</label>
+    <input type="text" name="caseNo" value="<%= caseItem.caseNo %>" required>
+  </div>
+
+  <!-- Complainants -->
+  <div>
+    <label>Complainants</label>
+    <input type="text" id="complainantInput" placeholder="Search or type name">
+    <button type="button" id="addComplainant">Add</button>
+    <div id="complainantList" class="person-list">
+<% complainants.forEach(function(c, idx) { %>
+  <div class="person-item">
+    <%= c %>
+    <button type="button" onclick="removeComplainant(<%= idx %>)">x</button>
+  </div>
+<% }); %>
+    </div>
+    <input type="hidden" id="complainantsData" name="complainants">
+  </div>
+
+  <!-- Respondents -->
+  <div>
+    <label>Respondents</label>
+    <input type="text" id="respondentInput" placeholder="Search or type name">
+    <button type="button" id="addRespondent">Add</button>
+    <div id="respondentList" class="person-list">
+      <% respondents.forEach(function(name, idx) { %>
+        <div class="person-item">
+          <%= name %> 
+          <button type="button" onclick="removeRespondent(<%= idx %>)">x</button>
+        </div>
+      <% }) %>
+    </div>
+    <input type="hidden" id="respondentsData" name="respondents">
+  </div>
+
+  <!-- Nature of Complaint -->
+  <div class="col">
+    <label>Nature of Complaint</label>
+    <input type="text" id="caseTypeInput" placeholder="Type complaint">
+    <button type="button" id="addCaseType">Add</button>
+    <div id="casesList" class="person-list">
+      <% caseItem.type.forEach(function(type, idx) { %>
+        <div class="person-item">
+          <%= type %> 
+          <button type="button" onclick="removeCaseType(<%= idx %>)">x</button>
+        </div>
+      <% }) %>
+    </div>
+    <input type="hidden" id="caseTypesData" name="caseTypes">
+  </div>
+
+  <!-- Remarks -->
+  <div>
+    <label>Complaint</label>
+    <textarea name="remarks"><%= caseItem.remarks %></textarea>
+  </div>
+
+  <button type="submit">Update Case</button>
+</form>
+  </div>
+</div><script>
+/*
+  This script _does not_ change your markup or classes.
+  It:
+  - receives `residents` (array) and `caseItem` from the server
+  - builds JS arrays for complainants/respondents/caseTypes
+  - pre-renders them into your existing .person-list containers
+  - hooks add/remove functions to always update hidden inputs
+  - keeps your existing search and add-manual behavior working
+*/
+
+/* server-side data provided by route */
+const serverResidents = <%- JSON.stringify(residents || []) %>; // [{ _id: "abc", firstName, lastName, ... }, ...]
+let complainants = <%- JSON.stringify(caseItem.complainants || []) %>; // array of ids (or objects)
+let respondents  = <%- JSON.stringify(caseItem.respondents || []) %>;
+let caseTypes     = <%- JSON.stringify(caseItem.type || []) %>;
+
+// Helper: normalise person item -> object with _id (string) and name fields
+function toResidentObj(item) {
+  if (!item) return null;
+  // If it's already an object with _id
+  if (typeof item === 'object' && item._id) {
+    // ensure _id is string
+    item._id = String(item._id);
+    return item;
+  }
+  // Otherwise it's likely a string id -> try to find in serverResidents
+  const idStr = String(item);
+  const found = serverResidents.find(r => String(r._id) === idStr);
+  if (found) return found;
+  // fallback -> treat as manual entry string (display as the string)
+  return { _id: idStr, firstName: idStr, middleName: "", lastName: "", extName: "", isManual: true };
+}
+
+// Convert complainants/respondents from whatever the DB stored (ids or objects) into client objects
+complainants = (complainants || []).map(toResidentObj).filter(Boolean);
+respondents  = (respondents  || []).map(toResidentObj).filter(Boolean);
+
+// Re-use your existing CSS class .person-item; render lists
+function renderPeopleList(containerId, listArray) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = "";
+  listArray.forEach((p, idx) => {
+    const display = (p.firstName ? `${p.firstName} ${p.middleName||''} ${p.lastName||''} ${p.extName||''}` : String(p)).replace(/\s+/g,' ').trim();
+
+    const item = document.createElement("div");
+    item.className = "person-item";
+    // inner text DIV (keeps your styles)
+    const textDiv = document.createElement("div");
+    textDiv.textContent = display;
+    item.appendChild(textDiv);
+
+    const removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.className = "remove-btn";
+    removeBtn.innerHTML = "&times;";
+    removeBtn.addEventListener("click", () => {
+      listArray.splice(idx, 1);
+      renderPeopleList(containerId, listArray);
+      updateHiddenInputs();
+    });
+
+    item.appendChild(removeBtn);
+    container.appendChild(item);
+  });
+}
+
+// Render case types (strings)
+function renderCaseTypes() {
+  const container = document.getElementById("casesList");
+  if (!container) return;
+  container.innerHTML = "";
+  caseTypes.forEach((t, idx) => {
+    const div = document.createElement("div");
+    div.className = "person-item";
+    div.textContent = t;
+
+    const removeBtn = document.createElement("button");
+    removeBtn.type = "button";
+    removeBtn.className = "remove-btn";
+    removeBtn.innerHTML = "&times;";
+    removeBtn.addEventListener("click", () => {
+      caseTypes.splice(idx, 1);
+      renderCaseTypes();
+      updateHiddenInputs();
+    });
+
+    div.appendChild(removeBtn);
+    container.appendChild(div);
+  });
+}
+
+// Keep hidden inputs up-to-date — IMPORTANT: send IDs (strings) for real residents, and full objects for manual ones
+function updateHiddenInputs() {
+  const complainantsPayload = complainants.map(p => p.isManual ? p : String(p._id));
+  const respondentsPayload  = respondents.map(p => p.isManual ? p : String(p._id));
+  document.getElementById('complainantsData').value = JSON.stringify(complainantsPayload || []);
+  document.getElementById('respondentsData').value  = JSON.stringify(respondentsPayload  || []);
+  document.getElementById('caseTypesData').value     = JSON.stringify(caseTypes || []);
+}
+
+// === Override/augment your existing add/remove functions so they call updateHiddenInputs() ===
+// If you already have addResident / addManualComplainant / addManualRespondent / addCaseType defined,
+// this block will replace them with versions that preserve your behavior but also keep hidden inputs updated.
+
+window.addResident = function(resident, listRef, containerId) {
+  // When search returns a resident, it passes the resident object with _id string
+  const targetArray = (containerId === "complainantList" ? complainants : (containerId === "respondentList" ? respondents : null));
+  if (!targetArray) return;
+  // ensure resident._id is string if present
+  if (resident && resident._id) resident._id = String(resident._id);
+  // avoid duplicates (compare by _id)
+  if (!targetArray.some(r => String(r._id) === String(resident._id))) {
+    targetArray.push(resident);
+    renderPeopleList(containerId, targetArray);
+    updateHiddenInputs();
+  }
+};
+
+// Non-resident add
+window.addManualComplainant = function() {
+  const f = document.getElementById("cFirstName").value.trim();
+  const m = document.getElementById("cMiddleName").value.trim();
+  const l = document.getElementById("cLastName").value.trim();
+  const e = document.getElementById("cExtName").value.trim();
+  if (!f || !l) { alert("First & Last Name required!"); return; }
+  const manual = { _id: 'manual-' + Date.now(), firstName: f, middleName: m, lastName: l, extName: e, isManual: true };
+  complainants.push(manual);
+  renderPeopleList("complainantList", complainants);
+  // clear inputs & hide
+  document.getElementById("cFirstName").value = "";
+  document.getElementById("cMiddleName").value = "";
+  document.getElementById("cLastName").value = "";
+  document.getElementById("cExtName").value = "";
+  document.getElementById("manualComplainant").style.display = "none";
+  updateHiddenInputs();
+};
+
+window.addManualRespondent = function() {
+  const f = document.getElementById("rFirstName").value.trim();
+  const m = document.getElementById("rMiddleName").value.trim();
+  const l = document.getElementById("rLastName").value.trim();
+  const e = document.getElementById("rExtName").value.trim();
+  if (!f || !l) { alert("First & Last Name required!"); return; }
+  const manual = { _id: 'manual-' + Date.now(), firstName: f, middleName: m, lastName: l, extName: e, isManual: true };
+  respondents.push(manual);
+  renderPeopleList("respondentList", respondents);
+  // clear inputs & hide
+  document.getElementById("rFirstName").value = "";
+  document.getElementById("rMiddleName").value = "";
+  document.getElementById("rLastName").value = "";
+  document.getElementById("rExtName").value = "";
+  document.getElementById("manualRespondent").style.display = "none";
+  updateHiddenInputs();
+};
+
+window.addCaseType = function() {
+  const caseSelect = document.getElementById("caseTypeSelect");
+  const otherCaseInput = document.getElementById("otherCaseInput");
+  const casesList = document.getElementById("casesList");
+  const caseType = caseSelect.value === "Others" ? otherCaseInput.value.trim() : caseSelect.value;
+  if (caseType && !caseTypes.includes(caseType)) {
+    caseTypes.push(caseType);
+    renderCaseTypes();
+    if (caseSelect.value === "Others") {
+      otherCaseInput.value = "";
+      otherCaseInput.style.display = "none";
+      caseSelect.value = "";
+    }
+    updateHiddenInputs();
+  }
+};
+
+// Ensure search buttons (the ones created by searchResident callback) call the updated addResident
+// NOTE: your existing searchResident function already calls addResident(resident, list, type)
+// so this override will be used automatically.
+
+// Hook submit to re-sync before submit (just to be safe)
+document.getElementById('updateCaseForm').addEventListener('submit', function(e) {
+  updateHiddenInputs();
+});
+
+// Initial render using the existing layout classes
+renderPeopleList("complainantList", complainants);
+renderPeopleList("respondentList", respondents);
+renderCaseTypes();
+updateHiddenInputs();
+
+// Optional: if you want the search-results to include serverResidents instantly when typing (your original search will still work)
+</script>

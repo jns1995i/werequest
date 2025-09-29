@@ -1,0 +1,256 @@
+<% layout('layout') %>
+
+<style>
+    input {
+        min-height: 42px;
+    }
+</style>
+
+<div class="height bgSoft padding10 borderRadius15 relative">
+    <a href="/res" class="nav absolute left20 top20"><i class="fas fa-chevron-left"></i>Go Back</a>    
+    <div class="height100 blockX overflow-y1 padding10 borderRadius15">
+        <div class="height0 padding10">
+            <form id="residentForm" action="/add-member" method="POST" class="height0 width50">
+                <div class="gap10 justifyStart alignStart height0">
+                    <div class="height0 col justifyStart alignStart">
+                        <p class="size30 str500 colorPrimary">Add Resident</p>
+                        <br>
+                        <div class="height0 gap10">
+                            <div class="height0 col gap5 alignStart">
+                                <label for="">First Name</label>
+                                <input type="text" name="firstName" required>
+                            </div>
+                            <div class="height0 col gap5 alignStart">
+                                <label for="">Middle Name</label>
+                                <input type="text" name="middleName">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="height0 gap10">
+                            <div class="height0 col gap5 alignStart">
+                                <label for="">Last Name</label>
+                                <input type="text" name="lastName" required>
+                            </div>
+                            <div class="height0 col gap5 alignStart">
+                                <label for="">Ext Name</label>
+                                <input type="text" name="extName">
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="height0 gap10">
+                            <div class="height0 gap5">
+                                <div class="height0 col alignStart">
+                                    <label for="">House Number</label>
+                                    <input name="houseNo" type="text" required>
+                                </div>
+                                <div class="height0 col alignStart">
+                                    <label for="">Purok</label>
+                                    <div class="selectBar widthMax100"> 
+                                        <select id="purok" required name="purok"  placeholder="purok">
+                                            <option value="Purok 1">Purok 1</option>
+                                            <option value="Purok 2">Purok 2</option>
+                                            <option value="Purok 3">Purok 3</option>
+                                            <option value="Purok 4">Purok 4</option>
+                                            <option value="Purok 5">Purok 5</option>
+                                            <option value="Purok 6">Purok 6</option>
+                                            <option value="Purok 7">Purok 7</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <label for="">Birthday</label>
+                        <div class="height0 gap5">
+                            <div class="height0 col alignStart width40">
+                                <div class="selectBar widthMax100"> 
+                                    <select id="bMonth" required name="bMonth"  placeholder="Month">
+                                        <option value="" selected disabled>Month</option>
+                                        <option value="1">January</option>
+                                        <option value="2">February</option>
+                                        <option value="3">March</option>
+                                        <option value="4">April</option>
+                                        <option value="5">May</option>
+                                        <option value="6">June</option>
+                                        <option value="7">July</option>
+                                        <option value="8">August</option>
+                                        <option value="9">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="height0 col alignStart width20">
+                                <input name="bDay" type="number" id="bDay" min="1" max="31" placeholder="Day" required>
+                            </div>
+                            <div class="height0 col alignStart width40">
+                                <input name="bYear" type="number" id="bYear" min="1900" placeholder="Year" required>
+                            </div>
+                        </div>
+                        <label class="colorPrimary" id="ageWarning" style="display: none;"></label>
+                        <br>
+                        <div class="height0 col alignStart">
+                            <label for="">Birth Place</label>
+                            <input type="text" name ="birthPlace" required>
+                        </div>
+                        <br>
+                        
+                        <div class="height0 gap10 marginBottom5">
+                            <div class="height0 col alignStart">
+                                <label for="">Gender</label>
+                                <div class="selectBar widthMax100">
+                                    <select id="gender" name="gender" required>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="height0 col alignStart">
+                                <label for="">Civil Status</label>
+                                <div class="selectBar  widthMax100">
+                                    <select name="civilStatus" id="civilStatus" required>
+                                        <option value="Single">Single</option>
+                                        <option value="Married">Married</option>
+                                        <option value="Widowed">Widowed</option>
+                                        <option value="Separated">Separated</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <br>
+                        
+                        <div class="height0 gap10 marginBottom5">
+                            <div class="height0 col alignStart">
+                                <label for="">Precinct</label>
+                                <div class="selectBar  widthMax100">
+                                    <select name="precinct" id="precinct" required>
+                                        <option value="Registered Vote">Registered Voter</option>
+                                        <option value="Non-Voter">Not Registered</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="height0 col alignStart">
+                                <label for="">Education</label>
+                                <div class="selectBar  widthMax100">
+                                    <select name="education" id="education" required>
+                                        <option value="" selected disabled>Select</option>
+                                        <option value="Elementary">Elementary</option>
+                                        <option value="High School">High School</option>
+                                        <option value="Vocational">Vocational</option>
+                                        <option value="College">College</option>
+                                        <option value="Post Graduate">Post Graduate</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="height0 gap10 marginBottom5">
+                            <div class="height0 col alignStart">
+                                <label for="">Nationality</label>
+                                <input type="text" name="nationality" id="nationality">
+                            </div>
+                            <div class="height0 col alignStart">
+                                <label for="">Religion</label>
+                                <input type="text" name="religion" id="religion" >
+                            </div>
+                        </div>
+                        <div class="height0 gap10 marginBlock15" id="emailField">
+                            <div class="height0 col justifyStart alignStart">
+                                <label for="">Phone</label>
+                                <input type="text" name="phone" id="phone" class="phone">
+                            </div>
+                            <div class="height0 col justifyStart alignStart">
+                                <label for="">Email</label>
+                                <input type="email" name="email" id="email">
+                            </div>
+                        </div>
+                        <br><hr><br>
+                        <div class="height0 gap10">
+                            <div class="height0 justifyStart gap10 paddingInline10 borderRadius10" id="soloParent">
+                                <input type="checkbox" name="soloParent"><label for="">Solo Parent (Optional) </label>
+                            </div>
+                            <div class="height0 justifyStart gap10 paddingInline10 borderRadius10"  id="pregnantLabel">
+                                <input type="checkbox" name="pregnant" id="pregnant"><label for="">Pregnant (Optional) </label>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="height0 gap10 borderRadius10 paddingBlock5">
+                            <div class="height0 justifyStart gap10 paddingInline10">
+                                <input type="checkbox" id="pwdCheckbox" name="pwd"><label for="">PWD (Optional) </label>
+                            </div>
+                            <div class="height0 col alignStart">
+                                <div class="selectBar">
+                                    <select id="pwdType" name="pwdType">
+                                        <option value="" selected disabled>Select Disability Type</option>
+                                        <option value="Visual">Visual</option>
+                                        <option value="Hearing">Hearing</option>
+                                        <option value="Mobility">Mobility</option>
+                                        <option value="Mental">Mental</option>
+                                        <option value="Speech">Speech</option>
+                                        <option value="Intellectual">Intellectual</option>
+                                        <option value="Psychosocial">Psychosocial</option>
+                                        <option value="Learning">Learning</option>
+                                        <option value="Multiple">Multiple Disabilities</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <hr>
+                        <br>
+                        <div class="height0 gap10">
+                            <div class="height0 col gap5 alignStart">
+                                <label for="">Working Status</label>
+                                <div class="selectBar"> 
+                                    <select id="employmentStatus" name="employmentStatus" required>
+                                        <option value="Unemployed">Unemployed</option>
+                                        <option value="Employed">Employed</option>
+                                        <option value="Self-Employed">Self-Employed</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="height0 col gap5 alignStart  borderRadius10 padding5"  id="workField">
+                                <label for="">Work or Source of Income</label>
+                                <input type="text" id="work" name="work">
+                            </div>
+                        </div>
+                        <br>
+                        <div class="height0 gap5">
+                            <br>
+                            <div class="height0 col gap5 alignStart">
+                                <label for="">Position</label>
+                                <div class="selectBar widthMin100">
+                                    <select name="position" id="position">
+                                        <option value="Resident">Resident</option>
+                                        <option value="Punong Barangay">Punong Barangay</option>
+                                        <option value="Barangay Secretary">Barangay Secretary</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="height0 justifyEnd"><button type="submit" class="nav pnav"><i class="fas fa-check-square"></i>Add to Record</button></div>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        
+    </div>
+</div>
+            
+    <script>
+        function enforceNumericInput(event) {
+            event.target.value = event.target.value.replace(/[^0-9]/g, '').slice(0, 11);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const phoneInputs = document.querySelectorAll('.phone');
+            phoneInputs.forEach(input => {
+                input.addEventListener('input', enforceNumericInput);
+            });
+        });
+    </script>

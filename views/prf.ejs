@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BVRSRS</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link  href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+    <script src="/color.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <link rel="stylesheet" href="/user.css">
+    <link rel="icon" href="/images/logo.png">
+    <style>
+        .horizon {
+        display: flex;
+        overflow-x: auto;
+        white-space: nowrap;
+        gap: 20px;
+        padding: 15px 0;
+        justify-content: start;
+        scroll-snap-type: x mandatory;
+        border: 1px solid rgba(255, 255, 255, 0);
+        border-radius: 10px;
+        }
+        .horCard {
+            flex: 0 0 auto;
+            padding: 20px;
+            width: 23%;
+        }
+        .details {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.6s ease-in-out, opacity 0.8s ease-in-out, padding 0.4s ease-in-out;
+            white-space: pre-line;
+        }
+
+        .details.show {
+            max-height: fit-content;
+            opacity: 1;
+            padding: 10px 0;
+        }
+
+        .newsCard {
+            transition: all 0.8s ease-in-out;
+        }
+        #assignDepCard, #assignPhotoCard, #passCard, #povertyCard {
+            max-width: 0;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        #assignDepCard.active, #assignPhotoCard.active, #passCard.active, #povertyCard.active {
+            max-width: 100%;
+            max-height: 100%;
+            opacity: 1;
+            padding: 0;
+            position: absolute;
+            z-index: 500;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .unseen {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.9s ease, opacity 0.6s ease;
+        }
+        .seen {
+            max-height: 300px;
+            opacity: 1;
+            padding: 0;
+            transition: max-height 0.9s ease, opacity 0.6s ease;
+        }
+        textarea {
+            background-color: white;
+        }
+        label {
+            margin-top: 20px;
+        }
+        .headf {
+            border: none;
+        }
+        .cnavX {
+                padding: 0;
+                height: 30px;
+                width: 31px;
+                min-width: 0;
+                border-radius: 50%;
+                i {
+                    font-size: 14px;
+                    height: 100%;
+                    width: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+            #userInfo td.str400 {
+                width: 25%;
+            }
+            #centerTable td, #centerTable tr, #centerTable th {
+                text-align: center;
+            }
+            .userPhoto {
+                height: 110px;
+                width: 110px;
+                outline: 1px solid lightgray;
+            }
+
+        
+@media screen and (max-width: 1025px) {
+    .mobile {
+        display: none;
+    }
+    .responsive {
+        display: none;
+    }
+    body {
+        padding: 0;
+    }
+    .EmerText {
+        display: flex;
+    }
+    #mainBody {
+        padding: 0 !important;
+    }
+    #mainCardM {
+        width: 100% !important;
+    }
+    .abstractBG {
+        align-items: center;
+    }
+        #assignDepCard.active, #assignPhotoCard.active, #passCard.active, #povertyCard.active {
+            max-width: 100%;
+            max-height: 100%;
+            opacity: 1;
+            padding: 0;
+            position: absolute;
+            z-index: 500;
+            top: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+    .modalCard form {
+        width: 100%;
+    }
+    #sidePanel, #sidePanel2 {
+        position: relative;
+        width: 100%;
+        top: 0;
+        left: 0;
+        margin-block: 15px;
+        background-color: rgb(237, 237, 237);
+        border: 0.5px solid gray;
+        box-shadow: none;
+    }
+    #perCard {
+        position: relative;
+        width: 100%;
+        top: 0;
+        left: 0;
+        margin-block: 15px;
+        border: 0.5px solid rgb(208, 208, 208);
+        box-shadow: none;
+    }
+}
+    </style>
+<body class="block bgWhite padding0 height100">
+
+
+    <div class="height100 block alignStart overflow-y1 hidden" id="rstCard" style="overflow-y: auto !important;">
+        <div class="height100 padding20 justifyCenter alignCenter modalCard">
+            <form action="/myPasswordRST" method="POST" id="changePassForm" class="flex bgWhite borderRadius5 col height0 padding30 gap15 width30 darkShadow relative">
+                <p class="size20 str500">Create New Password</p>
+
+                <!-- Current password (hidden) -->
+                <div class="height0 gap5 col alignStart">
+                    <div class="height0 justifyBetween">
+                        <label for="currentPassword" class="marginTop0 hidden">Current Password</label>
+                        <div class="width0 success1 green size12 justifyStart height0" style="display:none;"><i class="fas fa-check-circle marginLeft10 marginRight5"></i> Verified</div>
+                    </div>
+                    <input type="password" class="hidden" id="currentPassword" name="currentPassword" value="<%= user.password %>" required>
+                    <div class="error1 red size12 justifyStart height0" style="display:none;">Wrong Password!</div>
+                </div>
+
+                <!-- Error if confirm doesn't match current -->
+
+                <!-- New password -->
+                <div class="height0 gap5 col alignStart">
+                    <div class="height0 justifyBetween">
+                        <label for="newPassword" class="marginTop0">Create Password </label>                        
+                        <div class="width0 success3 green size12 justifyStart height0" style="display:none;"></div>
+                        <div class="width0 success4 colorPrimary size12 justifyStart height0" style="display:none;"></div>
+                    </div>
+                    <input type="password" id="newPassword" name="password" required>
+                    <div class="error3 red size12 justifyStart height0" style="display:none;">
+                        <div class="height0 col alignStart padding10 borderRadius10 borderPrimary">
+                            <p class="size12">&bull; Atleast 1 Special Character</p>
+                            <p class="size12">&bull; Atleast 1 Upper Case Letter</p>
+                            <p class="size12">&bull; Combination of Letter and Numbers</p>
+                            <p class="size12">&bull; Minimum of 8 characters</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error if password is weak -->
+
+                <!-- Confirm new password -->
+                <div class="height0 gap5 col alignStart">
+                    <div class="height0 justifyBetween">
+                        <label for="confirmPassword" class="marginTop0">Confirm Password</label>
+                        <div class="width0 success2 green size12 justifyStart height0" style="display:none;"></div>
+                    </div>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    <div class="error2 red size12 justifyStart height0" style="display:none;">Passwords do not match!</div>
+                </div>
+
+                <!-- Error if confirm doesn't match new password -->
+
+                <!-- Show/hide -->
+                <div class="height0 justifyStart">
+                    <label class="showPass size12 marginTop0" style="cursor:pointer;" onclick="togglePasswords()"><i class="fas fa-eye"></i> Show Password</label>
+                </div>
+
+                <div class="textCenter size12 red str500 warning padding10 borderPrimary borderRadius10" style="display: none;">
+                    Please ensure all inputs are valid!
+                </div>
+                <!-- Submit -->
+                <div class="height0 justifyEnd faded2" id="submitBtn">
+                    <button type="submit" class="nav">Save Changes</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <script>
+(function() {
+    const rstCard = document.getElementById("rstCard");
+    if (!rstCard) return; // safety check
+
+    const newPass = rstCard.querySelector("#newPassword");
+    const confirmPass = rstCard.querySelector("#confirmPassword");
+    const form = rstCard.querySelector("#changePassForm");
+    const warningDiv = rstCard.querySelector(".warning");
+
+    const error2 = rstCard.querySelector(".error2");   // mismatch
+    const error3 = rstCard.querySelector(".error3");   // weak
+    const success2 = rstCard.querySelector(".success2"); // match ok
+    const success3 = rstCard.querySelector(".success3"); // strong
+    const success4 = rstCard.querySelector(".success4"); // good
+    const showToggle = rstCard.querySelector(".showPass");
+    const submitBtnDiv = rstCard.querySelector("#submitBtn");
+
+    let debounceTimer;
+
+    function isStrong(password) {
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/.test(password);
+    }
+
+    function isGood(password) {
+        return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{4,}$/.test(password);
+    }
+
+    function checkFormValidity() {
+        const newVal = newPass.value.trim();
+        const confVal = confirmPass.value.trim();
+        const passwordsMatch = newVal !== "" && newVal === confVal;
+        const passwordIsStrong = isStrong(newVal);
+
+        if (passwordsMatch && passwordIsStrong) {
+            submitBtnDiv.classList.remove("faded2");
+            warningDiv.style.display = "none";
+        } else {
+            submitBtnDiv.classList.add("faded2");
+        }
+    }
+
+    function validatePasswords() {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+            const newVal = newPass.value.trim();
+            const confVal = confirmPass.value.trim();
+
+            // mismatch check
+            if (newVal && confVal) {
+                if (newVal !== confVal) {
+                    error2.style.display = "flex";
+                    success2.style.display = "none";
+                } else {
+                    error2.style.display = "none";
+                    success2.style.display = "inline";
+                }
+            } else {
+                error2.style.display = "none";
+                success2.style.display = "none";
+            }
+
+            // strength check
+            if (newVal) {
+                if (!isGood(newVal)) {
+                    error3.style.display = "flex";
+                    success3.style.display = "none";
+                    success4.style.display = "none";
+                } else if (!isStrong(newVal)) {
+                    error3.style.display = "none";
+                    success3.style.display = "none";
+                    success4.style.display = "inline";
+                } else {
+                    error3.style.display = "none";
+                    success3.style.display = "inline";
+                    success4.style.display = "none";
+                }
+            } else {
+                error3.style.display = "none";
+                success3.style.display = "none";
+                success4.style.display = "none";
+            }
+
+            checkFormValidity();
+        }, 500);
+    }
+
+    newPass.addEventListener("input", validatePasswords);
+    confirmPass.addEventListener("input", validatePasswords);
+
+    form.addEventListener("submit", (e) => {
+        warningDiv.style.display = "none";
+        const newVal = newPass.value.trim();
+        const confVal = confirmPass.value.trim();
+
+        const passwordsMatch = newVal !== "" && newVal === confVal;
+        const passwordIsStrong = isStrong(newVal);
+
+        if (!(passwordsMatch && passwordIsStrong)) {
+            e.preventDefault();
+            warningDiv.style.display = "flex";
+        } else {
+            const confirmReset = confirm("Are you sure you want to reset your password?");
+            if (!confirmReset) e.preventDefault();
+        }
+    });
+
+    showToggle.addEventListener("click", () => {
+        const isHidden = newPass.type === "password";
+        [newPass, confirmPass].forEach(input => {
+            input.type = isHidden ? "text" : "password";
+        });
+
+        showToggle.innerHTML = isHidden
+            ? '<i class="fas fa-eye-slash"></i> Hide Password'
+            : '<i class="fas fa-eye"></i> Show Password';
+    });
+})();
+</script>
+
+
+    <div class="height100 block alignStart overflow-y1" id="assignDepCard" style="overflow-y: auto !important;">
+        <div class="height0 padding20">
+            <form id="residentForm" action="/myUpdate" method="POST" class="height0 width50 bgWhite padding30 gap0 darkShadow relative borderRadius10">
+    <a href="" class="nav cnav absolute right10 top10"><i class="fas fa-times"></i></a>
+    <div class="gap5 justifyStart alignStart height0">
+        <div class="height0 col justifyStart alignStart">
+            <p class="size30 str500 colorPrimary">Edit Profile</p>
+
+            <!-- First & Middle Name -->
+            <div class="height0 gap10">
+                <div class="height0 col gap5 alignStart">
+                    <label for="">First Name</label>
+                    <input type="text" name="firstName" value="<%= user.firstName %>" required>
+                </div>
+                <div class="height0 col gap5 alignStart">
+                    <label for="">Middle Name</label>
+                    <input type="text" name="middleName" value="<%= user.middleName %>">
+                </div>
+            </div>
+
+            <!-- Last & Ext Name -->
+            <div class="height0 gap10">
+                <div class="height0 col gap5 alignStart">
+                    <label for="">Last Name</label>
+                    <input type="text" name="lastName" value="<%= user.lastName %>" required>
+                </div>
+                <div class="height0 col gap5 alignStart">
+                    <label for="">Ext Name</label>
+                    <input type="text" name="extName" value="<%= user.extName %>">
+                </div>
+            </div>
+
+            <!-- House No & Purok -->
+            <div class="height0 gap10">
+                <div class="height0 gap5">
+                    <div class="height0 col alignStart">
+                        <label for="">House Number</label>
+                        <input name="houseNo" type="text" value="<%= user.houseNo %>" required>
+                    </div>
+                    <div class="height0 col alignStart">
+                        <label for="">Purok</label>
+                        <div class="selectBar widthMax100"> 
+                            <select id="purok" required name="purok">
+                                <% for(let i=1; i<=7; i++){ %>
+                                    <option value="Purok <%= i %>" <%= user.purok === 'Purok ' + i ? 'selected' : '' %>>Purok <%= i %></option>
+                                <% } %>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Birthday -->
+            <label for="">Birthday</label>
+            <div class="height0 gap5">
+                <div class="height0 col alignStart width40">
+                    <div class="selectBar widthMax100"> 
+                        <select id="bMonth" required name="bMonth">
+                            <option value="" disabled>Month</option>
+                            <% const months = ["January","February","March","April","May","June","July","August","September","October","November","December"]; %>
+                            <% for(let i=1; i<=12; i++){ %>
+                                <option value="<%= i %>" <%= user.bMonth == i ? 'selected' : '' %>><%= months[i-1] %></option>
+                            <% } %>
+                        </select>
+                    </div>
+                </div>
+                <div class="height0 col alignStart width20">
+                    <input name="bDay" type="number" id="bDay" min="1" max="31" value="<%= user.bDay %>" placeholder="Day" required>
+                </div>
+                <div class="height0 col alignStart width40">
+                    <input name="bYear" type="number" id="bYear" min="1900" value="<%= user.bYear %>" placeholder="Year" required>
+                </div>
+            </div>
+            <label class="colorPrimary" id="ageWarning" style="display: none;"></label>
+
+            <!-- Birth Place -->
+            <div class="height0 col alignStart">
+                <label for="">Birth Place</label>
+                <div class="selectBar widthMin100">
+                    <select name="birthPlace" id="birthPlace" required>
+                        <option value="">--Select City--</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Gender & Civil Status -->
+            <div class="height0 gap10 marginBottom5">
+                <div class="height0 col alignStart">
+                    <label for="">Gender</label>
+                    <div class="selectBar widthMax100">
+                        <select id="gender" name="gender" required>
+                            <option value="Male" <%= user.gender === 'Male' ? 'selected' : '' %>>Male</option>
+                            <option value="Female" <%= user.gender === 'Female' ? 'selected' : '' %>>Female</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="height0 col alignStart">
+                    <label for="">Civil Status</label>
+                    <div class="selectBar  widthMax100">
+                        <select name="civilStatus" id="civilStatus" required>
+                            <option value="Single" <%= user.civilStatus === 'Single' ? 'selected' : '' %>>Single</option>
+                            <option value="Married" <%= user.civilStatus === 'Married' ? 'selected' : '' %>>Married</option>
+                            <option value="Widowed" <%= user.civilStatus === 'Widowed' ? 'selected' : '' %>>Widowed</option>
+                            <option value="Separated" <%= user.civilStatus === 'Separated' ? 'selected' : '' %>>Separated</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Precinct & Education -->
+            <div class="height0 gap10 marginBottom5">
+                <div class="height0 col alignStart">
+                    <label for="">Precinct</label>
+                    <div class="selectBar widthMax100">
+                        <select name="precinct" id="precinct" required>
+                            <option value="Registered Voter" <%= user.precinct === 'Registered Voter' ? 'selected' : '' %>>Registered Voter</option>
+                            <option value="Non-Voter" <%= user.precinct === 'Non-Voter' ? 'selected' : '' %>>Not Registered</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="height0 col alignStart">
+                    <label for="">Education</label>
+                    <div class="selectBar widthMax100">
+                        <select name="education" id="education" required>
+                            <option value="" disabled>Select</option>
+                            <option value="Elementary" <%= user.education === 'Elementary' ? 'selected' : '' %>>Elementary</option>
+                            <option value="High School" <%= user.education === 'High School' ? 'selected' : '' %>>High School</option>
+                            <option value="Vocational" <%= user.education === 'Vocational' ? 'selected' : '' %>>Vocational</option>
+                            <option value="College" <%= user.education === 'College' ? 'selected' : '' %>>College</option>
+                            <option value="Post Graduate" <%= user.education === 'Post Graduate' ? 'selected' : '' %>>Post Graduate</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nationality & Religion -->
+            <div class="height0 gap10 marginBottom5">
+                <div class="height0 col alignStart">
+                    <label for="">Nationality</label>
+                    <input type="text" name="nationality" id="nationality" value="<%= user.nationality %>">
+                </div>
+                <div class="height0 col alignStart">
+                    <label for="">Religion</label>
+                    <input type="text" name="religion" id="religion" value="<%= user.religion %>">
+                </div>
+            </div>
+
+            <!-- Phone & Email -->
+            <div class="height0 gap10 marginBlock15" id="emailField">
+                <div class="height0 col justifyStart alignStart">
+                    <label for="">Phone</label>
+                    <input type="text" name="phone" id="phone" class="phone" value="<%= user.phone %>">
+                </div>
+                <div class="height0 col justifyStart alignStart">
+                    <label for="">Email</label>
+                    <input type="email" name="email" id="email" value="<%= user.email %>">
+                </div>
+            </div>
+
+            <br><hr><br>
+
+            <!-- Solo Parent & Pregnant -->
+            <div class="height0 gap10">
+                <div class="height0 justifyStart alignCenter gap10 paddingInline10 borderRadius10" id="soloParent">
+                    <input type="checkbox" class="width0 height0" name="soloParent" <%= user.soloParent === 'on' ? 'checked' : '' %>>
+                    <label for="">Solo Parent (Optional)</label>
+                </div>
+
+                <div class="height0 justifyStart alignCenter gap10 paddingInline10 borderRadius10" id="pregnantLabel">
+                    <input type="checkbox" class="width0 height0" name="pregnant" <%= user.pregnant === 'on' ? 'checked' : '' %>>
+                    <label for="">Pregnant (Optional)</label>
+                </div>
+            </div>
+
+            <br>
+
+            <!-- PWD -->
+            <div class="height0 gap10 borderRadius10 paddingBlock5">
+                <div class="height0 justifyStart alignCenter gap10 paddingInline10">
+                    <input type="checkbox" class="width0 height0" id="pwdCheckbox" name="pwd" <%= user.pwd ? 'Yes' : 'No' %>><label for="">PWD (Optional) </label>
+                </div>
+                <div class="height0 col alignStart">
+                    <div class="selectBar">
+                        <select id="pwdType" name="pwdType">
+                            <option value="" disabled>Select Disability Type</option>
+                            <% const disabilities = ["Visual","Hearing","Mobility","Mental","Speech","Intellectual","Psychosocial","Learning","Multiple"]; %>
+                            <% disabilities.forEach(d => { %>
+                                <option value="<%= d %>" <%= user.pwdType === d ? 'selected' : '' %>><%= d %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <br><hr><br>
+
+            <!-- Employment -->
+            <div class="height0 gap10">
+                <div class="height0 col gap5 alignStart">
+                    <label for="">Working Status</label>
+                    <div class="selectBar"> 
+                        <select id="employmentStatus" name="employmentStatus" required>
+                            <option value="Unemployed" <%= user.employmentStatus === 'Unemployed' ? 'selected' : '' %>>Unemployed</option>
+                            <option value="Employed" <%= user.employmentStatus === 'Employed' ? 'selected' : '' %>>Employed</option>
+                            <option value="Self-Employed" <%= user.employmentStatus === 'Self-Employed' ? 'selected' : '' %>>Self-Employed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="height0 col gap5 alignStart borderRadius10 padding5" id="workField">
+                    <label for="">Work or Source of Income</label>
+                    <input type="text" id="work" name="work" value="<%= user.work %>">
+                </div>
+            </div>
+
+            <!-- Position -->
+            <div class="height0 gap5">
+                <br>
+                <div class="height0 col gap5 alignStart">
+                    <label for="">Position</label>
+                    <div class="selectBar widthMin100">
+                        <select name="position" id="position">
+                            <option value="Resident" <%= user.position === 'Resident' ? 'selected' : '' %>>Resident</option>
+                            <option value="Punong Barangay" <%= user.position === 'Punong Barangay' ? 'selected' : '' %>>Punong Barangay</option>
+                            <option value="Barangay Secretary" <%= user.position === 'Barangay Secretary' ? 'selected' : '' %>>Barangay Secretary</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <br>
+            <div class="height0 justifyEnd"><button type="submit" class="nav">Save Changes</button></div>
+        </div>
+    </div>
+</form>
+
+<script>
+    // Fill birthPlace dynamically & keep selected
+    const cities = [
+        "Alaminos","Angeles","Antipolo","Bacolod","Bacoor","Bago","Baguio",
+        "Bais","Balanga","Batac","Batangas City","Bayawan","Baybay","Bayugan",
+        "Biñan","Bislig","Bogo","Borongan","Bulacan","Butuan","Cabadbaran",
+        "Cabanatuan","Cabuyao","Cadiz","Cagayan de Oro","Calaca","Calamba",
+        "Calapan","Calbayog","Caloocan","Candon","Canlaon","Carcar","Carmona",
+        "Catbalogan","Cauayan","Cavite City","Cebu City","Cotabato City",
+        "Dagupan","Danao","Dapitan","Dasmariñas","Davao City","Digos",
+        "Dipolog","Dumaguete","El Salvador","Escalante","Gapan","General Santos",
+        "General Trias","Gingoog","Guihulngan","Himamaylan","Ilagan","Iligan",
+        "Iloilo City","Imus","Iriga","Isabela","Kabankalan","Kidapawan",
+        "Koronadal","La Carlota","Lamitan","Laoag","Lapu-Lapu","Las Piñas",
+        "Legazpi","Ligao","Lipa","Lucena","Maasin","Mabalacat","Makati",
+        "Malabon","Malaybalay","Malolos","Mandaluyong","Mandaue","Manila",
+        "Marawi","Marikina","Masbate City","Mati","Meycauayan","Muñoz",
+        "Muntinlupa","Naga","Navotas","Olongapo","Ormoc","Oroquieta","Ozamiz",
+        "Pagadian","Palayan","Panabo","Parañaque","Pasay","Pasig","Passi",
+        "Puerto Princesa","Quezon City","Roxas","Sagay","Samal","San Carlos",
+        "San Fernando","San Jose","San Jose del Monte","San Pablo","San Pedro",
+        "Santa Rosa","Santo Tomas","Santiago","Silay","Sipalay","Sorsogon City",
+        "Surigao City","Tabaco","Tabuk","Tacloban","Tacurong","Tagaytay",
+        "Tagbilaran","Taguig","Tagum","Talisay","Tanauan","Tandag","Tangub",
+        "Tanjay","Tarlac City","Tayabas","Toledo","Trece Martires","Tuguegarao",
+        "Urdaneta","Valencia","Valenzuela","Victorias","Vigan","Zamboanga City"
+    ];
+    const birthPlaceSelect = document.getElementById("birthPlace");
+    const selectedCity = "<%= user.birthPlace %>";
+    cities.forEach(city => {
+        let option = document.createElement("option");
+        option.value = city;
+        option.textContent = city;
+        if(city === selectedCity) option.selected = true;
+        birthPlaceSelect.appendChild(option);
+    });
+</script>
+        </div>
+    </div>
+
+    <div class="height100 block alignStart overflow-y1" id="passCard" style="overflow-y: auto !important;">
+        <div class="height100 padding20 justifyCenter alignCenter modalCard">
+            <form action="/myPassword" method="POST" id="changePassForm" class="flex bgWhite borderRadius10 col height0 padding30 gap15 width30 darkShadow relative">
+                <a href="" class="nav cnav absolute right10 top10"><i class="fas fa-times"></i></a>
+                <p class="size20 str500">Reset My Password</p>
+
+                <!-- Current password (hidden) -->
+                <div class="height0 gap5 col alignStart">
+                    <div class="height0 justifyBetween">
+                        <label for="currentPassword" class="marginTop0">Current Password</label>
+                        <div class="width0 success1 green size12 justifyStart height0" style="display:none;"><i class="fas fa-check-circle marginLeft10 marginRight5"></i></div>
+                    </div>
+                    <input type="password" id="currentPassword" name="currentPassword" required>
+                    <div class="error1 red size12 justifyStart height0" style="display:none;">Wrong Password!</div>
+                </div>
+
+                <!-- Error if confirm doesn't match current -->
+
+                <!-- New password -->
+                <div class="height0 gap5 col alignStart">
+                    <div class="height0 justifyBetween">
+                        <label for="newPassword" class="marginTop0">Create Password </label>                        
+                        <div class="width0 success3 green size12 justifyStart height0" style="display:none;"></div>
+                        <div class="width0 success4 colorPrimary size12 justifyStart height0" style="display:none;"><i class="fas fa-check-circle marginLeft10 marginRight5"></i> Good but Too Short</div>
+                    </div>
+                    <input type="password" id="newPassword" name="password" required>
+                    <div class="error3 red size12 justifyStart height0" style="display:none;">
+                        
+                        <div class="height0 col alignStart padding10 borderRadius10">
+                            <p class="size12">&bull; Atleast 1 Special Character</p>
+                            <p class="size12">&bull; Atleast 1 Upper Case Letter</p>
+                            <p class="size12">&bull; Combination of Letter and Numbers</p>
+                            <p class="size12">&bull; Minimum of 8 characters</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error if password is weak -->
+
+                <!-- Confirm new password -->
+                <div class="height0 gap5 col alignStart">
+                    <div class="height0 justifyBetween">
+                        <label for="confirmPassword" class="marginTop0">Confirm Password</label>
+                        <div class="width0 success2 green size12 justifyStart height0" style="display:none;"></div>
+                    </div>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    <div class="error2 red size12 justifyStart height0" style="display:none;">Passwords do not match!</div>
+                </div>
+
+                <!-- Error if confirm doesn't match new password -->
+
+                <!-- Show/hide -->
+                <div class="height0 justifyStart">
+                    <label class="showPass size12 marginTop0" style="cursor:pointer;" onclick="togglePasswords()"><i class="fas fa-eye"></i> Show Password</label>
+                </div>
+
+                <div class="textCenter size12 red str500 warning padding10 borderPrimary borderRadius10" style="display: none;">
+                    Please ensure all inputs are valid!
+                </div>
+                <!-- Submit -->
+                <div class="height0 justifyEnd faded2" id="submitBtn">
+                    <button type="submit" class="nav">Save Changes</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+<script>
+const currentPassword = document.querySelector("#passCard #currentPassword");
+const newPass = document.querySelector("#passCard #newPassword");
+const confirmPass = document.querySelector("#passCard #confirmPassword");
+const form = document.querySelector("#passCard #changePassForm");
+const warningDiv = document.querySelector("#passCard .warning");
+
+const error1 = document.querySelector("#passCard .error1");
+const error2 = document.querySelector("#passCard .error2");
+const error3 = document.querySelector("#passCard .error3");
+
+const success1 = document.querySelector("#passCard .success1");
+const success2 = document.querySelector("#passCard .success2");
+const success3 = document.querySelector("#passCard .success3");
+const success4 = document.querySelector("#passCard .success4");
+
+const showToggle = document.querySelector("#passCard .showPass");
+const submitBtnDiv = document.querySelector("#passCard #submitBtn");
+
+let debounceTimerNewConfirm;
+let debounceTimerCurrent; // New debounce timer for current password validation
+let isCurrentPasswordValid = false; // New state variable
+
+function isStrong(password) {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/.test(password);
+}
+
+function isGood(password) {
+    return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{4,}$/.test(password);
+}
+
+// ✅ Checks if all conditions are met before showing submit button
+function checkFormValidity() {
+    const newVal = newPass.value.trim();
+    const confVal = confirmPass.value.trim();
+    
+    // Passwords must match, be strong, and the current password must be valid
+    const passwordsMatch = newVal !== "" && newVal === confVal;
+    const passwordIsStrong = isStrong(newVal);
+
+    if (passwordsMatch && passwordIsStrong && isCurrentPasswordValid) {
+        submitBtnDiv.classList.remove("faded2");
+        warningDiv.style.display = "none";
+    } else {
+        submitBtnDiv.classList.add("faded2");
+    }
+}
+
+// ✅ Function to validate current password with the server
+async function validateCurrentPassword() {
+    const curVal = currentPassword.value.trim();
+    if (!curVal) {
+        // Clear states if the input is empty
+        success1.style.display = "none";
+        error1.style.display = "none";
+        isCurrentPasswordValid = false;
+        checkFormValidity();
+        return;
+    }
+
+    try {
+        const response = await fetch("/verify-password", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ currentPassword: curVal }),
+        });
+
+        const data = await response.json();
+        isCurrentPasswordValid = data.valid;
+
+        if (isCurrentPasswordValid) {
+            success1.style.display = "inline";
+            error1.style.display = "none";
+        } else {
+            success1.style.display = "none";
+            error1.style.display = "flex";
+        }
+    } catch (err) {
+        console.error("Failed to verify password:", err);
+        isCurrentPasswordValid = false;
+        success1.style.display = "none";
+        error1.style.display = "flex";
+    }
+    
+    checkFormValidity();
+}
+
+form.addEventListener("submit", (e) => {
+    warningDiv.style.display = "none";
+
+    const newVal = newPass.value.trim();
+    const confVal = confirmPass.value.trim();
+
+    const passwordsMatch = newVal !== "" && newVal === confVal;
+    const passwordIsStrong = isStrong(newVal);
+
+    if (!(passwordsMatch && passwordIsStrong && isCurrentPasswordValid)) {
+        e.preventDefault();
+        warningDiv.style.display = "flex";
+    } else {
+        const confirmReset = confirm("Are you sure you want to reset your password?");
+        if (!confirmReset) {
+            e.preventDefault();
+        }
+    }
+});
+
+// ✅ Debounced new/confirm password validation (no changes needed here)
+function validateNewPasswords() {
+    clearTimeout(debounceTimerNewConfirm);
+    debounceTimerNewConfirm = setTimeout(() => {
+        const newVal = newPass.value.trim();
+        const confVal = confirmPass.value.trim();
+
+        // Error 2: New and confirm password mismatch
+        if (newVal && confVal) {
+            if (newVal !== confVal) {
+                error2.style.display = "flex";
+                success2.style.display = "none";
+            } else {
+                error2.style.display = "none";
+                success2.style.display = "inline";
+            }
+        } else {
+            error2.style.display = "none";
+            success2.style.display = "none";
+        }
+
+        // Error 3: Weak password
+        if (newVal) {
+            if (!isGood(newVal)) {
+                error3.style.display = "flex";
+                success3.style.display = "none";
+                success4.style.display = "none";
+            } else if (!isStrong(newVal)) {
+                error3.style.display = "none";
+                success3.style.display = "none";
+                success4.style.display = "inline";
+            } else {
+                error3.style.display = "none";
+                success3.style.display = "inline";
+                success4.style.display = "none";
+            }
+        } else {
+            error3.style.display = "none";
+            success3.style.display = "none";
+            success4.style.display = "none";
+        }
+
+        checkFormValidity();
+    }, 500);
+}
+
+newPass.addEventListener("input", validateNewPasswords);
+confirmPass.addEventListener("input", validateNewPasswords);
+currentPassword.addEventListener("input", () => {
+    clearTimeout(debounceTimerCurrent);
+    debounceTimerCurrent = setTimeout(validateCurrentPassword, 500);
+});
+
+
+// ✅ Show/Hide toggle
+showToggle.addEventListener("click", () => {
+    const isHidden = newPass.type === "password";
+
+    [newPass, confirmPass, currentPassword].forEach(input => {
+        input.type = isHidden ? "text" : "password";
+    });
+
+    showToggle.innerHTML = isHidden
+        ? '<i class="fas fa-eye-slash"></i> Hide Password'
+        : '<i class="fas fa-eye"></i> Show Password';
+});
+</script>
+
+
+
+
+
+    <div class="height100 block alignStart overflow-y1" id="assignPhotoCard" style="overflow-y: auto !important;">
+        <div class="height100 padding20 justifyCenter alignCenter modalCard gap0">
+<form id="uploadForm" class="flex bgWhite borderRadius10 col height0 padding20 gap10 width30 darkShadow relative">
+  <a href="" class="nav cnav absolute right10 top10"><i class="fas fa-times"></i></a>
+  <p class="size18 str500 green">Change Photo</p>
+
+  <input type="file" id="photoInput" accept="image/*">
+
+  <!-- Preview area -->
+  <div style="width: 100%; max-height: 300px; overflow: hidden;">
+    <img id="photoPreview" style="max-width: 100%; display: none; border-radius: 10px;" />
+  </div>
+
+  <div class="height0 justifyEnd">
+    <button type="submit" class="nav width0">Save Changes</button>
+  </div>
+</form>
+
+<script>
+  const photoInput = document.getElementById('photoInput');
+  const photoPreview = document.getElementById('photoPreview');
+  const uploadForm = document.getElementById('uploadForm');
+
+  // Show preview
+  photoInput.addEventListener('change', function (e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function (event) {
+      photoPreview.src = event.target.result;
+      photoPreview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // Submit with fetch
+  uploadForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const file = photoInput.files[0];
+    if (!file) {
+      alert("Please select a photo first.");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("image", file);
+
+    fetch("/upload-my-photo", {
+      method: "POST",
+      body: formData
+    }).then(res => {
+      if (res.ok) {
+        window.location.href = "/prf";
+      } else {
+        alert("Upload failed.");
+      }
+    });
+  });
+</script>
+
+
+
+            <script>
+                const input = document.getElementById("photoInput");
+                const preview = document.getElementById("photoPreview");
+
+                input.addEventListener("change", function () {
+                    const file = this.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            preview.src = e.target.result;
+                            preview.style.display = "flex";
+                        };
+                        reader.readAsDataURL(file);
+                    } else {
+                        preview.src = "#";
+                        preview.style.display = "none";
+                    }
+                });
+            </script>
+
+        </div>
+    </div>
+    <div class="height25 absolute top0 left0 headPrime index50"></div>
+    <div class="height95 gap20 bgSoft padding20 alignStart overflow-y1 relative" id="mainBody">
+
+
+
+        <div class="bgWhite borderRadius10 padding20 col justifyStart width45 height0 gap10 index50" id="mainCardM">
+            
+            <div class="height0 col alignStart padding20 bgWhite borderRadius10" id="perCard">
+        <a href="/hom" class="nav absolute left20 top20 index50"><i class="fas fa-arrow-left"></i> Home</a>
+                            <div class="section relative padding5">
+                                <img src="<%= user.photo || '/images/profile.jpg' %>" alt="User Photo" class="userPhoto borderRadius15" onerror="this.onerror=null; this.src='/images/profile.jpg';">
+                                <a href="javascript:void()" class="nav cnav transparent index10 borderRadius10 borderWhite" id="assignPhoto" style="position: absolute; right: 40%; bottom: 10px; transform: scale(0.9); background-color: rgba(255, 255, 255, 0.601);">
+                                    <i class="fas fa-pen"></i>
+                                </a>
+                            </div> 
+
+                            
+                                <div class="height0">
+                                        <p class="size28 str400"><%= user.firstName %> <%= user.middleName %> <%= user.lastName %> <%= user.extName %></p>
+                                </div>
+                                
+
+                            <div class="height0">
+                                <p class="size14">Username: <%= user.username || "-" %></p>
+                            </div>
+                
+                <span class="flex gap10 justifyCenter width100 padding10">
+                    <a href="javascript:void()" class="nav" id="assignBtn">Edit Info</a>
+                    <a href="javascript:void()" class="nav" id="passBtn">Reset Password</a>
+                    <a href="/" class="nav">Logout</a>
+                </span>
+
+                 <div class="height0 justifyBetween">
+                                <p class="size20 colorPrimary str500">Personal Info</p>
+                            </div>
+                            <hr>
+
+                            <div class="height0 justifyBetween">
+                                <p class="size14  str400">Family Role</p>
+                                <p class="size14 str600"><%= user.role || "" %></p>
+                            </div>
+
+                            <div class="height0 justifyBetween">
+                                <p class="size14  str400">Address</p>
+                                <p class="size14 str600"><%= user.houseNo %> <%= user.purok %></p>
+                            </div>
+                            <%
+                                // 1. Convert month digit to a word
+                                const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                                const bMonthWord = monthNames[parseInt(user.bMonth) - 1];
+
+                                // 2. Compute the age
+                                const today = new Date();
+                                const birthDate = new Date(user.bYear, parseInt(user.bMonth) - 1, user.bDay);
+                                let age = today.getFullYear() - birthDate.getFullYear();
+
+                                // Adjust age if the birthday hasn't happened yet this year
+                                if (today.getMonth() < birthDate.getMonth() || (today.getMonth() === birthDate.getMonth() && today.getDate() < birthDate.getDate())) {
+                                    age--;
+                                }
+                            %>
+
+                            <div class="height0 justifyBetween">
+                                <p class="size14  str400">Age</p>
+                                <p class="size14 str600"><%= age %> Years Old</p>
+                            </div>
+
+                            <div class="height0 justifyBetween">
+                                <p class="size14  str400">Birthday</p>
+                                <p class="size14 str600"><%= bMonthWord  %> <%= user.bDay %>, <%= user.bYear %></p>
+                            </div>
+
+                            <div class="height0 justifyBetween">
+                                <p class="size14  str400">BirthPlace</p>
+                                <p class="size14 str600"><%= user.birthPlace || "-" %></p>
+                            </div>
+
+                            <div class="height0 justifyBetween">
+                                <p class="size14  str400">Gender</p>
+                                <p class="size14 str600"><%= user.gender || "-" %></p>
+                            </div>
+
+                            <div class="height0 justifyBetween">
+                                <p class="size14  str400">Civil Status</p>
+                                <p class="size14 str600"><%= user.civilStatus %></p>
+                            </div>
+
+                            <div class="height0 justifyBetween">
+                                <p class="size14  str400">Contact No</p>
+                                <p class="size14 str600"><%= user.phone || "-" %></p>
+                            </div>
+
+                            <div class="height0 justifyBetween">
+                                <p class="size14  str400">Email</p>
+                                <p class="size14 str600"><%= user.email || "-" %></p>
+                            </div>
+                            <br>
+                            <br>
+                            
+
+                            <br>
+                            <div class="height0 justifyStart">
+                                <p class="size20 str500">Other Info</p>
+                            </div>
+                            <hr>
+                            
+
+                            <div class="height0 justifyBetween">
+                                <p class="size14  str400">Nationality</p>
+                                <p class="size14 str600"><%= user.nationality || "-" %></p>
+                            </div>
+
+                            <div class="height0 justifyBetween">
+                                <p class="size14  str400">Religion</p>
+                                <p class="size14 str600"><%= user.religion || "-" %></p>
+                            </div>
+
+                            <div class="height0 justifyBetween">
+                                <p class="size14 str400">Education</p>
+                                <p class="size14 str600"><%= user.education || "-" %></p>
+                            </div>
+
+                            <div class="height0 justifyBetween">
+                                <p class="size14 str400">Employment Status</p>
+                                <p class="size14 str600"><%= user.employmentStatus || "-" %></p>
+                            </div>
+
+                            <div class="height0 justifyBetween">
+                                <p class="size14 str400">Work</p>
+                                <p class="size14 str600"><%= user.work || "-" %></p>
+                            </div>
+
+                            <br>
+                            <div class="height0 justifyStart">
+                                <p class="size20 str500">Special Categories</p>
+                            </div>
+                            <hr>
+                                <div class="height0 paddingBlock5 wrap gap10 justifyStart">
+                                    <% if (user.precinct === "Registered Voter") { %>
+                                    <div class="height0 padding5 size12 borderRadius5 borderPrimary width0">Registered Voter</div>
+                                    <% } else { %>
+                                    <div class="height0 padding5 size12 borderRadius5 borderPrimary width0">Non-Voter</div>
+                                    <% } %>
+
+                                    <% if (user.pregnant === "on") { %>
+                                    <div class="height0 padding5 size12 borderRadius5 borderPrimary width0">Pregnant</div>
+                                    <% } else { %>
+                                    <% } %>
+                                    
+                                    <% if (user.soloParent === "on") { %>
+                                    <div class="height0 padding5 size12 borderRadius5 borderPrimary width0">Solo Parent</div>
+                                    <% } else { %>
+                                    <% } %>
+
+                                    <% if (user.pwd === "on") { %>
+                                    <div class="height0 padding5 size12 borderRadius5 borderPrimary width0">Person with Disability: <%= user.pwdType || 'Unknown Type'%></div>
+                                    <% } else { %>
+                                    <% } %>
+                                </div>
+
+            </div>
+
+                        
+  
+        </div>
+
+
+
+        <div class="bgWhite borderRadius10 padding20 col justifyStart width35 height0 gap20 hidden">
+            <div class="height0 gap10 justifyEvenly">
+                <a href="javascript:void()" class="nav tnav" id=""><i class="fas fa-key"></i>Reset Password</a>
+            </div>
+            <div class="bgSoft borderRadius10 height0 padding20 size12 textCenter hidden">
+                <p></p>
+                <p class="">
+                    If there’s a mispelled or incorrect information,<br>you can ask for RE-INTERVIEW 🔗 <a href="" class="inline str600"> REQUEST HERE</a>
+                    
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll(".showBtn").forEach(button => {
+            button.addEventListener("click", function(event) {
+                event.preventDefault(); // Prevent default <a> behavior
+    
+                let newsCard = this.closest(".newsCard"); // Get parent newsCard
+                let details = newsCard.querySelector(".details"); // Get details inside the card
+                let icon = this.querySelector("i"); // Get icon inside the button
+    
+                details.classList.toggle("show"); // Toggle visibility
+                
+                // Toggle icon class
+                if (details.classList.contains("show")) {
+                    icon.classList.remove("fa-chevron-down");
+                    icon.classList.add("fa-chevron-up");
+                } else {
+                    icon.classList.remove("fa-chevron-up");
+                    icon.classList.add("fa-chevron-down");
+                }
+            });
+        });
+    });
+    
+    </script>
+<script>
+    document.querySelectorAll('.details').forEach(div => {
+    div.innerHTML = div.innerHTML.replace(/(?<!\S)(https?:\/\/[^\s]+|www\.[^\s]+|\b[a-zA-Z0-9.-]+\.(com|net|org|gov|edu|ph)\b)(?!\S)/g, '<a href="http://$1" target="_blank" class="inline blue str500">$1</a>');
+});
+</script>
+<script>
+document.getElementById("assignBtn").addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent default link behavior
+
+    let assignCard = document.getElementById("assignDepCard");
+    let assignBtn = document.getElementById("assignBtn");
+
+    // Toggle 'active' class
+    assignCard.classList.toggle("active");
+
+    // Change button text & icon based on active state
+    if (assignCard.classList.contains("active")) {
+        assignBtn.innerHTML = '<i class="fas fa-edit"></i> Update Info';
+    } else {
+        assignBtn.innerHTML = '<i class="fas fa-edit"></i> Update Info';
+    }
+});
+
+// Add logic to handle closing when closeBtn is clicked
+document.getElementById("closeBtn").addEventListener("click", function () {
+    let assignCard = document.getElementById("assignDepCard");
+    let assignBtn = document.getElementById("assignBtn");
+
+    // Remove 'active' class
+    assignCard.classList.remove("active");
+
+    // Reset button text & icon
+    assignBtn.innerHTML = '<i class="fas fa-edit"></i> Update Info';
+});
+
+</script>
+
+<script>
+document.getElementById("assignPhoto").addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent default link behavior
+
+    let assignPhotoCard = document.getElementById("assignPhotoCard");
+    let assignPhoto = document.getElementById("assignPhoto");
+
+    // Toggle 'active' class
+    assignPhotoCard.classList.toggle("active");
+
+    // Change button text & icon based on active state
+    if (assignPhotoCard.classList.contains("active")) {
+        assignPhoto.innerHTML = '<i class="fas fa-pen"></i>';
+    } else {
+        assignPhoto.innerHTML = '<i class="fas fa-pen"></i>';
+    }
+});
+
+// Add logic to handle closing when closeBtn is clicked
+document.getElementById("closeBtn").addEventListener("click", function () {
+    let assignPhotoCard = document.getElementById("assignPhotoCard");
+    let assignPhoto = document.getElementById("assignPhoto");
+
+    // Remove 'active' class
+    assignPhotoCard.classList.remove("active");
+
+    // Reset button text & icon
+    assignPhoto.innerHTML = '<i class="fas fa-pen"></i>';
+});
+
+</script>
+
+<script>
+document.getElementById("passBtn").addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent default link behavior
+
+    let passCard = document.getElementById("passCard");
+    let passBtn = document.getElementById("passBtn");
+
+    // Toggle 'active' class
+    passCard.classList.toggle("active");
+
+    // Change button text & icon based on active state
+    if (passCard.classList.contains("active")) {
+    passBtn.innerHTML = '<i class="fas fa-key"></i> Password';
+    } else {
+    passBtn.innerHTML = '<i class="fas fa-key"></i> Password';
+    }
+});
+
+// Add logic to handle closing when closeBtn is clicked
+document.getElementById("closeBtn").addEventListener("click", function () {
+    let passCard = document.getElementById("passCard");
+    let passBtn = document.getElementById("passBtn");
+
+    // Remove 'active' class
+    passCard.classList.remove("active");
+
+    // Reset button text & icon
+    passBtn.innerHTML = '<i class="fas fa-key"></i> Password';
+});
+
+</script>
+<script>
+document.getElementById("povertyBtn").addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent default link behavior
+
+    let povertyCard = document.getElementById("povertyCard");
+    let povertyBtn = document.getElementById("povertyBtn");
+
+    // Toggle 'active' class
+    povertyCard.classList.toggle("active");
+
+    // Change button text & icon based on active state
+    if (povertyCard.classList.contains("active")) {
+    povertyBtn.innerHTML = '<i class="fas fa-question-circle"></i>';
+    } else {
+    povertyBtn.innerHTML = '<i class="fas fa-question-circle"></i>';
+    }
+});
+
+// Add logic to handle closing when closeBtn is clicked
+document.getElementById("closeBtn").addEventListener("click", function () {
+    let povertyCard = document.getElementById("povertyCard");
+    let povertyBtn = document.getElementById("povertyBtn");
+
+    // Remove 'active' class
+    povertyCard.classList.remove("active");
+
+    // Reset button text & icon
+    povertyBtn.innerHTML = '<i class="fas fa-question-circle"></i>';
+});
+</script>
+
+<script>
+    // Inject from server to client
+    const user = {
+        reset: <%= user.reset %>  // if using EJS
+    };
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    if (user.reset === 1) {   // loose equality works for both number and string
+        const rstCard = document.getElementById("rstCard");
+        if (rstCard) {
+            rstCard.classList.remove("hidden");
+        }
+    }
+});
+</script>
+
+
+</body>
+</html>
