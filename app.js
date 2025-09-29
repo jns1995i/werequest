@@ -3,7 +3,8 @@ const express = require("express");
 const { MongoClient, ObjectId } = require("mongodb");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const engine = require("ejs-mate"); // Import ejs-mate
+const MongoDBStore = require("connect-mongodb-session")(session); // Fix: Pass the session object
+const engine = require("ejs-mate");
 const multer = require("multer");
 const path = require("path");
 const crypto = require("crypto");
@@ -12,8 +13,16 @@ const ExcelJS = require("exceljs");
 const PDFDocument = require("pdfkit");
 const nodemailer = require('nodemailer');
 
-
 const SECRET_KEY = "6LflzO4qAAAAAF4n0ABQ2YyHGPSA3RDjvtvFt1AQ";
+
+const { v2: cloudinary } = require("cloudinary");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+
+cloudinary.config({
+  cloud_name: process.env.CLOUD_NAME,
+  api_key: process.env.API_KEY,
+  api_secret: process.env.API_SECRET,
+});
 
 const fs = require('fs');
 const uploadDir = 'public/uploads';
@@ -21,12 +30,11 @@ const uploadDir = 'public/uploads';
 if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
-
 // Use the file upload middleware
 
 
 const app = express();
-const PORT = process.env.PORT || 3025;
+const PORT = process.env.PORT || 3030;
 
 app.engine("ejs", engine);
 app.set("view engine", "ejs");
@@ -38,13 +46,28 @@ app.use(express.static("public"));
 app.use('/uploads', express.static('public/uploads'));
 
 
+// New: Configure MongoDB session store
+const store = new MongoDBStore({
+    uri: process.env.MONGO_URI,
+    collection: "sessions"
+});
+
+// New: Catch session store errors
+store.on("error", function(error) {
+    console.error("Session Store Error:", error);
+});
+
+app.set('trust proxy', 1);
+
 app.use(session({
-    secret: process.env.SESSION_SECRET || "your_secret_key",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        secure: process.env.NODE_ENV === "production"
-    }
+    secret: process.env.SESSION_SECRET || "your_secret_key",
+    resave: false,
+    saveUninitialized: false,
+    store: store, // New: Use the MongoDB store
+    cookie: {
+        secure: process.env.NODE_ENV === "production",
+        httpOnly: true
+    }
 }));
 
 const client = new MongoClient(process.env.MONGO_URI);
@@ -63,9 +86,20 @@ const requireAuth = (req, res, next) => {
     }
     next();
 };
+
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "uploads",
+    allowed_formats: ["jpg", "png", "jpeg", "webp"],
+  },
+});
+const upload = multer({ storage });
+
 const isLogin = async (req, res, next) => {
     try {
         if (!req.session.userId) {
+            console.log("No session userId found");
             return res.redirect("/");
         }
 
@@ -77,6 +111,7 @@ const isLogin = async (req, res, next) => {
 
         const user = await db.collection("resident").findOne({ _id: userId });
         if (!user) {
+            console.log("User not found for ID:", userId);
             return res.redirect("/");
         }
 
@@ -111,27 +146,25 @@ const isLogin = async (req, res, next) => {
             suspend: { $in: [0, "0"] } // global filter
         }).toArray();
 
-        console.log("🔍 Cases Retrieved:", cases);
+      // ✅ 8. Fetch all residents involved in cases
+        let persons = [];
+        if (cases.length > 0) {
+            const allPersonIds = [
+                ...new Set(cases.flatMap(c => [...c.respondents, ...c.complainants]))
+            ];
+            persons = await db.collection("resident").find({
+                _id: { $in: allPersonIds.map(id => new ObjectId(id)) }
+            }).toArray();
 
-        // ✅ Extract all unique complainant & respondent IDs
-        const allPersonIds = [
-            ...new Set(cases.flatMap(c => [...c.respondents, ...c.complainants]))
-        ];
-
-        // ✅ Fetch complainant & respondent details
-        const persons = await db.collection("resident").find({
-            _id: { $in: allPersonIds.map(id => new ObjectId(id)) }
-        }).toArray();
-
-        // ✅ Map resident details into case complainants/respondents
-        cases.forEach(c => {
-            c.respondents = c.respondents.map(rid =>
-                persons.find(p => p._id.equals(rid)) || rid
-            );
-            c.complainants = c.complainants.map(rid =>
-                persons.find(p => p._id.equals(rid)) || rid
-            );
-        });
+            cases.forEach(c => {
+                c.respondents = c.respondents.map(rid =>
+                    persons.find(p => p._id.equals(rid)) || rid
+                );
+                c.complainants = c.complainants.map(rid =>
+                    persons.find(p => p._id.equals(rid)) || rid
+                );
+            });
+        }
 
         // ✅ Attach data to req and res.locals
         req.user = user;
@@ -519,16 +552,17 @@ const isHr = async (req, res, next) => {
     }
 };
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "public/uploads/");
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname)); // Rename file with timestamp
-    }
-});
 
-const upload = multer({ storage: storage });
+const getPublicIdFromUrl = (url) => {
+  try {
+    const parts = url.split("/upload/")[1]; // "v1698765432/uploads/abc123.jpg"
+    const withoutVersion = parts.split("/").slice(1).join("/"); // "uploads/abc123.jpg"
+    return withoutVersion.replace(/\.[^/.]+$/, ""); // "uploads/abc123"
+  } catch (err) {
+    console.error("Failed to extract public_id:", err);
+    return null;
+  }
+};
 
 // Routes
 app.get("/", (req, res) => res.render("index", { error: "", layout: "layout", title: "Home", activePage: "home" }));
@@ -556,7 +590,8 @@ app.get("/1", isLogin, (req, res) => res.render("1", { layout: "design", title: 
 app.get("/complaintChart", isLogin, (req, res) => res.render("complaintChart", { layout: "layout", title: "Dashboard", activePage: "dsb" }));
 
 app.get("/design", isLogin, myReq, isAnn, (req, res) => res.render("design", { layout: "design", title: "Design", activePage: "design" }));
-const RECAPTCHA_SECRET_KEY = "6LcqZMMrAAAAAHlyZaFL5DZXJ-8VCjxzfsvtSIy_"; // Replace with your actual reCAPTCHA Secret Key
+const RECAPTCHA_SECRET_KEY = "6LcXjtgrAAAAAFM1zexPSsT29OGpHBIo7c_Rbhhf"; // Replace with your actual reCAPTCHA Secret Key
+
 app.post("/login", async (req, res) => {
     try {
         const { username, password, "g-recaptcha-response": recaptchaToken } = req.body;
@@ -860,21 +895,22 @@ app.post("/editAnn/:id", isLogin, upload.single("image"), async (req, res) => {
         };
 
         // If there's an image, handle it
-        if (image) {
-            const imagePath = '/uploads/' + image.filename; // Define the path where the image will be saved
-            updateData.image = imagePath; // Save the image path to the database
+if (image) {
+    const imageUrl = image.path; 
+    updateData.image = imageUrl; 
 
-            // If there was an old image, delete it from the server
-            if (existingAnnouncement.image) {
-                const oldImagePath = path.join(__dirname, 'public', existingAnnouncement.image);
-                fs.unlink(oldImagePath, (err) => {
-                    if (err) console.error("Error deleting old image:", err);
-                });
-            }
-        } else {
-            // If no new image is provided, keep the existing image
-            updateData.image = existingAnnouncement.image;
+    if (existingAnnouncement.image) {
+        const publicId = getPublicIdFromUrl(existingAnnouncement.image);
+        if (publicId) {
+            cloudinary.uploader.destroy(publicId, (err, result) => {
+                if (err) console.error("Error deleting old image from Cloudinary:", err);
+                else console.log("Old image deleted:", result);
+            });
         }
+    }
+} else {
+    updateData.image = existingAnnouncement.image;
+}
 
         // Update the announcement in the database
         const result = await db.collection("announcements").updateOne(
@@ -2308,12 +2344,12 @@ app.post("/upload-my-photo", isLogin, upload.single("image"), async (req, res) =
       return res.status(400).send("Missing file or session.");
     }
 
-    const filename = req.file.filename;
+    const imageUrl = req.file.path; // Cloudinary automatically gives you the hosted URL
 
-    // Save path to database
+    // Save Cloudinary URL to database
     await db.collection("resident").updateOne(
       { _id: new ObjectId(userId) },
-      { $set: { photo: `/uploads/${filename}` } }
+      { $set: { photo: imageUrl } }
     );
 
     res.status(200).send("Photo uploaded successfully.");
@@ -3049,6 +3085,14 @@ const upload2 = multer({
         }
     }
 });
+const cloudinary = require("cloudinary").v2;
+
+// Cloudinary config (make sure you have env vars set)
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 app.post("/reqDocument", isLogin, upload2.array("proof[]"), async (req, res) => {
   const sessionUserId = req.user._id; // Logged-in user ID
@@ -3058,8 +3102,19 @@ app.post("/reqDocument", isLogin, upload2.array("proof[]"), async (req, res) => 
 
     let { type, qty, purpose, remarks, remarkMain, requestFor } = req.body;
 
-    // Handle proof files
-    const proof = req.files?.map(file => "/uploads/proofs/" + file.filename) || [];
+    // Upload proof files to Cloudinary
+    let proof = [];
+    if (req.files && req.files.length > 0) {
+      const uploadPromises = req.files.map(file =>
+        cloudinary.uploader.upload(file.path, {
+          folder: "barangay_proofs", // Cloudinary folder name
+          resource_type: "image"
+        })
+      );
+
+      const results = await Promise.all(uploadPromises);
+      proof = results.map(r => r.secure_url); // Cloudinary hosted URLs
+    }
 
     // Ensure all inputs are arrays
     type = [].concat(type);
@@ -3099,10 +3154,10 @@ app.post("/reqDocument", isLogin, upload2.array("proof[]"), async (req, res) => 
 
       let status = "Pending";
       if (docType === "Barangay Indigency") {
-        status = "Pending"; // you can adjust logic based on residentIndigent
+        status = "Pending"; // You can adjust logic if needed
       }
 
-      // Convert requestFor to ObjectId (frontend may send any resident ID)
+      // Convert requestFor to ObjectId
       const requestForId = requestFor[i] ? new ObjectId(requestFor[i]) : new ObjectId(sessionUserId);
 
       return {
@@ -3118,7 +3173,7 @@ app.post("/reqDocument", isLogin, upload2.array("proof[]"), async (req, res) => 
         type: docType,
         qty: qty[i] || 1,
         purpose: purpose[i] || "",
-        proof: proof[i] || ""
+        proof: proof[i] || "" // Cloudinary URL if uploaded
       };
     });
 
@@ -3130,20 +3185,20 @@ app.post("/reqDocument", isLogin, upload2.array("proof[]"), async (req, res) => 
       const mailOptions = {
         from: '"Barangay San Andres" <johnniebre1995@gmail.com>',
         to: resident.email,
-        subject: 'Document Request Submitted Successfully',
+        subject: "Document Request Submitted Successfully",
         html: `
           <p style="font-size: 18px; text-align: center;">Your request has been submitted successfully!</p>
           <div style="font-size: 14px; text-align: center; font-weight: 500;">
             The Barangay Secretary will review your request within 24 hours on business days and will notify you via email regarding its status. Weekends are excluded.
           </div>
-        `
+        `,
       };
 
       try {
         await transporter.sendMail(mailOptions);
-        console.log('Email sent to:', resident.email);
+        console.log("Email sent to:", resident.email);
       } catch (emailError) {
-        console.error('Error sending email:', emailError);
+        console.error("Error sending email:", emailError);
       }
     }
 
@@ -3164,8 +3219,18 @@ app.post("/reqDocumentA", isLogin, upload2.array("proof[]"), async (req, res) =>
 
     let { type, qty, purpose, remarks, remarkMain, requestFor } = req.body;
 
-    // Handle proof files
-    const proof = req.files?.map(file => "/uploads/proofs/" + file.filename) || [];
+    // Upload proof files to Cloudinary
+    let proof = [];
+    if (req.files && req.files.length > 0) {
+      const uploadPromises = req.files.map(file =>
+        cloudinary.uploader.upload(file.path, {
+          folder: "barangay_proofs", // store inside this Cloudinary folder
+          resource_type: "image",
+        })
+      );
+      const results = await Promise.all(uploadPromises);
+      proof = results.map(r => r.secure_url); // save Cloudinary URLs
+    }
 
     // Ensure all inputs are arrays
     type = [].concat(type);
@@ -3205,10 +3270,10 @@ app.post("/reqDocumentA", isLogin, upload2.array("proof[]"), async (req, res) =>
 
       let status = "Pending";
       if (docType === "Barangay Indigency") {
-        status = "Pending"; // you can adjust logic based on residentIndigent
+        status = "Pending"; // can adjust based on residentIndigent
       }
 
-      // Convert requestFor to ObjectId (frontend may send any resident ID)
+      // Convert requestFor to ObjectId
       const requestForId = requestFor[i] ? new ObjectId(requestFor[i]) : new ObjectId(sessionUserId);
 
       return {
@@ -3224,7 +3289,7 @@ app.post("/reqDocumentA", isLogin, upload2.array("proof[]"), async (req, res) =>
         type: docType,
         qty: qty[i] || 1,
         purpose: purpose[i] || "",
-        proof: proof[i] || ""
+        proof: proof[i] || "", // Cloudinary URL if uploaded
       };
     });
 
@@ -3236,20 +3301,20 @@ app.post("/reqDocumentA", isLogin, upload2.array("proof[]"), async (req, res) =>
       const mailOptions = {
         from: '"Barangay San Andres" <johnniebre1995@gmail.com>',
         to: resident.email,
-        subject: 'Document Request Submitted Successfully',
+        subject: "Document Request Submitted Successfully",
         html: `
           <p style="font-size: 18px; text-align: center;">Your request has been submitted successfully!</p>
           <div style="font-size: 14px; text-align: center; font-weight: 500;">
             The Barangay Secretary will review your request within 24 hours on business days and will notify you via email regarding its status. Weekends are excluded.
           </div>
-        `
+        `,
       };
 
       try {
         await transporter.sendMail(mailOptions);
-        console.log('Email sent to:', resident.email);
+        console.log("Email sent to:", resident.email);
       } catch (emailError) {
-        console.error('Error sending email:', emailError);
+        console.error("Error sending email:", emailError);
       }
     }
 
