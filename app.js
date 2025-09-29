@@ -3085,14 +3085,7 @@ const upload2 = multer({
         }
     }
 });
-const cloudinary = require("cloudinary").v2;
 
-// Cloudinary config (make sure you have env vars set)
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
 
 app.post("/reqDocument", isLogin, upload2.array("proof[]"), async (req, res) => {
   const sessionUserId = req.user._id; // Logged-in user ID
