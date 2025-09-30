@@ -34,7 +34,7 @@ if (!fs.existsSync(uploadDir)) {
 
 
 const app = express();
-const PORT = process.env.PORT || 3030;
+const PORT = process.env.PORT || 3025;
 
 app.engine("ejs", engine);
 app.set("view engine", "ejs");
