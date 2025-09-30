@@ -3,7 +3,7 @@ const express = require("express");
 const { MongoClient, ObjectId } = require("mongodb");
 const bodyParser = require("body-parser");
 const session = require("express-session");
-const MongoDBStore = require("connect-mongodb-session")(session); // Fix: Pass the session object
+const MongoDBStore = require("connect-mongodb-session")(session);
 const engine = require("ejs-mate");
 const multer = require("multer");
 const path = require("path");
@@ -46,7 +46,6 @@ app.use(express.static("public"));
 app.use('/uploads', express.static('public/uploads'));
 
 
-// New: Configure MongoDB session store
 const store = new MongoDBStore({
     uri: process.env.MONGO_URI,
     collection: "sessions"
@@ -60,10 +59,10 @@ store.on("error", function(error) {
 app.set('trust proxy', 1);
 
 app.use(session({
-    secret: process.env.SESSION_SECRET || "your_secret_key",
+    secret: process.env.SESSION_SECRET || "your_secret_key",
     resave: false,
     saveUninitialized: false,
-    store: store, // New: Use the MongoDB store
+    store: store,
     cookie: {
         secure: process.env.NODE_ENV === "production",
         httpOnly: true
@@ -94,6 +93,7 @@ const storage = new CloudinaryStorage({
     allowed_formats: ["jpg", "png", "jpeg", "webp"],
   },
 });
+
 const upload = multer({ storage });
 
 const isLogin = async (req, res, next) => {
@@ -122,18 +122,6 @@ const isLogin = async (req, res, next) => {
                 return res.render("index", { error: "Your account is suspended!" });
             });
             return; // stop further execution
-        }
-
-        // Get household
-        let household = null;
-        if (user.householdId && ObjectId.isValid(user.householdId)) {
-            household = await db.collection("household").findOne({ _id: new ObjectId(user.householdId) });
-        }
-
-        // Get family
-        let family = null;
-        if (user.familyId && ObjectId.isValid(user.familyId)) {
-            family = await db.collection("family").findOne({ _id: new ObjectId(user.familyId) });
         }
 
         // ✅ Fetch cases where this user is complainant or respondent (excluding archived/suspended)
@@ -168,12 +156,8 @@ const isLogin = async (req, res, next) => {
 
         // ✅ Attach data to req and res.locals
         req.user = user;
-        req.household = household;
-        req.family = family;
-        req.cases = cases; // better use plural
+        req.cases = cases;
         res.locals.user = user;
-        res.locals.household = household;
-        res.locals.family = family;
         res.locals.cases = cases;
 
         next();
@@ -590,7 +574,7 @@ app.get("/1", isLogin, (req, res) => res.render("1", { layout: "design", title: 
 app.get("/complaintChart", isLogin, (req, res) => res.render("complaintChart", { layout: "layout", title: "Dashboard", activePage: "dsb" }));
 
 app.get("/design", isLogin, myReq, isAnn, (req, res) => res.render("design", { layout: "design", title: "Design", activePage: "design" }));
-const RECAPTCHA_SECRET_KEY = "6LcXjtgrAAAAAFM1zexPSsT29OGpHBIo7c_Rbhhf"; // Replace with your actual reCAPTCHA Secret Key
+const RECAPTCHA_SECRET_KEY = "6LcXjtgrAAAAAFM1zexPSsT29OGpHBIo7c_Rbhhf"; 
 
 app.post("/login", async (req, res) => {
     try {
