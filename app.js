@@ -225,8 +225,8 @@ const sumDoc = async (req, res, next) => {
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'johnniebre1995@gmail.com',
-        pass: 'gswplydselmqjysq',
+        user: 'wilyn.sabatinasuncion@gmail.com',
+        pass: 'kgaquwmapdezixat',
     },
     tls: {
       rejectUnauthorized: false, // 👈 this line tells Node.js to ignore self-signed cert errors
@@ -825,7 +825,7 @@ app.post("/newAnn", upload.single("image"), async (req, res) => {
         // Send emails using Nodemailer
         const emailPromises = residents.map(resident => {
             const mailOptions = {
-                from: 'johnniebre1995@gmail.com',
+                from: 'wilyn.sabatinasuncion@gmail.com',
                 to: resident.email,
                 subject: `New Announcement: ${title}`,
                 text: `Dear Resident,\n\nWe have a new announcement:\n\nTitle: ${title}\nDescription: ${description}\n\nThank you.`,
@@ -1032,7 +1032,7 @@ app.post("/add-resident", async (req, res) => {
 
             if (recipientEmail) {
                 const mailOptions = {
-                    from: 'johnniebre1995@gmail.com',
+                    from: 'wilyn.sabatinasuncion@gmail.com',
                     to: recipientEmail,
                     subject: "Your Resident Account Details",
                     text: `Dear ${firstName},\n\nYour resident account has been created.\nUsername: ${username}\nPassword: ${password}\n\nPlease keep your credentials secure.\n\nThank you.`,
@@ -1875,7 +1875,7 @@ app.post("/reset-resident/:id", async (req, res) => {
 
       if (emailToSend) {
         const mailOptions = {
-          from: '"Barangay San Andres" <johnniebre1995@gmail.com>',
+          from: '"Barangay San Andres" <wilyn.sabatinasuncion@gmail.com>',
           to: emailToSend,
           subject: 'Password Reset',
           text: `Your new password is: ${newPassword}`,
@@ -1925,7 +1925,7 @@ app.post("/suspend-resident/:id", async (req, res) => {
             // 📧 Send email in the background
             if (resident.email) {
                 const mailOptions = {
-                    from: "johnniebre1995@gmail.com",
+                    from: "wilyn.sabatinasuncion@gmail.com",
                     to: resident.email,
                     subject: "Account Suspension Notification",
                     text: `Dear ${resident.firstName},\n\nWe regret to inform you that your account has been suspended.\n\nThank you.`,
@@ -1977,7 +1977,7 @@ app.post("/decline-reg/:id", async (req, res) => {
             // 📧 Send email in the background
             if (resident.email) {
                 const mailOptions = {
-                    from: "johnniebre1995@gmail.com",
+                    from: "wilyn.sabatinasuncion@gmail.com",
                     to: resident.email,
                     subject: "Registration Declined",
                     text: `Dear ${resident.firstName},\n\nWe regret to inform you that your registration has been decline.\n\nThank you.`,
@@ -2027,7 +2027,7 @@ app.post("/approve-reg/:id", async (req, res) => {
             // 📧 Send approval email in the background
             if (resident.email) {
                 const mailOptions = {
-                    from: "johnniebre1995@gmail.com",
+                    from: "wilyn.sabatinasuncion@gmail.com",
                     to: resident.email,
                     subject: "Registration Approved",
                     text: `Dear ${resident.firstName},\n\nYour registration has been approved.\n\nHere are your login details:\nUsername: ${resident.username}\nPassword: ${resident.password}\n\nYou may now access barangay services using your account.\n\nThank you.`,
@@ -2082,7 +2082,7 @@ app.post("/suspend2-resident/:id", async (req, res) => {
             // 📧 Send email in the background
             if (resident.email) {
                 const mailOptions = {
-                    from: "johnniebre1995@gmail.com",
+                    from: "wilyn.sabatinasuncion@gmail.com",
                     to: resident.email,
                     subject: "Account Unsuspension Notification",
                     text: `Dear ${resident.firstName},\n\nWe are happy to inform you that your account has been unsuspended.\n\nThank you.`,
@@ -2130,7 +2130,7 @@ app.post("/archive-resident/:id", async (req, res) => {
             // 📧 Send email in the background
             if (resident.email) {
                 const mailOptions = {
-                    from: "johnniebre1995@gmail.com",
+                    from: "wilyn.sabatinasuncion@gmail.com",
                     to: resident.email,
                     subject: "Account Archived & Suspended",
                     text: `Dear ${resident.firstName},\n\nWe regret to inform you that your account has been archived and suspended.\n\nThank you.`,
@@ -2180,7 +2180,7 @@ app.post("/archive2-resident/:id", async (req, res) => {
             // 📧 Send email in the background
             if (resident.email) {
                 const mailOptions = {
-                    from: "johnniebre1995@gmail.com",
+                    from: "wilyn.sabatinasuncion@gmail.com",
                     to: resident.email,
                     subject: "Account Archived & Suspended",
                     text: `Dear ${resident.firstName},\n\nWe regret to inform you that your account has been archived and suspended.\n\nThank you.`,
@@ -3166,7 +3166,7 @@ app.post("/reqDocument", isLogin, upload2.array("proof[]"), async (req, res) => 
     // Send email notification
     if (resident?.email) {
       const mailOptions = {
-        from: '"Barangay San Andres" <johnniebre1995@gmail.com>',
+        from: '"Barangay San Andres" <wilyn.sabatinasuncion@gmail.com>',
         to: resident.email,
         subject: "Document Request Submitted Successfully",
         html: `
@@ -3282,7 +3282,7 @@ app.post("/reqDocumentA", isLogin, upload2.array("proof[]"), async (req, res) =>
     // Send email notification
     if (resident?.email) {
       const mailOptions = {
-        from: '"Barangay San Andres" <johnniebre1995@gmail.com>',
+        from: '"Barangay San Andres" <wilyn.sabatinasuncion@gmail.com>',
         to: resident.email,
         subject: "Document Request Submitted Successfully",
         html: `
@@ -3974,7 +3974,7 @@ app.post("/yesDoc/:id", async (req, res) => {
         }
 
         await transporter.sendMail({
-            from: '"Barangay San Andres" <johnniebre1995@gmail.com>',
+            from: '"Barangay San Andres" <wilyn.sabatinasuncion@gmail.com>',
             to: emailRecipient,
             subject: "Request Status Update - Approved",
             html: emailHTML
@@ -4026,7 +4026,7 @@ app.post("/verDoc/:id", async (req, res) => {
         }
 
         await transporter.sendMail({
-            from: '"Barangay San Andres" <johnniebre1995@gmail.com>',
+            from: '"Barangay San Andres" <wilyn.sabatinasuncion@gmail.com>',
             to: emailRecipient,
             subject: "Request Status Update - Verified",
             html: emailHTML
@@ -4079,7 +4079,7 @@ app.post("/noDoc/:id", async (req, res) => {
         }
 
         await transporter.sendMail({
-            from: '"Barangay San Andres" <johnniebre1995@gmail.com>',
+            from: '"Barangay San Andres" <wilyn.sabatinasuncion@gmail.com>',
             to: emailRecipient,
             subject: "Request Status Update - Declined",
             html: emailHTML
@@ -4127,7 +4127,7 @@ app.post("/release/:id", async (req, res) => {
 
         if (resident?.email) {
             const mailOptions = {
-                from: 'johnniebre1995@gmail.com',
+                from: 'wilyn.sabatinasuncion@gmail.com',
                 to: resident.email,
                 subject: "Your Document has been released",
                 html: `
@@ -4186,7 +4186,7 @@ app.post("/cancel/:id", async (req, res) => {
 
         if (resident?.email) {
             const mailOptions = {
-                from: 'johnniebre1995@gmail.com',
+                from: 'wilyn.sabatinasuncion@gmail.com',
                 to: resident.email,
                 subject: "Request Cancelled",
                 html: `
@@ -6294,7 +6294,7 @@ app.post("/add-member", async (req, res) => {
 
                 if (shouldSendEmail && recipientEmail) {
                     const mailOptions = {
-                        from: "johnniebre1995@gmail.com",
+                        from: "wilyn.sabatinasuncion@gmail.com",
                         to: recipientEmail,
                         subject: "Your Resident Account Details",
                         text: `Dear ${firstName},\n\nYour resident account has been created.\nUsername: ${username}\nPassword: ${password}\n\nPlease keep your credentials secure.\n\nThank you.`,
@@ -6447,7 +6447,7 @@ app.post("/add-memberR", async (req, res) => {
 
                 if (shouldSendEmail && recipientEmail) {
                     const mailOptions = {
-                        from: "johnniebre1995@gmail.com",
+                        from: "wilyn.sabatinasuncion@gmail.com",
                         to: recipientEmail,
                         subject: "Account Registration",
                         text: `Dear ${firstName},\n\nYour registration has been submitted successfully! \n\nThank you.`,

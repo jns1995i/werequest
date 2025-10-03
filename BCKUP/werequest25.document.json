@@ -1,0 +1,98 @@
+[{
+  "_id": {
+    "$oid": "68cfa7e62819b4521b7fc1e5"
+  },
+  "reqId": {
+    "$oid": "68cfa7e62819b4521b7fc1e4"
+  },
+  "remarks": "",
+  "type": "Business Permit",
+  "qty": 2,
+  "purpose": "LOAN",
+  "proof": "",
+  "status": "Pending",
+  "createdAt": {
+    "$date": "2025-09-21T07:23:18.870Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-21T07:23:18.870Z"
+  },
+  "requestBy": {
+    "$oid": "68bed73dcdf88515016bf7b1"
+  },
+  "requestFor": {
+    "$oid": "68bed73dcdf88515016bf7b1"
+  }
+},
+{
+  "_id": {
+    "$oid": "68d39521f622c7c09a79421c"
+  },
+  "reqId": {
+    "$oid": "68d39521f622c7c09a79421b"
+  },
+  "remarks": "",
+  "type": "Barangay Clearance",
+  "qty": 1,
+  "purpose": "ANY LEGAL",
+  "proof": "",
+  "status": "Pending",
+  "createdAt": {
+    "$date": "2025-09-24T06:52:17.240Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-24T06:52:17.240Z"
+  },
+  "requestBy": {
+    "$oid": "68bed73dcdf88515016bf7b1"
+  },
+  "requestFor": "68bed740cdf88515016bf895"
+},
+{
+  "_id": {
+    "$oid": "68d39661f622c7c09a79424a"
+  },
+  "reqId": {
+    "$oid": "68d39661f622c7c09a794249"
+  },
+  "remarks": "",
+  "type": "Barangay Clearance",
+  "qty": 1,
+  "purpose": "ANY LEGAL",
+  "proof": "/uploads/proofs/1758697057362-349377417.png",
+  "status": "Pending",
+  "createdAt": {
+    "$date": "2025-09-24T06:57:37.394Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-24T06:57:37.394Z"
+  },
+  "requestBy": {
+    "$oid": "68bed73dcdf88515016bf7b1"
+  },
+  "requestFor": "68bed740cdf88515016bf893"
+},
+{
+  "_id": {
+    "$oid": "68d39661f622c7c09a79424b"
+  },
+  "reqId": {
+    "$oid": "68d39661f622c7c09a794249"
+  },
+  "remarks": "",
+  "type": "Barangay Clearance",
+  "qty": 1,
+  "purpose": "SCHOOL REQUIREMENT",
+  "proof": "",
+  "status": "Pending",
+  "createdAt": {
+    "$date": "2025-09-24T06:57:37.394Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-24T06:57:37.394Z"
+  },
+  "requestBy": {
+    "$oid": "68bed73dcdf88515016bf7b1"
+  },
+  "requestFor": "68bed73dcdf88515016bf7b1"
+}]

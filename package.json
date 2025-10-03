@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js",
+    "postinstall": "npm install --legacy-peer-deps"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +16,7 @@
     "axios": "^1.8.4",
     "bcryptjs": "^3.0.2",
     "body-parser": "^1.20.3",
-    "cloudinary": "^2.7.0",
+    "cloudinary": "^1.41.3",
     "connect-mongo": "^5.1.0",
     "connect-mongodb-session": "^5.0.0",
     "dotenv": "^16.4.7",
@@ -29,7 +30,6 @@
     "mongodb": "^6.20.0",
     "mongoose": "^8.12.1",
     "multer": "^1.4.5-lts.1",
-    "multer-storage-cloudinary": "^4.0.0",
     "nodemailer": "^7.0.5",
     "pdfkit": "^0.16.0"
   },

@@ -1,0 +1,2174 @@
+[{
+  "_id": {
+    "$oid": "68be82cb0f2cf9668dd1e0a5"
+  },
+  "archive": 0,
+  "houseNo": "014",
+  "purok": "Shortcut",
+  "createdAt": {
+    "$date": "2025-09-08T07:16:27.926Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-08T07:16:27.926Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e03d"
+  },
+  "houseNo": "33",
+  "purok": "Dike",
+  "ownership": "Owned",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Cemented",
+  "toiletType": "None",
+  "waterSource": "Pump",
+  "numRooms": 2,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e03e"
+  },
+  "houseNo": "20",
+  "purok": "Dike",
+  "ownership": "Rented",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Tiles",
+  "toiletType": "Open Pit",
+  "waterSource": "Deep Well",
+  "numRooms": 1,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e03f"
+  },
+  "houseNo": "55",
+  "purok": "Dike",
+  "ownership": "Rented",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Shared",
+  "waterSource": "Bottled Water",
+  "numRooms": 5,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e040"
+  },
+  "houseNo": "40",
+  "purok": "Dike",
+  "ownership": "Government Housing",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Cemented",
+  "toiletType": "None",
+  "waterSource": "Faucet",
+  "numRooms": 2,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e041"
+  },
+  "houseNo": "37",
+  "purok": "Dike",
+  "ownership": "Informal Settler",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Cemented",
+  "toiletType": "Shared",
+  "waterSource": "Bottled Water",
+  "numRooms": 2,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e042"
+  },
+  "houseNo": "94",
+  "purok": "Dike",
+  "ownership": "Government Housing",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Tiles",
+  "toiletType": "None",
+  "waterSource": "Faucet",
+  "numRooms": 5,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e043"
+  },
+  "houseNo": "22",
+  "purok": "Dike",
+  "ownership": "Informal Settler",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "None",
+  "waterSource": "Faucet",
+  "numRooms": 5,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e044"
+  },
+  "houseNo": "81",
+  "purok": "Dike",
+  "ownership": "Rented",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Wood",
+  "toiletType": "None",
+  "waterSource": "Deep Well",
+  "numRooms": 1,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e045"
+  },
+  "houseNo": "1",
+  "purok": "Dike",
+  "ownership": "Owned",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "None",
+  "waterSource": "Faucet",
+  "numRooms": 4,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e046"
+  },
+  "houseNo": "22",
+  "purok": "Dike",
+  "ownership": "Government Housing",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Wood",
+  "toiletType": "None",
+  "waterSource": "Bottled Water",
+  "numRooms": 5,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e047"
+  },
+  "houseNo": "20",
+  "purok": "Dike",
+  "ownership": "Rented",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Cemented",
+  "toiletType": "None",
+  "waterSource": "Bottled Water",
+  "numRooms": 4,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e048"
+  },
+  "houseNo": "56",
+  "purok": "Dike",
+  "ownership": "Informal Settler",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Cemented",
+  "toiletType": "Open Pit",
+  "waterSource": "Bottled Water",
+  "numRooms": 3,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e049"
+  },
+  "houseNo": "87",
+  "purok": "Dike",
+  "ownership": "Informal Settler",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Private with Flush",
+  "waterSource": "Pump",
+  "numRooms": 5,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e04a"
+  },
+  "houseNo": "31",
+  "purok": "Dike",
+  "ownership": "Owned",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "None",
+  "waterSource": "Deep Well",
+  "numRooms": 3,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e04b"
+  },
+  "houseNo": "72",
+  "purok": "Dike",
+  "ownership": "Informal Settler",
+  "houseType": "Makeshift",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Shared",
+  "waterSource": "Pump",
+  "numRooms": 5,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e04c"
+  },
+  "houseNo": "91",
+  "purok": "Dike",
+  "ownership": "Informal Settler",
+  "houseType": "Makeshift",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Cemented",
+  "toiletType": "Shared",
+  "waterSource": "Bottled Water",
+  "numRooms": 2,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e04d"
+  },
+  "houseNo": "39",
+  "purok": "Dike",
+  "ownership": "Owned",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Tiles",
+  "toiletType": "Shared",
+  "waterSource": "Pump",
+  "numRooms": 1,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e04e"
+  },
+  "houseNo": "32",
+  "purok": "Dike",
+  "ownership": "Informal Settler",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Private with Flush",
+  "waterSource": "Bottled Water",
+  "numRooms": 4,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e04f"
+  },
+  "houseNo": "4",
+  "purok": "Dike",
+  "ownership": "Government Housing",
+  "houseType": "Makeshift",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Wood",
+  "toiletType": "Open Pit",
+  "waterSource": "Pump",
+  "numRooms": 5,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e050"
+  },
+  "houseNo": "2",
+  "purok": "Dike",
+  "ownership": "Rented",
+  "houseType": "Makeshift",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Tiles",
+  "toiletType": "Open Pit",
+  "waterSource": "Deep Well",
+  "numRooms": 3,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e051"
+  },
+  "houseNo": "87",
+  "purok": "Shortcut",
+  "ownership": "Rented",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Open Pit",
+  "waterSource": "Pump",
+  "numRooms": 4,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e052"
+  },
+  "houseNo": "26",
+  "purok": "Shortcut",
+  "ownership": "Government Housing",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Private with Flush",
+  "waterSource": "Deep Well",
+  "numRooms": 1,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e053"
+  },
+  "houseNo": "14",
+  "purok": "Shortcut",
+  "ownership": "Owned",
+  "houseType": "Makeshift",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Cemented",
+  "toiletType": "None",
+  "waterSource": "Faucet",
+  "numRooms": 5,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e054"
+  },
+  "houseNo": "39",
+  "purok": "Shortcut",
+  "ownership": "Government Housing",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Shared",
+  "waterSource": "Faucet",
+  "numRooms": 2,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e055"
+  },
+  "houseNo": "81",
+  "purok": "Shortcut",
+  "ownership": "Government Housing",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Wood",
+  "toiletType": "Open Pit",
+  "waterSource": "Faucet",
+  "numRooms": 3,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e056"
+  },
+  "houseNo": "98",
+  "purok": "Shortcut",
+  "ownership": "Owned",
+  "houseType": "Makeshift",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Cemented",
+  "toiletType": "None",
+  "waterSource": "Deep Well",
+  "numRooms": 4,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e057"
+  },
+  "houseNo": "54",
+  "purok": "Shortcut",
+  "ownership": "Government Housing",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Cemented",
+  "toiletType": "Private with Flush",
+  "waterSource": "Faucet",
+  "numRooms": 3,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e058"
+  },
+  "houseNo": "60",
+  "purok": "Shortcut",
+  "ownership": "Government Housing",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Wood",
+  "toiletType": "Private with Flush",
+  "waterSource": "Faucet",
+  "numRooms": 3,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e059"
+  },
+  "houseNo": "5",
+  "purok": "Shortcut",
+  "ownership": "Government Housing",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Wood",
+  "toiletType": "Shared",
+  "waterSource": "Pump",
+  "numRooms": 2,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e05a"
+  },
+  "houseNo": "36",
+  "purok": "Shortcut",
+  "ownership": "Informal Settler",
+  "houseType": "Makeshift",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Cemented",
+  "toiletType": "Open Pit",
+  "waterSource": "Pump",
+  "numRooms": 2,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e05b"
+  },
+  "houseNo": "82",
+  "purok": "Shortcut",
+  "ownership": "Owned",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Tiles",
+  "toiletType": "None",
+  "waterSource": "Deep Well",
+  "numRooms": 2,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e05c"
+  },
+  "houseNo": "87",
+  "purok": "Shortcut",
+  "ownership": "Government Housing",
+  "houseType": "Makeshift",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Tiles",
+  "toiletType": "None",
+  "waterSource": "Faucet",
+  "numRooms": 5,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e05d"
+  },
+  "houseNo": "73",
+  "purok": "Shortcut",
+  "ownership": "Rented",
+  "houseType": "Makeshift",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Shared",
+  "waterSource": "Faucet",
+  "numRooms": 2,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e05e"
+  },
+  "houseNo": "86",
+  "purok": "Shortcut",
+  "ownership": "Government Housing",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Wood",
+  "toiletType": "Open Pit",
+  "waterSource": "Faucet",
+  "numRooms": 1,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e05f"
+  },
+  "houseNo": "42",
+  "purok": "Shortcut",
+  "ownership": "Informal Settler",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Private with Flush",
+  "waterSource": "Deep Well",
+  "numRooms": 3,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e060"
+  },
+  "houseNo": "21",
+  "purok": "Shortcut",
+  "ownership": "Owned",
+  "houseType": "Makeshift",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Tiles",
+  "toiletType": "None",
+  "waterSource": "Pump",
+  "numRooms": 1,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e061"
+  },
+  "houseNo": "99",
+  "purok": "Shortcut",
+  "ownership": "Owned",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Wood",
+  "toiletType": "Private with Flush",
+  "waterSource": "Faucet",
+  "numRooms": 5,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e062"
+  },
+  "houseNo": "55",
+  "purok": "Shortcut",
+  "ownership": "Rented",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Shared",
+  "waterSource": "Faucet",
+  "numRooms": 2,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e063"
+  },
+  "houseNo": "41",
+  "purok": "Shortcut",
+  "ownership": "Owned",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Cemented",
+  "toiletType": "Open Pit",
+  "waterSource": "Faucet",
+  "numRooms": 4,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e064"
+  },
+  "houseNo": "60",
+  "purok": "Shortcut",
+  "ownership": "Government Housing",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Tiles",
+  "toiletType": "Shared",
+  "waterSource": "Bottled Water",
+  "numRooms": 5,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e065"
+  },
+  "houseNo": "60",
+  "purok": "Maharlika Highway",
+  "ownership": "Rented",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Cemented",
+  "toiletType": "Private with Flush",
+  "waterSource": "Bottled Water",
+  "numRooms": 3,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e066"
+  },
+  "houseNo": "63",
+  "purok": "Maharlika Highway",
+  "ownership": "Owned",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Shared",
+  "waterSource": "Faucet",
+  "numRooms": 5,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e067"
+  },
+  "houseNo": "71",
+  "purok": "Maharlika Highway",
+  "ownership": "Owned",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Tiles",
+  "toiletType": "Open Pit",
+  "waterSource": "Faucet",
+  "numRooms": 3,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e068"
+  },
+  "houseNo": "30",
+  "purok": "Maharlika Highway",
+  "ownership": "Owned",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Wood",
+  "toiletType": "Private with Flush",
+  "waterSource": "Bottled Water",
+  "numRooms": 5,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e069"
+  },
+  "houseNo": "48",
+  "purok": "Maharlika Highway",
+  "ownership": "Informal Settler",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Cemented",
+  "toiletType": "Private with Flush",
+  "waterSource": "Bottled Water",
+  "numRooms": 1,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e06a"
+  },
+  "houseNo": "30",
+  "purok": "Maharlika Highway",
+  "ownership": "Informal Settler",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Shared",
+  "waterSource": "Deep Well",
+  "numRooms": 5,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e06b"
+  },
+  "houseNo": "19",
+  "purok": "Maharlika Highway",
+  "ownership": "Informal Settler",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Cemented",
+  "toiletType": "Open Pit",
+  "waterSource": "Pump",
+  "numRooms": 5,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e06c"
+  },
+  "houseNo": "18",
+  "purok": "Maharlika Highway",
+  "ownership": "Owned",
+  "houseType": "Makeshift",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Wood",
+  "toiletType": "Private with Flush",
+  "waterSource": "Faucet",
+  "numRooms": 4,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e06d"
+  },
+  "houseNo": "82",
+  "purok": "Maharlika Highway",
+  "ownership": "Rented",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Wood",
+  "toiletType": "Shared",
+  "waterSource": "Bottled Water",
+  "numRooms": 5,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e06e"
+  },
+  "houseNo": "18",
+  "purok": "Maharlika Highway",
+  "ownership": "Rented",
+  "houseType": "Makeshift",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Wood",
+  "toiletType": "Shared",
+  "waterSource": "Bottled Water",
+  "numRooms": 2,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e06f"
+  },
+  "houseNo": "93",
+  "purok": "Maharlika Highway",
+  "ownership": "Government Housing",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Private with Flush",
+  "waterSource": "Pump",
+  "numRooms": 5,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e070"
+  },
+  "houseNo": "37",
+  "purok": "Maharlika Highway",
+  "ownership": "Informal Settler",
+  "houseType": "Makeshift",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Cemented",
+  "toiletType": "Shared",
+  "waterSource": "Faucet",
+  "numRooms": 1,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e071"
+  },
+  "houseNo": "5",
+  "purok": "Maharlika Highway",
+  "ownership": "Informal Settler",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Wood",
+  "toiletType": "Private with Flush",
+  "waterSource": "Pump",
+  "numRooms": 2,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e072"
+  },
+  "houseNo": "32",
+  "purok": "Maharlika Highway",
+  "ownership": "Government Housing",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Open Pit",
+  "waterSource": "Faucet",
+  "numRooms": 1,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e073"
+  },
+  "houseNo": "92",
+  "purok": "Maharlika Highway",
+  "ownership": "Rented",
+  "houseType": "Makeshift",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "None",
+  "waterSource": "Deep Well",
+  "numRooms": 5,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e074"
+  },
+  "houseNo": "23",
+  "purok": "Maharlika Highway",
+  "ownership": "Owned",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Private with Flush",
+  "waterSource": "Bottled Water",
+  "numRooms": 3,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e075"
+  },
+  "houseNo": "51",
+  "purok": "Maharlika Highway",
+  "ownership": "Rented",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Wood",
+  "toiletType": "Private with Flush",
+  "waterSource": "Deep Well",
+  "numRooms": 4,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e076"
+  },
+  "houseNo": "78",
+  "purok": "Maharlika Highway",
+  "ownership": "Government Housing",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "None",
+  "waterSource": "Faucet",
+  "numRooms": 4,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e077"
+  },
+  "houseNo": "67",
+  "purok": "Maharlika Highway",
+  "ownership": "Rented",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Wood",
+  "toiletType": "Shared",
+  "waterSource": "Bottled Water",
+  "numRooms": 4,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e078"
+  },
+  "houseNo": "65",
+  "purok": "Maharlika Highway",
+  "ownership": "Owned",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Cemented",
+  "toiletType": "None",
+  "waterSource": "Deep Well",
+  "numRooms": 3,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e079"
+  },
+  "houseNo": "89",
+  "purok": "Perigola",
+  "ownership": "Informal Settler",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Tiles",
+  "toiletType": "Private with Flush",
+  "waterSource": "Faucet",
+  "numRooms": 1,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e07a"
+  },
+  "houseNo": "93",
+  "purok": "Perigola",
+  "ownership": "Informal Settler",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Cemented",
+  "toiletType": "None",
+  "waterSource": "Faucet",
+  "numRooms": 1,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e07b"
+  },
+  "houseNo": "29",
+  "purok": "Perigola",
+  "ownership": "Rented",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Private with Flush",
+  "waterSource": "Pump",
+  "numRooms": 1,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e07c"
+  },
+  "houseNo": "16",
+  "purok": "Perigola",
+  "ownership": "Owned",
+  "houseType": "Makeshift",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Wood",
+  "toiletType": "Shared",
+  "waterSource": "Pump",
+  "numRooms": 5,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e07d"
+  },
+  "houseNo": "15",
+  "purok": "Perigola",
+  "ownership": "Owned",
+  "houseType": "Makeshift",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Tiles",
+  "toiletType": "None",
+  "waterSource": "Bottled Water",
+  "numRooms": 1,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e07e"
+  },
+  "houseNo": "65",
+  "purok": "Perigola",
+  "ownership": "Government Housing",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Tiles",
+  "toiletType": "Shared",
+  "waterSource": "Pump",
+  "numRooms": 4,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e07f"
+  },
+  "houseNo": "87",
+  "purok": "Perigola",
+  "ownership": "Rented",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Cemented",
+  "toiletType": "Shared",
+  "waterSource": "Bottled Water",
+  "numRooms": 1,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e080"
+  },
+  "houseNo": "61",
+  "purok": "Perigola",
+  "ownership": "Rented",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Wood",
+  "toiletType": "Open Pit",
+  "waterSource": "Bottled Water",
+  "numRooms": 4,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e081"
+  },
+  "houseNo": "18",
+  "purok": "Perigola",
+  "ownership": "Owned",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Shared",
+  "waterSource": "Deep Well",
+  "numRooms": 1,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e082"
+  },
+  "houseNo": "1",
+  "purok": "Perigola",
+  "ownership": "Rented",
+  "houseType": "Makeshift",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Cemented",
+  "toiletType": "Shared",
+  "waterSource": "Faucet",
+  "numRooms": 2,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e083"
+  },
+  "houseNo": "58",
+  "purok": "Perigola",
+  "ownership": "Rented",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Tiles",
+  "toiletType": "Open Pit",
+  "waterSource": "Faucet",
+  "numRooms": 2,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e084"
+  },
+  "houseNo": "17",
+  "purok": "Perigola",
+  "ownership": "Rented",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Wood",
+  "toiletType": "Shared",
+  "waterSource": "Deep Well",
+  "numRooms": 2,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e085"
+  },
+  "houseNo": "81",
+  "purok": "Perigola",
+  "ownership": "Rented",
+  "houseType": "Makeshift",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Tiles",
+  "toiletType": "Open Pit",
+  "waterSource": "Faucet",
+  "numRooms": 2,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e086"
+  },
+  "houseNo": "33",
+  "purok": "Perigola",
+  "ownership": "Rented",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Tiles",
+  "toiletType": "None",
+  "waterSource": "Faucet",
+  "numRooms": 4,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e087"
+  },
+  "houseNo": "100",
+  "purok": "Perigola",
+  "ownership": "Informal Settler",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Wood",
+  "toiletType": "Private with Flush",
+  "waterSource": "Bottled Water",
+  "numRooms": 4,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e088"
+  },
+  "houseNo": "64",
+  "purok": "Perigola",
+  "ownership": "Informal Settler",
+  "houseType": "Makeshift",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Tiles",
+  "toiletType": "Shared",
+  "waterSource": "Bottled Water",
+  "numRooms": 5,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e089"
+  },
+  "houseNo": "9",
+  "purok": "Perigola",
+  "ownership": "Government Housing",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Cemented",
+  "toiletType": "Open Pit",
+  "waterSource": "Faucet",
+  "numRooms": 1,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e08a"
+  },
+  "houseNo": "94",
+  "purok": "Perigola",
+  "ownership": "Government Housing",
+  "houseType": "Makeshift",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Cemented",
+  "toiletType": "Shared",
+  "waterSource": "Pump",
+  "numRooms": 5,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e08b"
+  },
+  "houseNo": "85",
+  "purok": "Perigola",
+  "ownership": "Owned",
+  "houseType": "Makeshift",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Cemented",
+  "toiletType": "None",
+  "waterSource": "Bottled Water",
+  "numRooms": 2,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e08c"
+  },
+  "houseNo": "64",
+  "purok": "Perigola",
+  "ownership": "Government Housing",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Wood",
+  "toiletType": "Shared",
+  "waterSource": "Bottled Water",
+  "numRooms": 3,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e08d"
+  },
+  "houseNo": "82",
+  "purok": "Cantarilla",
+  "ownership": "Government Housing",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Cemented",
+  "toiletType": "None",
+  "waterSource": "Faucet",
+  "numRooms": 2,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e08e"
+  },
+  "houseNo": "74",
+  "purok": "Cantarilla",
+  "ownership": "Government Housing",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Wood",
+  "toiletType": "Private with Flush",
+  "waterSource": "Pump",
+  "numRooms": 3,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e08f"
+  },
+  "houseNo": "19",
+  "purok": "Cantarilla",
+  "ownership": "Informal Settler",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Cemented",
+  "toiletType": "None",
+  "waterSource": "Bottled Water",
+  "numRooms": 5,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e090"
+  },
+  "houseNo": "60",
+  "purok": "Cantarilla",
+  "ownership": "Government Housing",
+  "houseType": "Makeshift",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Wood",
+  "toiletType": "None",
+  "waterSource": "Bottled Water",
+  "numRooms": 4,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e091"
+  },
+  "houseNo": "44",
+  "purok": "Cantarilla",
+  "ownership": "Rented",
+  "houseType": "Makeshift",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Tiles",
+  "toiletType": "Shared",
+  "waterSource": "Pump",
+  "numRooms": 4,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e092"
+  },
+  "houseNo": "45",
+  "purok": "Cantarilla",
+  "ownership": "Rented",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Wood",
+  "toiletType": "None",
+  "waterSource": "Bottled Water",
+  "numRooms": 3,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e093"
+  },
+  "houseNo": "58",
+  "purok": "Cantarilla",
+  "ownership": "Government Housing",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Shared",
+  "waterSource": "Bottled Water",
+  "numRooms": 2,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e094"
+  },
+  "houseNo": "50",
+  "purok": "Cantarilla",
+  "ownership": "Informal Settler",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Shared",
+  "waterSource": "Bottled Water",
+  "numRooms": 2,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e095"
+  },
+  "houseNo": "2",
+  "purok": "Cantarilla",
+  "ownership": "Owned",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "None",
+  "waterSource": "Faucet",
+  "numRooms": 5,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e096"
+  },
+  "houseNo": "50",
+  "purok": "Cantarilla",
+  "ownership": "Rented",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Wood",
+  "toiletType": "Shared",
+  "waterSource": "Faucet",
+  "numRooms": 4,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e097"
+  },
+  "houseNo": "17",
+  "purok": "Cantarilla",
+  "ownership": "Rented",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "None",
+  "waterSource": "Pump",
+  "numRooms": 1,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e098"
+  },
+  "houseNo": "29",
+  "purok": "Cantarilla",
+  "ownership": "Government Housing",
+  "houseType": "Makeshift",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Private with Flush",
+  "waterSource": "Deep Well",
+  "numRooms": 3,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e099"
+  },
+  "houseNo": "40",
+  "purok": "Cantarilla",
+  "ownership": "Government Housing",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Wood",
+  "toiletType": "Private with Flush",
+  "waterSource": "Bottled Water",
+  "numRooms": 5,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e09a"
+  },
+  "houseNo": "8",
+  "purok": "Cantarilla",
+  "ownership": "Rented",
+  "houseType": "Makeshift",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Cemented",
+  "toiletType": "Private with Flush",
+  "waterSource": "Pump",
+  "numRooms": 4,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e09b"
+  },
+  "houseNo": "11",
+  "purok": "Cantarilla",
+  "ownership": "Government Housing",
+  "houseType": "Makeshift",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Tiles",
+  "toiletType": "Open Pit",
+  "waterSource": "Pump",
+  "numRooms": 2,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e09c"
+  },
+  "houseNo": "98",
+  "purok": "Cantarilla",
+  "ownership": "Owned",
+  "houseType": "Makeshift",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Cemented",
+  "toiletType": "Private with Flush",
+  "waterSource": "Pump",
+  "numRooms": 4,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e09d"
+  },
+  "houseNo": "76",
+  "purok": "Cantarilla",
+  "ownership": "Informal Settler",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Wood",
+  "toiletType": "Shared",
+  "waterSource": "Bottled Water",
+  "numRooms": 1,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e09e"
+  },
+  "houseNo": "39",
+  "purok": "Cantarilla",
+  "ownership": "Rented",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Tiles",
+  "toiletType": "Private with Flush",
+  "waterSource": "Faucet",
+  "numRooms": 5,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e09f"
+  },
+  "houseNo": "79",
+  "purok": "Cantarilla",
+  "ownership": "Informal Settler",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Tiles",
+  "toiletType": "Shared",
+  "waterSource": "Bottled Water",
+  "numRooms": 5,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0a0"
+  },
+  "houseNo": "63",
+  "purok": "Cantarilla",
+  "ownership": "Informal Settler",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Wood",
+  "toiletType": "Private with Flush",
+  "waterSource": "Pump",
+  "numRooms": 5,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0a1"
+  },
+  "houseNo": "17",
+  "purok": "Bagong Daan",
+  "ownership": "Owned",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Wood",
+  "toiletType": "Open Pit",
+  "waterSource": "Pump",
+  "numRooms": 1,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0a2"
+  },
+  "houseNo": "9",
+  "purok": "Bagong Daan",
+  "ownership": "Informal Settler",
+  "houseType": "Makeshift",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Tiles",
+  "toiletType": "Shared",
+  "waterSource": "Bottled Water",
+  "numRooms": 3,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0a3"
+  },
+  "houseNo": "84",
+  "purok": "Bagong Daan",
+  "ownership": "Informal Settler",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Wood",
+  "toiletType": "Open Pit",
+  "waterSource": "Faucet",
+  "numRooms": 3,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0a4"
+  },
+  "houseNo": "39",
+  "purok": "Bagong Daan",
+  "ownership": "Informal Settler",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Wood",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Private with Flush",
+  "waterSource": "Deep Well",
+  "numRooms": 3,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0a5"
+  },
+  "houseNo": "40",
+  "purok": "Bagong Daan",
+  "ownership": "Informal Settler",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Tiles",
+  "toiletType": "Private with Flush",
+  "waterSource": "Bottled Water",
+  "numRooms": 3,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0a6"
+  },
+  "houseNo": "1",
+  "purok": "Bagong Daan",
+  "ownership": "Informal Settler",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Cemented",
+  "toiletType": "Open Pit",
+  "waterSource": "Faucet",
+  "numRooms": 2,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0a7"
+  },
+  "houseNo": "61",
+  "purok": "Bagong Daan",
+  "ownership": "Government Housing",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Wood",
+  "toiletType": "Open Pit",
+  "waterSource": "Pump",
+  "numRooms": 2,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0a8"
+  },
+  "houseNo": "22",
+  "purok": "Bagong Daan",
+  "ownership": "Rented",
+  "houseType": "Makeshift",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Cemented",
+  "toiletType": "Private with Flush",
+  "waterSource": "Faucet",
+  "numRooms": 3,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0a9"
+  },
+  "houseNo": "100",
+  "purok": "Bagong Daan",
+  "ownership": "Government Housing",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Cemented",
+  "toiletType": "None",
+  "waterSource": "Bottled Water",
+  "numRooms": 2,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0aa"
+  },
+  "houseNo": "26",
+  "purok": "Bagong Daan",
+  "ownership": "Government Housing",
+  "houseType": "Makeshift",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Private with Flush",
+  "waterSource": "Faucet",
+  "numRooms": 5,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0ab"
+  },
+  "houseNo": "46",
+  "purok": "Bagong Daan",
+  "ownership": "Rented",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "Open Pit",
+  "waterSource": "Bottled Water",
+  "numRooms": 3,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0ac"
+  },
+  "houseNo": "24",
+  "purok": "Bagong Daan",
+  "ownership": "Owned",
+  "houseType": "Makeshift",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Nipa",
+  "flooringMaterial": "Cemented",
+  "toiletType": "Shared",
+  "waterSource": "Deep Well",
+  "numRooms": 5,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0ad"
+  },
+  "houseNo": "99",
+  "purok": "Bagong Daan",
+  "ownership": "Government Housing",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Tiles",
+  "toiletType": "Open Pit",
+  "waterSource": "Pump",
+  "numRooms": 2,
+  "electricity": "Generator",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0ae"
+  },
+  "houseNo": "68",
+  "purok": "Bagong Daan",
+  "ownership": "Owned",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Galvanized Iron",
+  "flooringMaterial": "Wood",
+  "toiletType": "None",
+  "waterSource": "Pump",
+  "numRooms": 1,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0af"
+  },
+  "houseNo": "7",
+  "purok": "Bagong Daan",
+  "ownership": "Owned",
+  "houseType": "Makeshift",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Wood",
+  "toiletType": "Private with Flush",
+  "waterSource": "Bottled Water",
+  "numRooms": 2,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0b0"
+  },
+  "houseNo": "11",
+  "purok": "Bagong Daan",
+  "ownership": "Informal Settler",
+  "houseType": "Fully Concrete",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Cemented",
+  "toiletType": "None",
+  "waterSource": "Faucet",
+  "numRooms": 2,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0b1"
+  },
+  "houseNo": "87",
+  "purok": "Bagong Daan",
+  "ownership": "Owned",
+  "houseType": "Nipa Hut",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Cemented",
+  "toiletType": "Open Pit",
+  "waterSource": "Pump",
+  "numRooms": 5,
+  "electricity": "Caserole Lamp",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0b2"
+  },
+  "houseNo": "78",
+  "purok": "Bagong Daan",
+  "ownership": "Rented",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Hollow Blocks",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Tiles",
+  "toiletType": "None",
+  "waterSource": "Pump",
+  "numRooms": 3,
+  "electricity": "Solar",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0b3"
+  },
+  "houseNo": "11",
+  "purok": "Bagong Daan",
+  "ownership": "Informal Settler",
+  "houseType": "Makeshift",
+  "wallMaterial": "Bamboo",
+  "roofMaterial": "Light Materials",
+  "flooringMaterial": "Bamboo",
+  "toiletType": "None",
+  "waterSource": "Deep Well",
+  "numRooms": 5,
+  "electricity": "Candle",
+  "archive": "0",
+  "dump": "1"
+},
+{
+  "_id": {
+    "$oid": "68be8755a75e6f3c5af0e0b4"
+  },
+  "houseNo": "61",
+  "purok": "Bagong Daan",
+  "ownership": "Government Housing",
+  "houseType": "Semi Concrete",
+  "wallMaterial": "Light Materials",
+  "roofMaterial": "Wood",
+  "flooringMaterial": "Wood",
+  "toiletType": "Open Pit",
+  "waterSource": "Faucet",
+  "numRooms": 3,
+  "electricity": "Electricity",
+  "archive": "0",
+  "dump": "1"
+}]
